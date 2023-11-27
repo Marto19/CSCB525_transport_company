@@ -14,9 +14,9 @@ public class SessionFactoryUtil {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             Configuration configuration = new Configuration();
-            configuration.addAnnotatedClass(Company.class);
-            configuration.addAnnotatedClass(Employee.class);
-            configuration.addAnnotatedClass(CompanyEvent.class);
+//            configuration.addAnnotatedClass(Company.class);
+//            configuration.addAnnotatedClass(Employee.class);
+//            configuration.addAnnotatedClass(CompanyEvent.class);
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
