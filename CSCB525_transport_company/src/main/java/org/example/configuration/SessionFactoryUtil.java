@@ -3,7 +3,6 @@ package org.example.configuration;
 //import org.example.entity.Company;
 //import org.example.entity.CompanyEvent;
 //import org.example.entity.Employee;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
