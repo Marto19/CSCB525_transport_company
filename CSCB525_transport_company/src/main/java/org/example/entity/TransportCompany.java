@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public class TransportCompany {
     private UUID idTransportCompany;
-    private String name;    
+    private String name;
 }
