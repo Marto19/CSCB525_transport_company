@@ -2,14 +2,19 @@ package org.example.entity;
 
 import org.example.VehicleType;
 
-//@Entity
-//@Table(name = "vehicle")
+import javax.persistence.*;
+
+@Entity
+@Table(name = "vehicle")
 public class Vehicle {
-    //@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    //@ManyToOne
-    //@JoinColumn(name = "transport_company_id", nullable = false)
+
+    @OneToMany
+    @Column(name = "transport_company_id")
     private TransportCompany transportCompany;
+
     private VehicleType vehicleType;
 
     public Vehicle(long id, TransportCompany transportCompany, VehicleType vehicleType) {
