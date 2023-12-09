@@ -3,6 +3,7 @@ package org.example.entity;
 import org.example.VehicleType;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicle")
@@ -13,7 +14,7 @@ public class Vehicle {
 
     @OneToMany
     @Column(name = "transport_company_id")
-    private TransportCompany transportCompany;
+    private List<TransportCompany> transportCompany;
 
     private VehicleType vehicleType;
 
