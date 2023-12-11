@@ -17,8 +17,7 @@ public class Vehicle {
 
     private VehicleType vehicleType;
 
-    public Vehicle(long id, List<TransportCompany> transportCompanies, VehicleType vehicleType) {
-        this.id = id;
+    public Vehicle(List<TransportCompany> transportCompanies, VehicleType vehicleType) {
         this.transportCompanies = transportCompanies;
         this.vehicleType = vehicleType;
     }

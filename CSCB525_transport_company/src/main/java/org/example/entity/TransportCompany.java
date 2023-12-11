@@ -12,8 +12,7 @@ public class TransportCompany {
     private long idTransportCompany;
     private String name;
 
-    public TransportCompany(long idTransportCompany, String name) {
-        this.idTransportCompany = idTransportCompany;
+    public TransportCompany(String name) {
         this.name = name;
     }
 
