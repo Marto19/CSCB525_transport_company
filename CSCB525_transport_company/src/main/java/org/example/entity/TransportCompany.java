@@ -1,21 +1,31 @@
 package org.example.entity;
 
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class TransportCompany {
-    private UUID idTransportCompany;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idTransportCompany;
     private String name;
 
-    public TransportCompany(UUID idTransportCompany, String name) {
+    public TransportCompany(long idTransportCompany, String name) {
         this.idTransportCompany = idTransportCompany;
         this.name = name;
     }
 
-    public UUID getIdTransportCompany() {
+    public TransportCompany() {
+
+    }
+
+    public long getIdTransportCompany() {
         return idTransportCompany;
     }
 
-    public void setIdTransportCompany(UUID idTransportCompany) {
+    public void setIdTransportCompany(long idTransportCompany) {
         this.idTransportCompany = idTransportCompany;
     }
 

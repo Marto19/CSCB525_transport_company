@@ -12,15 +12,14 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    @Column(name = "transport_company_id")
-    private List<TransportCompany> transportCompany;
+    @OneToMany(mappedBy = "vehicle")
+    private List<TransportCompany> transportCompanies;
 
     private VehicleType vehicleType;
 
-    public Vehicle(long id, TransportCompany transportCompany, VehicleType vehicleType) {
+    public Vehicle(long id, List<TransportCompany> transportCompanies, VehicleType vehicleType) {
         this.id = id;
-        this.transportCompany = transportCompany;
+        this.transportCompanies = transportCompanies;
         this.vehicleType = vehicleType;
     }
 
