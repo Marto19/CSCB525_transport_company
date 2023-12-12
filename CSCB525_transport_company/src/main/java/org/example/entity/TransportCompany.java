@@ -5,13 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "transport_company")
 public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idTransportCompany;
     private String name;
-    @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
+    private Set<Vehicle> vehicleSet = new HashSet<>();
 
     public TransportCompany(String name) {
         this.name = name;

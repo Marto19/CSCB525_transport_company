@@ -3,7 +3,6 @@ package org.example.entity;
 import org.example.enums.VehicleType;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "vehicle")
@@ -13,16 +12,15 @@ public class Vehicle {
     @Column(name = "id")
     private long id;
 
-    @OneToMany(mappedBy = "vehicle")
-    @Column(name = "transport_company")
-    private List<TransportCompany> transportCompanies;
-
     @Column(name = "vehicle_type")
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
-    public Vehicle(List<TransportCompany> transportCompanies, VehicleType vehicleType) {
-        this.transportCompanies = transportCompanies;
+    @ManyToOne
+    @JoinColumn(name = "transport_company_id")
+    private TransportCompany transportCompany;
+
+    public Vehicle(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
     }
 
