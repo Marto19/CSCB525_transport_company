@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,12 @@ import java.util.Set;
 public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long idTransportCompany;
+    @Column(name = "name")
     private String name;
+    @Column(name = "income")
+    private BigDecimal income;
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();
 
