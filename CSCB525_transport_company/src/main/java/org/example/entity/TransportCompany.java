@@ -46,11 +46,36 @@ public class TransportCompany {
         this.name = name;
     }
 
+    public BigDecimal getIncome() {
+        return income;
+    }
+
+    public void setIncome(BigDecimal income) {
+        this.income = income;
+    }
+
+    public Set<Employee> getEmployeeSet() {
+        return employeeSet;
+    }
+
+    public void setEmployeeSet(Set<Employee> employeeSet) {
+        this.employeeSet = employeeSet;
+    }
+
+    public Set<Vehicle> getVehicleSet() {
+        return vehicleSet;
+    }
+
+    public void setVehicleSet(Set<Vehicle> vehicleSet) {
+        this.vehicleSet = vehicleSet;
+    }
+
     @Override
     public String toString() {
         return "TransportCompany{" +
                 "idTransportCompany=" + idTransportCompany +
                 ", name='" + name + '\'' +
+                ", income=" + income +
                 '}';
     }
 }
