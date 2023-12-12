@@ -1,6 +1,6 @@
 package org.example.entity;
 
-import org.example.VehicleType;
+import org.example.enums.VehicleType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +18,7 @@ public class Vehicle {
     private List<TransportCompany> transportCompanies;
 
     @Column(name = "vehicle_type")
+    @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
     public Vehicle(List<TransportCompany> transportCompanies, VehicleType vehicleType) {
