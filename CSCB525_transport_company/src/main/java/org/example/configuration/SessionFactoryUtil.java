@@ -3,6 +3,8 @@ package org.example.configuration;
 //import org.example.entity.Company;
 //import org.example.entity.CompanyEvent;
 //import org.example.entity.Employee;
+
+import org.example.entity.Employee;
 import org.example.entity.TransportCompany;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -16,7 +18,7 @@ public class SessionFactoryUtil {
         if (sessionFactory == null) {
             Configuration configuration = new Configuration();
             configuration.addAnnotatedClass(TransportCompany.class);
-//            configuration.addAnnotatedClass(Employee.class);
+            configuration.addAnnotatedClass(Employee.class);
 //            configuration.addAnnotatedClass(CompanyEvent.class);
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()

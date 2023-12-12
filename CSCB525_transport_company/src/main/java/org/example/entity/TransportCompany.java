@@ -1,9 +1,8 @@
 package org.example.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class TransportCompany {
@@ -11,6 +10,8 @@ public class TransportCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idTransportCompany;
     private String name;
+    @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
+    private Set<Employee> employeeSet = new HashSet<>();
 
     public TransportCompany(String name) {
         this.name = name;

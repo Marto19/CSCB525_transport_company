@@ -15,7 +15,8 @@ public class Employee {
     private QualificationType qualificationType;
     @Column(name = "name")
     private String name;
-   // private TransportCompany transportCompany;
+    @ManyToOne
+    private TransportCompany transportCompany;
 
 
 }
