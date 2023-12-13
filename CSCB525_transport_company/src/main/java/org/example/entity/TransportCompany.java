@@ -2,7 +2,9 @@ package org.example.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +20,11 @@ public class TransportCompany {
     private BigDecimal income;
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();
-
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
-    private Set<Vehicle> vehicleSet = new HashSet<>();
+    private List<Vehicle> vehicleSet = new ArrayList<>();
+//    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
+//    private Set<Obligations> obligationsSet = new HashSet<>();
+
 
     public TransportCompany(String name) {
         this.name = name;
@@ -62,11 +66,11 @@ public class TransportCompany {
         this.employeeSet = employeeSet;
     }
 
-    public Set<Vehicle> getVehicleSet() {
+    public List<Vehicle> getVehicleSet() {
         return vehicleSet;
     }
 
-    public void setVehicleSet(Set<Vehicle> vehicleSet) {
+    public void setVehicleSet(List<Vehicle> vehicleSet) {
         this.vehicleSet = vehicleSet;
     }
 

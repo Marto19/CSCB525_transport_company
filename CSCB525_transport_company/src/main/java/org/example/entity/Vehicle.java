@@ -17,7 +17,6 @@ public class Vehicle {
     private VehicleType vehicleType;
 
     @ManyToOne
-    @JoinColumn(name = "transport_company_id")
     private TransportCompany transportCompany;
 
     public Vehicle(VehicleType vehicleType) {
