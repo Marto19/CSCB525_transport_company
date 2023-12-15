@@ -5,6 +5,7 @@ package org.example.configuration;
 //import org.example.entity.Employee;
 
 import org.example.entity.Employee;
+import org.example.entity.Obligations;
 import org.example.entity.TransportCompany;
 import org.example.entity.Vehicle;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,7 @@ public class SessionFactoryUtil {
             configuration.addAnnotatedClass(TransportCompany.class);
             configuration.addAnnotatedClass(Employee.class);
             configuration.addAnnotatedClass(Vehicle.class);
+            configuration.addAnnotatedClass(Obligations.class);
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

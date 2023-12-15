@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,17 +15,18 @@ public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @NotNull
     private long idTransportCompany;
     @Column(name = "name")
     private String name;
     @Column(name = "income")
     private BigDecimal income;
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
-    private Set<Employee> employeeSet = new HashSet<>();
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
+    private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //1:n - transportCompany:Vehicles
     private List<Vehicle> vehicleSet = new ArrayList<>();
-//    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
-//    private Set<Obligations> obligationsSet = new HashSet<>();
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
+    private Set<Obligations> obligationsSet = new HashSet<>();
 
 
     public TransportCompany(String name) {
