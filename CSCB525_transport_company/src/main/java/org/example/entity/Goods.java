@@ -16,9 +16,13 @@ public class Goods {
     @Column(name = "weight")
     @NotNull
     private double weight;
+    @Column(name = "goods_type")
     @Enumerated
     @NotNull
     private GoodsType goodsType;
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
 
     public Goods(@NotNull double weight, @NotNull GoodsType goodsType) {
         this.weight = weight;
@@ -61,4 +65,5 @@ public class Goods {
     }
 
     //TODO: maybe remove all the setters for the id in all classes
+    //TODO: think about the relations between goods and trip, does it have to be reversed?
 }

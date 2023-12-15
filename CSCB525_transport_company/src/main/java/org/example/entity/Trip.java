@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trip")
@@ -32,6 +34,9 @@ public class Trip {
     private Vehicle vehicle;
 
     //TODO: create goods table, because you'll need its foreign key here
+    //creating the table
+    @OneToMany(mappedBy = "trip")
+    private List<Goods> goodsList = new ArrayList<>();
 
     public Trip(){}
 
