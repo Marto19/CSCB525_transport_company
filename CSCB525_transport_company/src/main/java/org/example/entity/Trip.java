@@ -23,6 +23,15 @@ public class Trip {
     private LocalDate departureDate;
     @Column(name = "arrival_date")
     private LocalDate arrivalDate;
+    //Adding the foreign keys below
+    @ManyToOne
+    @JoinColumn(name = "transport_company_id")
+    private TransportCompany transportCompany;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
+
+    //TODO: create goods table, because you'll need its foreign key here
 
     public Trip(){}
 

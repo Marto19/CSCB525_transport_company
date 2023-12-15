@@ -24,10 +24,13 @@ public class TransportCompany {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //1:n - transportCompany:Vehicles
-    private List<Vehicle> vehicleSet = new ArrayList<>();
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)
+    private List<Vehicle> vehicleListToVehicle = new ArrayList<>();
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)  //1:n - transportCompany:Obligations
     private Set<Obligations> obligationsSet = new HashSet<>();
-
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
+    private List<Trip> tripList = new ArrayList<>();
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
+    private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
     public TransportCompany(String name) {
         this.name = name;
@@ -70,11 +73,43 @@ public class TransportCompany {
     }
 
     public List<Vehicle> getVehicleSet() {
-        return vehicleSet;
+        return vehicleListToVehicle;
     }
 
     public void setVehicleSet(List<Vehicle> vehicleSet) {
-        this.vehicleSet = vehicleSet;
+        this.vehicleListToVehicle = vehicleSet;
+    }
+
+    public List<Vehicle> getVehicleListToVehicle() {
+        return vehicleListToVehicle;
+    }
+
+    public void setVehicleListToVehicle(List<Vehicle> vehicleListToVehicle) {
+        this.vehicleListToVehicle = vehicleListToVehicle;
+    }
+
+    public Set<Obligations> getObligationsSet() {
+        return obligationsSet;
+    }
+
+    public void setObligationsSet(Set<Obligations> obligationsSet) {
+        this.obligationsSet = obligationsSet;
+    }
+
+    public List<Trip> getTripList() {
+        return tripList;
+    }
+
+    public void setTripList(List<Trip> tripList) {
+        this.tripList = tripList;
+    }
+
+    public List<Vehicle> getVehicleListToTrip() {
+        return vehicleListToTrip;
+    }
+
+    public void setVehicleListToTrip(List<Vehicle> vehicleListToTrip) {
+        this.vehicleListToTrip = vehicleListToTrip;
     }
 
     @Override
@@ -83,6 +118,11 @@ public class TransportCompany {
                 "idTransportCompany=" + idTransportCompany +
                 ", name='" + name + '\'' +
                 ", income=" + income +
+                ", employeeSet=" + employeeSet +
+                ", vehicleListToVehicle=" + vehicleListToVehicle +
+                ", obligationsSet=" + obligationsSet +
+                ", tripList=" + tripList +
+                ", vehicleListToTrip=" + vehicleListToTrip +
                 '}';
     }
 }
