@@ -1,32 +1,20 @@
-package org.example.entity;
+package org.example.dto;
 
+import org.example.entity.TransportCompany;
 import org.example.enums.QualificationType;
-import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "employee")
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
+public class EmployeeDto {
     private long id;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "qualification_type")
     private QualificationType qualificationType;
-    @Column(name = "name")
     private String name;
-    @ManyToOne                                  //n:1 - Employee:TransportCompany
     private TransportCompany transportCompany;
 
-    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany) {
+    public EmployeeDto(long id, QualificationType qualificationType, String name, TransportCompany transportCompany) {
+        this.id = id;
         this.qualificationType = qualificationType;
         this.name = name;
         this.transportCompany = transportCompany;
     }
-
-    public Employee(){}
 
     public long getId() {
         return id;
@@ -59,14 +47,5 @@ public class Employee {
     public void setTransportCompany(TransportCompany transportCompany) {
         this.transportCompany = transportCompany;
     }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", qualificationType=" + qualificationType +
-                ", name='" + name + '\'' +
-                ", transportCompany=" + transportCompany +
-                '}';
-    }
+    //TODO: finish the dto
 }
