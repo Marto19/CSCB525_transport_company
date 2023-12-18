@@ -38,13 +38,20 @@ public class Trip {
     @OneToMany(mappedBy = "trip")
     private List<Goods> goodsList = new ArrayList<>();
 
+    @OneToOne
+    private Payments payments;
+
     public Trip(){}
 
-    public Trip(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate) {
+    public Trip(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, Payments payments) {
         this.startingPoint = startingPoint;
         this.endPoint = endPoint;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
+        this.transportCompany = transportCompany;
+        this.vehicle = vehicle;
+        this.goodsList = goodsList;
+        this.payments = payments;
     }
 
     public long getId() {
@@ -87,6 +94,38 @@ public class Trip {
         this.arrivalDate = arrivalDate;
     }
 
+    public TransportCompany getTransportCompany() {
+        return transportCompany;
+    }
+
+    public void setTransportCompany(TransportCompany transportCompany) {
+        this.transportCompany = transportCompany;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public List<Goods> getGoodsList() {
+        return goodsList;
+    }
+
+    public void setGoodsList(List<Goods> goodsList) {
+        this.goodsList = goodsList;
+    }
+
+    public Payments getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Payments payments) {
+        this.payments = payments;
+    }
+
     @Override
     public String toString() {
         return "Trip{" +
@@ -95,6 +134,10 @@ public class Trip {
                 ", endPoint='" + endPoint + '\'' +
                 ", departureDate=" + departureDate +
                 ", arrivalDate=" + arrivalDate +
+                ", transportCompany=" + transportCompany +
+                ", vehicle=" + vehicle +
+                ", goodsList=" + goodsList +
+                ", payments=" + payments +
                 '}';
     }
 }
