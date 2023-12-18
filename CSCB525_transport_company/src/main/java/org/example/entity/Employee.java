@@ -19,11 +19,14 @@ public class Employee {
     private String name;
     @ManyToOne                                  //n:1 - Employee:TransportCompany
     private TransportCompany transportCompany;
+    @OneToOne                           //connection between obligations and employee - 1:1
+    private Obligations obligations;
 
-    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany) {
+    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany, Obligations obligations) {
         this.qualificationType = qualificationType;
         this.name = name;
         this.transportCompany = transportCompany;
+        this.obligations = obligations;
     }
 
     public Employee(){}
@@ -60,6 +63,14 @@ public class Employee {
         this.transportCompany = transportCompany;
     }
 
+    public Obligations getObligations() {
+        return obligations;
+    }
+
+    public void setObligations(Obligations obligations) {
+        this.obligations = obligations;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -67,6 +78,7 @@ public class Employee {
                 ", qualificationType=" + qualificationType +
                 ", name='" + name + '\'' +
                 ", transportCompany=" + transportCompany +
+                ", obligations=" + obligations +
                 '}';
     }
 }
