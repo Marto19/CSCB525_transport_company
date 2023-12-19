@@ -20,32 +20,25 @@ public class EmployeeDto {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public QualificationType getQualificationType() {
         return qualificationType;
-    }
-
-    public void setQualificationType(QualificationType qualificationType) {
-        this.qualificationType = qualificationType;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public TransportCompany getTransportCompany() {
         return transportCompany;
     }
 
-    public void setTransportCompany(TransportCompany transportCompany) {
-        this.transportCompany = transportCompany;
+    @Override
+    public String toString() {
+        return "EmployeeDto{" +
+                "id=" + id +
+                ", qualificationType=" + qualificationType +
+                ", name='" + name + '\'' +
+                ", transportCompany=" + transportCompany +
+                '}';
     }
-    //TODO: finish the dto
 }
