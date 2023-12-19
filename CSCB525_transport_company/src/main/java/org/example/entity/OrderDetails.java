@@ -22,6 +22,9 @@ public class OrderDetails {
     @OneToOne
     @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public OrderDetails(String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
         this.firstName = firstName;
