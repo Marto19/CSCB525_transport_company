@@ -1,15 +1,15 @@
-package org.example.dto;
+package org.example.DTO;
 
 import org.example.entity.TransportCompany;
 import org.example.enums.QualificationType;
 
-public class EmployeeDto {
+public class EmployeeDTO {
     private long id;
     private QualificationType qualificationType;
     private String name;
     private TransportCompany transportCompany;
 
-    public EmployeeDto(long id, QualificationType qualificationType, String name, TransportCompany transportCompany) {
+    public EmployeeDTO(long id, QualificationType qualificationType, String name, TransportCompany transportCompany) {
         this.id = id;
         this.qualificationType = qualificationType;
         this.name = name;
