@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "payments")
-public class Payments {
+@Table(name = "order_details")
+public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -21,16 +21,16 @@ public class Payments {
     private BigDecimal priceToPay;
     @OneToOne
     @JoinColumn(name = "trip_id")
-    private Trip trip;
+    private TripDetails tripDetails;
 
-    public Payments(String firstName, String lastName, BigDecimal priceToPay, Trip trip) {
+    public OrderDetails(String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.priceToPay = priceToPay;
-        this.trip = trip;
+        this.tripDetails = tripDetails;
     }
 
-    public Payments(){}
+    public OrderDetails(){}
 
     public long getId() {
         return id;
@@ -64,12 +64,12 @@ public class Payments {
         this.priceToPay = priceToPay;
     }
 
-    public Trip getTrip() {
-        return trip;
+    public TripDetails getTrip() {
+        return tripDetails;
     }
 
-    public void setTrip(Trip trip) {
-        this.trip = trip;
+    public void setTrip(TripDetails tripDetails) {
+        this.tripDetails = tripDetails;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Payments {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", priceToPay=" + priceToPay +
-                ", trip=" + trip +
+                ", trip=" + tripDetails +
                 '}';
     }
 }

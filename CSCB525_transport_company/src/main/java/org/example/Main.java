@@ -8,3 +8,5 @@ public class Main {
         SessionFactoryUtil.getSessionFactory().openSession();
     }
 }
+
+//TODO: add client table, think about it, connect it with the payments

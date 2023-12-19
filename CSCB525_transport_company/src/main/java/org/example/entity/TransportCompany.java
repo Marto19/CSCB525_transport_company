@@ -28,7 +28,7 @@ public class TransportCompany {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)  //1:n - transportCompany:Obligations
     private Set<Obligations> obligationsSet = new HashSet<>();
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
-    private List<Trip> tripList = new ArrayList<>();
+    private List<TripDetails> tripDetailsList = new ArrayList<>();
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
@@ -96,12 +96,12 @@ public class TransportCompany {
         this.obligationsSet = obligationsSet;
     }
 
-    public List<Trip> getTripList() {
-        return tripList;
+    public List<TripDetails> getTripList() {
+        return tripDetailsList;
     }
 
-    public void setTripList(List<Trip> tripList) {
-        this.tripList = tripList;
+    public void setTripList(List<TripDetails> tripDetailsList) {
+        this.tripDetailsList = tripDetailsList;
     }
 
     public List<Vehicle> getVehicleListToTrip() {
@@ -121,7 +121,7 @@ public class TransportCompany {
                 ", employeeSet=" + employeeSet +
                 ", vehicleListToVehicle=" + vehicleListToVehicle +
                 ", obligationsSet=" + obligationsSet +
-                ", tripList=" + tripList +
+                ", tripList=" + tripDetailsList +
                 ", vehicleListToTrip=" + vehicleListToTrip +
                 '}';
     }

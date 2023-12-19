@@ -22,7 +22,7 @@ public class Goods {
     private GoodsType goodsType;
     @ManyToOne
     @JoinColumn(name = "trip_id")
-    private Trip trip;
+    private TripDetails tripDetails;
 
     public Goods(@NotNull double weight, @NotNull GoodsType goodsType) {
         this.weight = weight;

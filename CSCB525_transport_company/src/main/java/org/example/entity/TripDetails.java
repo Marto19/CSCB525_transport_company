@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "trip")
-public class Trip {
+@Table(name = "trip_details")
+public class TripDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,15 +35,15 @@ public class Trip {
 
     //TODO: create goods table, because you'll need its foreign key here
     //creating the table
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "tripDetails")
     private List<Goods> goodsList = new ArrayList<>();
 
     @OneToOne
-    private Payments payments;
+    private OrderDetails orderDetails;
 
-    public Trip(){}
+    public TripDetails(){}
 
-    public Trip(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, Payments payments) {
+    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
         this.startingPoint = startingPoint;
         this.endPoint = endPoint;
         this.departureDate = departureDate;
@@ -51,7 +51,7 @@ public class Trip {
         this.transportCompany = transportCompany;
         this.vehicle = vehicle;
         this.goodsList = goodsList;
-        this.payments = payments;
+        this.orderDetails = orderDetails;
     }
 
     public long getId() {
@@ -118,12 +118,12 @@ public class Trip {
         this.goodsList = goodsList;
     }
 
-    public Payments getPayments() {
-        return payments;
+    public OrderDetails getPayments() {
+        return orderDetails;
     }
 
-    public void setPayments(Payments payments) {
-        this.payments = payments;
+    public void setPayments(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Trip {
                 ", transportCompany=" + transportCompany +
                 ", vehicle=" + vehicle +
                 ", goodsList=" + goodsList +
-                ", payments=" + payments +
+                ", payments=" + orderDetails +
                 '}';
     }
 }
