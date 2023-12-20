@@ -21,15 +21,15 @@ public class TransportCompany {
     private String name;
     @Column(name = "income")
     private BigDecimal income;
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
+    @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER) //1:n - transportCompany:Vehicles
+    @OneToMany(mappedBy = "transportCompany") //1:n - transportCompany:Vehicles
     private List<Vehicle> vehicleListToVehicle = new ArrayList<>();
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.EAGER)  //1:n - transportCompany:Obligations
+    @OneToMany(mappedBy = "transportCompany")  //1:n - transportCompany:Obligations
     private Set<Obligations> obligationsSet = new HashSet<>();
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
+    @OneToMany(mappedBy = "transportCompany")  //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<TripDetails> tripDetailsList = new ArrayList<>();
-    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
+    @OneToMany(mappedBy = "transportCompany")   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
     public TransportCompany(String name) {
