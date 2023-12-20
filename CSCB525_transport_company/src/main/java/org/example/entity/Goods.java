@@ -60,7 +60,7 @@ public class Goods {
         return "Goods{" +
                 "id=" + id +
                 ", weight=" + weight +
-                ", goodsType=" + goodsType +
+                //", goodsType=" + goodsType +
                 '}';
     }
 

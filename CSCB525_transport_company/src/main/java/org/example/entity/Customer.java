@@ -62,7 +62,7 @@ public class Customer {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", orderDetailsList=" + orderDetailsList +
+                //", orderDetailsList=" + orderDetailsList + //changing to show the properties that aren't connections
                 '}';
     }
 }

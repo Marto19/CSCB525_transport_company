@@ -26,10 +26,10 @@ public class TripDetails {
     @Column(name = "arrival_date")
     private LocalDate arrivalDate;
     //Adding the foreign keys below
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transport_company_id")
     private TransportCompany transportCompany;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
@@ -134,10 +134,10 @@ public class TripDetails {
                 ", endPoint='" + endPoint + '\'' +
                 ", departureDate=" + departureDate +
                 ", arrivalDate=" + arrivalDate +
-                ", transportCompany=" + transportCompany +
-                ", vehicle=" + vehicle +
-                ", goodsList=" + goodsList +
-                ", payments=" + orderDetails +
+//                ", transportCompany=" + transportCompany +
+//                ", vehicle=" + vehicle +
+//                ", goodsList=" + goodsList +
+//                ", payments=" + orderDetails +
                 '}';
     }
 }

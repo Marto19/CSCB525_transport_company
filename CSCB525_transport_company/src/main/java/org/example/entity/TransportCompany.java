@@ -118,11 +118,11 @@ public class TransportCompany {
                 "idTransportCompany=" + idTransportCompany +
                 ", name='" + name + '\'' +
                 ", income=" + income +
-                ", employeeSet=" + employeeSet +
-                ", vehicleListToVehicle=" + vehicleListToVehicle +
-                ", obligationsSet=" + obligationsSet +
-                ", tripList=" + tripDetailsList +
-                ", vehicleListToTrip=" + vehicleListToTrip +
+//                ", employeeSet=" + employeeSet +
+//                ", vehicleListToVehicle=" + vehicleListToVehicle +
+//                ", obligationsSet=" + obligationsSet +
+//                ", tripList=" + tripDetailsList +
+//                ", vehicleListToTrip=" + vehicleListToTrip +
                 '}';
     }
 }

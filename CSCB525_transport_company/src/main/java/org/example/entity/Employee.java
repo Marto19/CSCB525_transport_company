@@ -77,8 +77,8 @@ public class Employee {
                 "id=" + id +
                 ", qualificationType=" + qualificationType +
                 ", name='" + name + '\'' +
-                ", transportCompany=" + transportCompany +
-                ", obligations=" + obligations +
+//                ", transportCompany=" + transportCompany +
+//                ", obligations=" + obligations +
                 '}';
     }
 }

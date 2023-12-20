@@ -28,11 +28,36 @@ public class Vehicle {
 
     }
 
-    public void setId(Long id) {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public TransportCompany getTransportCompany() {
+        return transportCompany;
+    }
+
+    public void setTransportCompany(TransportCompany transportCompany) {
+        this.transportCompany = transportCompany;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", vehicleType=" + vehicleType +
+//                ", transportCompany=" + transportCompany +
+                '}';
     }
 }

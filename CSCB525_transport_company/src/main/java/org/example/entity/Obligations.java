@@ -64,8 +64,8 @@ public class Obligations {
         return "Obligations{" +
                 "id=" + id +
                 ", amount=" + amount +
-                ", transportCompany=" + transportCompany +
-                ", employee=" + employee +
+//                ", transportCompany=" + transportCompany +
+//                ", employee=" + employee +
                 '}';
     }
 }

@@ -75,14 +75,31 @@ public class OrderDetails {
         this.tripDetails = tripDetails;
     }
 
+    public TripDetails getTripDetails() {
+        return tripDetails;
+    }
+
+    public void setTripDetails(TripDetails tripDetails) {
+        this.tripDetails = tripDetails;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
-        return "Payments{" +
+        return "OrderDetails{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", priceToPay=" + priceToPay +
-                ", trip=" + tripDetails +
+//                ", tripDetails=" + tripDetails +
+//                ", customer=" + customer +
                 '}';
     }
 }
