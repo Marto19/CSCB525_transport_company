@@ -19,10 +19,10 @@ public class OrderDetails {
     private String lastName;
     @Column(name = "price_to_pay")
     private BigDecimal priceToPay;
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

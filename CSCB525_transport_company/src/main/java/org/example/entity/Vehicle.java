@@ -16,7 +16,7 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "transport_company_id")  //n:1 - Vehicles:TransportCompany in TC
     private TransportCompany transportCompany;
 

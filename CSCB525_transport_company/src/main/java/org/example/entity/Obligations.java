@@ -14,7 +14,7 @@ public class Obligations {
     private long id;
     @Column(name = "amount")
     private BigDecimal amount;
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "transport_company_id")
     private TransportCompany transportCompany;
     @OneToOne

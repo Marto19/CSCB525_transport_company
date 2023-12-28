@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ClientDAO {
+public class CustomerDAO {
     /**
      * Creates a new client record in the database.
      *
@@ -72,4 +72,6 @@ public class ClientDAO {
             transaction.commit();
         }
     }
+
+
 }

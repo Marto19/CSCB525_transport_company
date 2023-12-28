@@ -17,9 +17,9 @@ public class Employee {
     private QualificationType qualificationType;
     @Column(name = "name")
     private String name;
-    @ManyToOne                                  //n:1 - Employee:TransportCompany
+    @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
     private TransportCompany transportCompany;
-    @OneToOne                           //connection between obligations and employee - 1:1
+    @OneToOne(fetch =  FetchType.LAZY)                           //connection between obligations and employee - 1:1
     private Obligations obligations;
 
     public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany, Obligations obligations) {

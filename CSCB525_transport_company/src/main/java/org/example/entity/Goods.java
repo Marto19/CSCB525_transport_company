@@ -20,7 +20,7 @@ public class Goods {
     @Enumerated
     @NotNull
     private GoodsType goodsType;
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
 

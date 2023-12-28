@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "transport_company")
 public class TransportCompany {
@@ -19,6 +20,7 @@ public class TransportCompany {
     private long idTransportCompany;
     @Column(name = "name")
     private String name;
+    @Column(name = "income")
     @Column(name = "income")
     private BigDecimal income;
     @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
