@@ -21,7 +21,6 @@ public class TransportCompany {
     @Column(name = "name")
     private String name;
     @Column(name = "income")
-    @Column(name = "income")
     private BigDecimal income;
     @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
