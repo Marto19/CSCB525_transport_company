@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DTO.EmployeeDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
 import org.example.entity.TransportCompany;
@@ -77,6 +78,12 @@ public class TransportCompanyDAO {
         }
     }
 
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Set<Employee> getCompanyEmployees(long id) {
         TransportCompany company;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -91,6 +98,22 @@ public class TransportCompanyDAO {
             transaction.commit();
         }
         return company.getEmployeeSet();
+    }
+
+    public static List<EmployeeDTO> getCompanyEmployeesDTO(long id) {
+        List<EmployeeDTO> employees;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employees = session.createQuery(
+                            "select new org.example.DTO.EmployeeDTO(e.id, e.qualificationType, e.name, e.transportCompany) from Employee e" +
+                                    " join e.transportCompany c " +
+                                    "where c.id = :id",
+                            EmployeeDTO.class)
+                    .setParameter("id", id)
+                    .getResultList();
+            transaction.commit();
+        }
+        return employees;
     }
 
 }
