@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.Entity;
+import javax.persistence.Entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
