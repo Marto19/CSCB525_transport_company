@@ -1,18 +1,25 @@
 package org.example;
 
-import org.example.DAO.TransportCompanyDAO;
+import org.example.DAO.EmployeeDAO;
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Employee;
 import org.example.entity.TransportCompany;
+import org.example.enums.QualificationType;
+
+import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         SessionFactoryUtil.getSessionFactory().openSession();
 
-        TransportCompany transportCompany = new TransportCompany("SAP");
-//        TransportCompanyDAO.createCompany(transportCompany);
 
-        TransportCompanyDAO.deleteCompany(transportCompany);
+        TransportCompany transportCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
+//        TransportCompanyDAO.saveOrUpdateCompany(transportCompany);
+        Employee employee = new Employee(QualificationType.CAR, "Tino Bombino", transportCompany);
+        EmployeeDAO.createEmployee(employee);
+
+//        EmployeeDAO.addEmployeeToCompany(employee, transportCompany);
     }
 }
 

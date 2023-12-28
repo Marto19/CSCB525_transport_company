@@ -40,8 +40,9 @@ public class TransportCompany {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
-    public TransportCompany(String name) {
+    public TransportCompany(String name, BigDecimal income) {
         this.name = name;
+        this.income = income;
     }
 
     public TransportCompany() {

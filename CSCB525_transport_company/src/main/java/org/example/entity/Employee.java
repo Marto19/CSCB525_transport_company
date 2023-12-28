@@ -17,14 +17,16 @@ public class Employee {
     private String name;
     @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
     private TransportCompany transportCompany;
+    @Transient
+    private long transportCompanyId;
     @OneToOne(fetch =  FetchType.LAZY)                           //connection between obligations and employee - 1:1
     private Obligations obligations;
 
-    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany, Obligations obligations) {
+    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany) {
         this.qualificationType = qualificationType;
         this.name = name;
-        this.transportCompany = transportCompany;
-        this.obligations = obligations;
+        this.transportCompanyId = transportCompany.getIdTransportCompany();
+        //this.obligations = obligations;
     }
 
     public Employee(){}

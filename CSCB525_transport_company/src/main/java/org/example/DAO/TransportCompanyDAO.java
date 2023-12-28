@@ -78,6 +78,15 @@ public class TransportCompanyDAO {
         }
     }
 
+    public static void saveOrUpdateCompany(TransportCompany transportCompany){
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            // it used to be saveOrUpdate(), but it's deprecated
+            session.merge(transportCompany);
+            transaction.commit();
+        }
+    }
+
 
     /**
      *
