@@ -1,6 +1,10 @@
 package org.example.entity;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,21 +20,24 @@ public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @NotNull
     private long idTransportCompany;
+    @NotBlank(message = "Company name cannot be blank!")
+    @Size(max = 20, message = "Company name has to be with up to 20 characters!")
+    @Pattern(regexp = "^([A-Z]).*", message = "Company name has to start with capital letter!")
     @Column(name = "name")
     private String name;
     @Column(name = "income")
+    @PositiveOrZero
     private BigDecimal income;
-    @OneToMany(mappedBy = "transportCompany") //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
-    @OneToMany(mappedBy = "transportCompany") //1:n - transportCompany:Vehicles
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //1:n - transportCompany:Vehicles
     private List<Vehicle> vehicleListToVehicle = new ArrayList<>();
-    @OneToMany(mappedBy = "transportCompany")  //1:n - transportCompany:Obligations
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Obligations
     private Set<Obligations> obligationsSet = new HashSet<>();
-    @OneToMany(mappedBy = "transportCompany")  //1:n - transportCompany:Trip - attribute - vehicle to trip
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<TripDetails> tripDetailsList = new ArrayList<>();
-    @OneToMany(mappedBy = "transportCompany")   //1:n - transportCompany:Trip - attribute - vehicle to trip
+    @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
     public TransportCompany(String name) {

@@ -1,11 +1,13 @@
 package org.example.DAO;
 
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Employee;
 import org.example.entity.TransportCompany;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Set;
 
 public class TransportCompanyDAO {
 
@@ -73,6 +75,22 @@ public class TransportCompanyDAO {
             session.delete(transportCompany);
             transaction.commit();
         }
+    }
+
+    public static Set<Employee> getCompanyEmployees(long id) {
+        TransportCompany company;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            company = session.createQuery(
+                            "select c from TransportCompany c" +
+                                    " join fetch c.employeeSet" +
+                                    " where c.id = :id",
+                            TransportCompany.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            transaction.commit();
+        }
+        return company.getEmployeeSet();
     }
 
 }
