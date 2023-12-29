@@ -8,10 +8,7 @@ import javax.persistence.Entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -133,5 +130,18 @@ public class TransportCompany {
 //                ", tripList=" + tripDetailsList +
 //                ", vehicleListToTrip=" + vehicleListToTrip +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransportCompany that = (TransportCompany) o;
+        return idTransportCompany == that.idTransportCompany && Objects.equals(name, that.name) && Objects.equals(income, that.income) && Objects.equals(employeeSet, that.employeeSet) && Objects.equals(vehicleListToVehicle, that.vehicleListToVehicle) && Objects.equals(obligationsSet, that.obligationsSet) && Objects.equals(tripDetailsList, that.tripDetailsList) && Objects.equals(vehicleListToTrip, that.vehicleListToTrip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idTransportCompany, name, income, employeeSet, vehicleListToVehicle, obligationsSet, tripDetailsList, vehicleListToTrip);
     }
 }

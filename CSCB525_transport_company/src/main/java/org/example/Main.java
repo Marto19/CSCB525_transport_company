@@ -19,6 +19,12 @@ public class Main {
         Employee employee = new Employee(QualificationType.CAR, "Tino Bombino", transportCompany);
         EmployeeDAO.createEmployee(employee);
 
+        Employee employee2 = new Employee(QualificationType.CAR, "Ivan Gotinov", transportCompany);
+//        EmployeeDAO.createEmployee(employee);
+        EmployeeDAO.addEmployeeToCompanyId(employee2, 5);
+
+        EmployeeDAO.addEmployeeToCompanyId(employee, 5);
+
 //        EmployeeDAO.addEmployeeToCompany(employee, transportCompany);
     }
 }

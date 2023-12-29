@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Positive;
 import org.example.enums.QualificationType;
 
 import javax.persistence.*;
@@ -20,7 +22,9 @@ public class Employee {
     @Transient
     private long transportCompanyId;
     @OneToOne(fetch =  FetchType.LAZY)                           //connection between obligations and employee - 1:1
-    private Obligations obligations;
+    @Positive
+    @Digits(integer = 4, fraction = 2, message = "Salaries should start from 1000.00 and have 2 digits after the decimal point!")
+    private Obligations obligations;    //this is their salary
 
     public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany) {
         this.qualificationType = qualificationType;

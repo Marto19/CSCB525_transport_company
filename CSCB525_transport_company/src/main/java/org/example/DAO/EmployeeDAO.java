@@ -6,6 +6,7 @@
     import org.hibernate.HibernateException;
     import org.hibernate.Session;
     import org.hibernate.Transaction;
+    import org.hibernate.query.Query;
 
     import java.util.List;
 
@@ -28,12 +29,11 @@
 
                 TransportCompany company = employee.getTransportCompany();
 
-                // Check if the associated TransportCompany is already managed or exists in the database
                 if (company != null) {
                     TransportCompany existingCompany = session.get(TransportCompany.class, company.getIdTransportCompany());
 
                     if (existingCompany == null) {
-                        // If the company doesn't exist, save it
+                        // If the company doesn't exist, save it before saving the employee
                         session.save(company);
                     } else {
                         // Use the existing company from the database
@@ -43,11 +43,20 @@
 
                 session.save(employee);
                 transaction.commit();
+
             } catch (Exception e) {
                 System.err.println("Error creating employee: " + e.getMessage());
             }
         }
 
+//        public static void createEmployee(Employee employee) {
+//            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+//                Transaction transaction = session.beginTransaction();
+//                // save() it's deprecated
+//                session.persist(employee);
+//                transaction.commit();
+//            }
+//        }
 
         /**
          * Retrieves a list of all employees from the database.
@@ -123,6 +132,44 @@
 //            } catch (Exception e) {
 //                System.err.println("Error adding employee to the Employee entity table: " + e.getMessage());
 //            }
+//        }
+
+        public static void addEmployeeToCompanyId(Employee employee, long id) {
+            if (employee == null) {
+                throw new IllegalArgumentException("The employee cannot be null");
+            }
+
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+
+                TransportCompany company = session.get(TransportCompany.class, id);
+
+                if (company != null) {
+                    Query query = session.createQuery("SELECT COUNT(*) FROM Employee WHERE id = :employeeId AND transportCompany.id = :companyId");
+                    query.setParameter("employeeId", employee.getId());
+                    query.setParameter("companyId", id);
+
+                    long count = (long) query.uniqueResult();
+                    if (count == 0) {
+                        // Employee does not exist for this company, proceed to add
+                        employee.setTransportCompany(company);
+                        session.saveOrUpdate(employee);
+                        transaction.commit();
+                        System.out.println("Employee updated with new company ID.");
+                    } else {
+                        System.out.println("Employee with ID " + employee.getId() + " already exists for company with ID " + id);
+                    }
+                } else {
+                    System.out.println("TransportCompany with ID " + id + " does not exist.");
+                }
+            } catch (Exception e) {
+                System.err.println("Error adding employee to TransportCompany: " + e.getMessage());
+            }
+        }
+        //TODO: redo the method above
+
+//        public static void addObligations(BigDecimal salary){
+//
 //        }
 
     }
