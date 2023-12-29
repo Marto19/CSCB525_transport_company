@@ -17,13 +17,13 @@ public class Main {
         TransportCompany transportCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
 //        TransportCompanyDAO.saveOrUpdateCompany(transportCompany);
         Employee employee = new Employee(QualificationType.CAR, "Tino Bombino", transportCompany);
-        EmployeeDAO.createEmployee(employee);
+        //EmployeeDAO.createEmployee(employee);
 
-        Employee employee2 = new Employee(QualificationType.CAR, "Ivan Gotinov", transportCompany);
-//        EmployeeDAO.createEmployee(employee);
-        EmployeeDAO.addEmployeeToCompanyId(employee2, 5);
+        Employee employee2 = new Employee(QualificationType.TRUCK, "Ivan Gotinov", transportCompany);
+        EmployeeDAO.createEmployee(employee2);
+        EmployeeDAO.addEmployeeToCompanyId(employee2, 3);
 
-        EmployeeDAO.addEmployeeToCompanyId(employee, 5);
+        //EmployeeDAO.addEmployeeToCompanyId(employee, 5);
 
 //        EmployeeDAO.addEmployeeToCompany(employee, transportCompany);
     }
