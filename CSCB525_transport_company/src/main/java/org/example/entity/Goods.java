@@ -10,7 +10,6 @@ public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @NotNull
     private long id;
     @Column(name = "weight")
     @NotNull

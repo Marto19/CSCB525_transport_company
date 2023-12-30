@@ -9,40 +9,43 @@ import javax.persistence.*;
 public class GoodsType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_of_position_type")
-    private long idOfPositionType;
+    @Column(name = "id_of_goods_type")
+    private long idOfGoodsType;
 
-    @Column(name = "position_type")
-    private String positionType;
+    @Column(name = "goods_type")
+    private String goodsType;
+
+    @OneToOne(mappedBy = "goodsType", fetch = FetchType.LAZY)
+    private Goods goods;        //bidirectional connection goodsType-Goods
 
 
     public GoodsType(long idOfPositionType, String positionType) {
-        this.idOfPositionType = idOfPositionType;
-        this.positionType = positionType;
+        this.idOfGoodsType = idOfPositionType;
+        this.goodsType = positionType;
     }
     public GoodsType(){}
 
     public long getIdOfPositionType() {
-        return idOfPositionType;
+        return idOfGoodsType;
     }
 
     public void setIdOfPositionType(long idOfPositionType) {
-        this.idOfPositionType = idOfPositionType;
+        this.idOfGoodsType = idOfPositionType;
     }
 
     public String getPositionType() {
-        return positionType;
+        return goodsType;
     }
 
     public void setPositionType(String positionType) {
-        this.positionType = positionType;
+        this.goodsType = positionType;
     }
 
     @Override
     public String toString() {
         return "GoodsType{" +
-                "idOfPositionType=" + idOfPositionType +
-                ", positionType='" + positionType + '\'' +
+                "idOfPositionType=" + idOfGoodsType +
+                ", positionType='" + goodsType + '\'' +
                 '}';
     }
 }
