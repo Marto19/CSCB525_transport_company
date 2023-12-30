@@ -1,9 +1,11 @@
 package org.example.DAO;
 
 import org.example.DTO.EmployeeDTO;
+import org.example.DTO.TransportCompanyDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
 import org.example.entity.TransportCompany;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -45,6 +47,18 @@ public class TransportCompanyDAO {
         }
         return transportCompanyList;
     }
+//TODO
+    public static List<TransportCompanyDTO> getCompaniesDTO() {
+        List<TransportCompanyDTO> companies;
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            companies = session
+                    .createQuery("select new org.example.DTO.TransportCompanyDTO(c.id, c.name) " +
+                            "from TransportCompany c", TransportCompanyDTO.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return companies;
 
     /**
      * function to update and save state of the company - UPDATE
@@ -77,6 +91,34 @@ public class TransportCompanyDAO {
             transaction.commit();
         }
     }
+
+    /**
+     * Deletes a transport company by its ID.
+     *
+     * @param companyId The ID of the company to be deleted.
+     * @implNote This method fetches the company by its provided ID and removes it from the database.
+     * @implSpec If no company is found with the given ID, no action is taken.
+     * @throws IllegalArgumentException If the provided ID is null or negative.
+     * @throws HibernateException       If an issue occurs during Hibernate interaction.
+     */
+    public static void deleteCompanyById(long companyId) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            TransportCompany companyToDelete = session.get(TransportCompany.class, companyId);
+            if (companyToDelete != null) {
+                session.delete(companyToDelete);
+                transaction.commit();
+                System.out.println("Company with ID " + companyId + " deleted successfully.");
+            } else {
+                System.out.println("Company with ID " + companyId + " does not exist.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting company: " + e.getMessage());
+        }
+    }
+
+
 
     public static void saveOrUpdateCompany(TransportCompany transportCompany){
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {

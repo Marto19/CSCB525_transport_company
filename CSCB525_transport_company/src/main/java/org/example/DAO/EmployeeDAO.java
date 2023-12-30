@@ -23,28 +23,11 @@
             if(employee == null){
                 throw new IllegalArgumentException("The employee cannot be null");
             }
-
-            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 Transaction transaction = session.beginTransaction();
-
-                TransportCompany company = employee.getTransportCompany();
-
-                if (company != null) {
-                    TransportCompany existingCompany = session.get(TransportCompany.class, company.getIdTransportCompany());
-
-                    if (existingCompany == null) {
-                        // If the company doesn't exist, save it before saving the employee
-                        session.save(company);
-                    } else {
-                        // Use the existing company from the database
-                        employee.setTransportCompany(existingCompany);
-                    }
-                }
-
                 session.save(employee);
                 transaction.commit();
-
-            } catch (Exception e) {
+            }catch (Exception e) {
                 System.err.println("Error creating employee: " + e.getMessage());
             }
         }
@@ -109,63 +92,6 @@
                 transaction.commit();
             }
         }
-
-//        public static void addEmployeeToCompany(Employee employee, TransportCompany company) {
-//            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-//                Transaction transaction = session.beginTransaction();
-//
-//                // Check if the employee already exists in the Employee entity table
-//                Employee existingEmployee = session.createQuery("FROM Employee WHERE id = :id", Employee.class)
-//                        .setParameter("employeeId", employee.getId())
-//                        .uniqueResult();
-//
-//                if (existingEmployee == null) {
-//                    // Associate the employee with the company and save the employee
-//                    employee.setTransportCompany(company); // Set the transport company for the employee
-//                    session.save(employee);
-//
-//                    transaction.commit();
-//                    System.out.println("Employee added to the Employee entity table with the specified company.");
-//                } else {
-//                    System.out.println("Employee already exists in the Employee entity table.");
-//                }
-//            } catch (Exception e) {
-//                System.err.println("Error adding employee to the Employee entity table: " + e.getMessage());
-//            }
-//        }
-
-//        public static void addEmployeeToCompanyId(Employee employee, long id) {
-//            if (employee == null) {
-//                throw new IllegalArgumentException("The employee cannot be null");
-//            }
-//
-//            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-//                Transaction transaction = session.beginTransaction();
-//
-//                TransportCompany company = session.get(TransportCompany.class, id);
-//
-//                if (company != null) {
-//                    Query query = session.createQuery("SELECT COUNT(*) FROM Employee WHERE id = :employeeId AND transportCompany.id = :companyId");
-//                    query.setParameter("employeeId", employee.getId());
-//                    query.setParameter("companyId", id);
-//
-//                    long count = (long) query.uniqueResult();
-//                    if (count == 0) {
-//                        // Employee does not exist for this company, proceed to add
-//                        employee.setTransportCompany(company);
-//                        session.saveOrUpdate(employee);
-//                        transaction.commit();
-//                        System.out.println("Employee updated with new company ID.");
-//                    } else {
-//                        System.out.println("Employee with ID " + employee.getId() + " already exists for company with ID " + id);
-//                    }
-//                } else {
-//                    System.out.println("TransportCompany with ID " + id + " does not exist.");
-//                }
-//            } catch (Exception e) {
-//                System.err.println("Error adding employee to TransportCompany: " + e.getMessage());
-//            }
-//        }
 
         /**
          * Adds an employee to a specific company based on their IDs.
@@ -250,5 +176,28 @@
 //        public static void addObligations(BigDecimal salary){
 //
 //        }
+
+        /**
+         * Retrieves a driver employee from the system by its ID.
+         *
+         * @param id The ID of the driver employee to be retrieved.
+         * @return The driver employee with the specified ID, or null if not found.
+         * @throws org.hibernate.HibernateException If there is an issue with the Hibernate operations.
+         *                           Check the nested exceptions for specific details.
+         *  @throws IllegalArgumentException If the provided ID is 0 or negative.
+         * @since 1.0
+         */
+        public static Employee getDriverById(long id) {
+            if ( id <= 0) {
+                throw new IllegalArgumentException("Driver employee ID cannot be 0 or negative.");
+            }
+                Employee driverEmployee;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                driverEmployee = session.get(Employee.class, id);
+                transaction.commit();
+            }
+            return driverEmployee;
+        }
 
     }
