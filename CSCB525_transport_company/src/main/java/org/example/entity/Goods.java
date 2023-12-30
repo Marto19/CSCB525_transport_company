@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import org.example.enums.GoodsType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -16,10 +15,13 @@ public class Goods {
     @Column(name = "weight")
     @NotNull
     private double weight;
-    @Column(name = "goods_type")
-    @Enumerated
-    @NotNull
+
+
+    @OneToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "goods_type_id") // Column referencing GoodsType
     private GoodsType goodsType;
+
+
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
@@ -47,13 +49,13 @@ public class Goods {
         this.weight = weight;
     }
 
-    public GoodsType getGoodsType() {
-        return goodsType;
-    }
-
-    public void setGoodsType(GoodsType goodsType) {
-        this.goodsType = goodsType;
-    }
+//    public GoodsType getGoodsType() {
+//        return goodsType;
+//    }
+//
+//    public void setGoodsType(GoodsType goodsType) {
+//        this.goodsType = goodsType;
+//    }
 
     @Override
     public String toString() {

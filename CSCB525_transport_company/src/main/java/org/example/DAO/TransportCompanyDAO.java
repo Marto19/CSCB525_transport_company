@@ -47,7 +47,7 @@ public class TransportCompanyDAO {
         }
         return transportCompanyList;
     }
-//TODO
+
     public static List<TransportCompanyDTO> getCompaniesDTO() {
         List<TransportCompanyDTO> companies;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {

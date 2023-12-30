@@ -35,7 +35,13 @@ public class Main {
         //EmployeeDAO.addEmployeeToCompanyId(employee, 5);
 
 //        EmployeeDAO.addEmployeeToCompany(employee, transportCompany);
+
+
     }
 }
 
-//TODO: add client table, think about it, connect it with the payments
+//TODO: add client table, think about it, connect it with the payments - done
+//TODO: watch out for those DTO's properties. You will have to redo them with the properties you need
+//TODO: change the enums by making them entities and connect them -done for GoodsType, but not connected
+// i think to be able to connect them, first u would have to create a DAO with thich to create a position
+// after that, create position in main and then you would be able to connect them?
