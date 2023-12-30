@@ -1,28 +1,28 @@
 package org.example.DTO;
 
-import java.math.BigDecimal;
-
 public class TransportCompanyDTO {
     private long idTransporCompany;
     private String name;
-    private BigDecimal income;
 
-    public TransportCompanyDTO(long idTransporCompany, String name, BigDecimal income) {
+    public TransportCompanyDTO(long idTransporCompany, String name) {
         this.idTransporCompany = idTransporCompany;
         this.name = name;
-        this.income = income;
     }
 
-    public long getIdTransportCompany() {
+    public long getIdTransporCompany() {
         return idTransporCompany;
+    }
+
+    public void setIdTransporCompany(long idTransporCompany) {
+        this.idTransporCompany = idTransporCompany;
     }
 
     public String getName() {
         return name;
     }
 
-    public BigDecimal getIncome() {
-        return income;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -30,7 +30,6 @@ public class TransportCompanyDTO {
         return "TransportCompanyDTO{" +
                 "idTransporCompany=" + idTransporCompany +
                 ", name='" + name + '\'' +
-                ", income=" + income +
                 '}';
     }
 }

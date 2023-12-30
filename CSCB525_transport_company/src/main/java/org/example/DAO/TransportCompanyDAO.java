@@ -50,7 +50,7 @@ public class TransportCompanyDAO {
 //TODO
     public static List<TransportCompanyDTO> getCompaniesDTO() {
         List<TransportCompanyDTO> companies;
-        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             companies = session
                     .createQuery("select new org.example.DTO.TransportCompanyDTO(c.id, c.name) " +
@@ -59,7 +59,7 @@ public class TransportCompanyDAO {
             transaction.commit();
         }
         return companies;
-
+    }
     /**
      * function to update and save state of the company - UPDATE
      * @param transportCompany
