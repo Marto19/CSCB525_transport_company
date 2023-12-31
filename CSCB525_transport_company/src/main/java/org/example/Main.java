@@ -43,3 +43,5 @@ public class Main {
 //TODO: add client table, think about it, connect it with the payments - done
 //TODO: watch out for those DTO's properties. You will have to redo them with the properties you need
 //TODO: change the enums by making them entities and connect them - done for GoodsType
+
+//HAPPY NEW YEARS UPDATE
