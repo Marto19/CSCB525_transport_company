@@ -20,6 +20,11 @@ public class Vehicle {
     @JoinColumn(name = "transport_company_id")  //n:1 - Vehicles:TransportCompany in TC
     private TransportCompany transportCompany;
 
+//    @OneToOne(fetch =  FetchType.LAZY)
+//    @JoinColumn(name = "vehicle_type_id") // Column referencing GoodsType
+//    private org.example.entity.VehicleType vehicleType1;
+//TODO: make the connection one to many
+
     public Vehicle(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
     }
