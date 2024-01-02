@@ -20,10 +20,8 @@ public class Obligations {
     @OneToOne
     private Employee employee;
 
-    public Obligations(BigDecimal amount, TransportCompany transportCompany, Employee employee) {
+    public Obligations(BigDecimal amount) {
         this.amount = amount;
-        this.transportCompany = transportCompany;
-        this.employee = employee;
     }
     public Obligations(){}
 

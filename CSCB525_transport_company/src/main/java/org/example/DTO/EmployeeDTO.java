@@ -1,7 +1,7 @@
 package org.example.DTO;
 
+import org.example.entity.QualificationType;
 import org.example.entity.TransportCompany;
-import org.example.enums.QualificationType;
 
 public class EmployeeDTO {
     private long id;

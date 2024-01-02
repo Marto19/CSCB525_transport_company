@@ -1,10 +1,13 @@
 package org.example.entity;
 
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import org.example.enums.QualificationType;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -12,9 +15,6 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "qualification_type")
-    private QualificationType qualificationType;
     @Column(name = "name")
     private String name;
     @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
@@ -26,14 +26,25 @@ public class Employee {
     @Digits(integer = 4, fraction = 2, message = "Salaries should start from 1000.00 and have 2 digits after the decimal point!")
     private Obligations obligations;    //this is their salary
 
-    public Employee(QualificationType qualificationType, String name, TransportCompany transportCompany) {
-        this.qualificationType = qualificationType;
+    @ManyToMany
+    private Set<org.example.entity.QualificationType> qualificationTypeSet = new HashSet<>(); //employee will create employee_qualification_type table
+
+    public Employee(@NotNull String name, @Nullable Set<QualificationType> qualificationTypeSet, @Nullable Obligations obligations, long transportCompanyId) {
         this.name = name;
-        this.transportCompanyId = transportCompany.getIdTransportCompany();
-        //this.obligations = obligations;
+        this.qualificationTypeSet = qualificationTypeSet;
+        this.obligations = obligations;
+        this.transportCompanyId = transportCompanyId;
+//        this.transportCompany = transportCompany;
     }
 
-    public Employee(){}
+    public Employee(@NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee
+        this.name = name;
+        this.qualificationTypeSet = qualificationTypeSet;
+    }
+
+    public Employee() {
+
+    }
 
     public long getId() {
         return id;
@@ -41,14 +52,6 @@ public class Employee {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public QualificationType getQualificationType() {
-        return qualificationType;
-    }
-
-    public void setQualificationType(QualificationType qualificationType) {
-        this.qualificationType = qualificationType;
     }
 
     public String getName() {
@@ -67,6 +70,14 @@ public class Employee {
         this.transportCompany = transportCompany;
     }
 
+    public long getTransportCompanyId() {
+        return transportCompanyId;
+    }
+
+    public void setTransportCompanyId(long transportCompanyId) {
+        this.transportCompanyId = transportCompanyId;
+    }
+
     public Obligations getObligations() {
         return obligations;
     }
@@ -75,14 +86,19 @@ public class Employee {
         this.obligations = obligations;
     }
 
+    public Set<QualificationType> getQualificationTypeSet() {
+        return qualificationTypeSet;
+    }
+
+    public void setQualificationTypeSet(Set<QualificationType> qualificationTypeSet) {
+        this.qualificationTypeSet = qualificationTypeSet;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", qualificationType=" + qualificationType +
                 ", name='" + name + '\'' +
-//                ", transportCompany=" + transportCompany +
-//                ", obligations=" + obligations +
                 '}';
     }
 }

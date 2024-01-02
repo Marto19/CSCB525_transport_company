@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "qualification_type")
@@ -13,8 +15,10 @@ public class QualificationType {
     @Column(name = "qualification_type_name")
     private String name;
 
-    public QualificationType(long id, String name) {
-        this.id = id;
+    @ManyToMany(mappedBy = "qualificationTypeSet")
+    private Set<Employee> employeeSet = new HashSet<>();
+
+    public QualificationType( String name) {
         this.name = name;
     }
 
