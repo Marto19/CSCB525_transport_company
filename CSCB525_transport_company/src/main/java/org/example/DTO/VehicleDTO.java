@@ -1,6 +1,6 @@
 package org.example.DTO;
 
-import org.example.enums.VehicleType;
+import org.example.entity.VehicleType;
 
 public class VehicleDTO {
     private long id;

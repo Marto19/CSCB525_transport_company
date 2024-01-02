@@ -1,7 +1,5 @@
 package org.example.entity;
 
-import org.example.enums.VehicleType;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,26 +10,22 @@ public class Vehicle {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "vehicle_type")
-    @Enumerated(EnumType.STRING)
-    private VehicleType vehicleType;
-
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "transport_company_id")  //n:1 - Vehicles:TransportCompany in TC
     private TransportCompany transportCompany;
 
-//    @OneToOne(fetch =  FetchType.LAZY)
-//    @JoinColumn(name = "vehicle_type_id") // Column referencing GoodsType
-//    private org.example.entity.VehicleType vehicleType1;
-//TODO: make the connection one to many
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "vehicle_type_id") // Column referencing GoodsType
+    private VehicleType vehicleType1;
+//TODO: make the connection one to many - done
 
-    public Vehicle(VehicleType vehicleType) {
-        this.vehicleType = vehicleType;
+
+    public Vehicle(TransportCompany transportCompany, VehicleType vehicleType1) {
+        this.transportCompany = transportCompany;
+        this.vehicleType1 = vehicleType1;
     }
 
-    public Vehicle() {
-
-    }
+    public Vehicle(){}
 
     public long getId() {
         return id;
@@ -39,14 +33,6 @@ public class Vehicle {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public VehicleType getVehicleType() {
-        return vehicleType;
-    }
-
-    public void setVehicleType(VehicleType vehicleType) {
-        this.vehicleType = vehicleType;
     }
 
     public TransportCompany getTransportCompany() {
@@ -57,12 +43,20 @@ public class Vehicle {
         this.transportCompany = transportCompany;
     }
 
+    public VehicleType getVehicleType1() {
+        return vehicleType1;
+    }
+
+    public void setVehicleType1(VehicleType vehicleType1) {
+        this.vehicleType1 = vehicleType1;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
                 "id=" + id +
-                ", vehicleType=" + vehicleType +
-//                ", transportCompany=" + transportCompany +
+                ", transportCompany=" + transportCompany +
+                ", vehicleType1=" + vehicleType1 +
                 '}';
     }
 }

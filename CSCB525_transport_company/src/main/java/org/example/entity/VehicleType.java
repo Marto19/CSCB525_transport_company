@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicle_type")
@@ -13,14 +15,16 @@ public class VehicleType {
     @Column(name = "vehicle_type")
     private String vehicleType;
 
-//    @OneToOne(mappedBy = "vehicleType1", fetch = FetchType.LAZY)
-//    private Vehicle vehicle;
-//TODO: make the connection one to many
+    @OneToMany(mappedBy = "vehicleType1", fetch = FetchType.LAZY)
+    private List<Vehicle> vehicle = new ArrayList<>();
+//TODO: make the connection one to many - done
 
     public VehicleType(long idOfVehicleType, String vehicleType) {
         this.idOfVehicleType = idOfVehicleType;
         this.vehicleType = vehicleType;
     }
+
+    public VehicleType(){}
 
     public long getIdOfVehicleType() {
         return idOfVehicleType;
