@@ -18,10 +18,12 @@ public class Employee {
     private long id;
     @Column(name = "name")
     private String name;
+
     @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
+    @JoinColumn(name = "transport_company_id") // Define the name of the foreign key column
     private TransportCompany transportCompany;
-    @Column(name = "id_transport_company")
-    private long transportCompanyId;
+//    @Column(name = "id_transport_company")
+//    private long transportCompanyId;
 //    @OneToOne(fetch =  FetchType.LAZY)                           //connection between obligations and employee - 1:1
     @Positive
     @Digits(integer = 4, fraction = 2, message = "Salaries should start from 1000.00 and have 2 digits after the decimal point!")
@@ -36,7 +38,7 @@ public class Employee {
 //        this.qualificationTypeSet = qualificationTypeSet;
         this.salary = salary;
         this.transportCompany = transportCompany;
-        this.transportCompanyId = transportCompany.getIdTransportCompany();
+//        this.transportCompanyId = transportCompany.getIdTransportCompany();
     }
 
     public Employee(@NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee

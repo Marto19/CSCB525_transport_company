@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.DAO.EmployeeDAO;
-import org.example.DAO.TransportCompanyDAO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
 import org.example.entity.QualificationType;
@@ -19,9 +18,9 @@ public class Main {
     ////////////////////////////////////// COMPANY MAKING ////////////////////////////////////////////////
 
         TransportCompany transportCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
-        TransportCompany transportCompany2 = new TransportCompany("Stark Industries", BigDecimal.valueOf(10000));
-        TransportCompanyDAO.saveOrUpdateCompany(transportCompany2);
-        TransportCompanyDAO.deleteCompanyById(4);
+//        TransportCompany transportCompany2 = new TransportCompany("Stark Industries", BigDecimal.valueOf(10000));
+//        TransportCompanyDAO.saveOrUpdateCompany(transportCompany2);
+//        TransportCompanyDAO.deleteCompanyById(4);
 
         ////////////////////////////////// CREATE OBLIGATIONS ////////////////////////////////////////////
 
