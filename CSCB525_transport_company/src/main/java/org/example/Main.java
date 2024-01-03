@@ -4,8 +4,8 @@ import org.example.DAO.EmployeeDAO;
 import org.example.DAO.TransportCompanyDAO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
-import org.example.entity.Obligations;
 import org.example.entity.QualificationType;
+import org.example.entity.Salary;
 import org.example.entity.TransportCompany;
 
 import java.math.BigDecimal;
@@ -20,12 +20,12 @@ public class Main {
 
         TransportCompany transportCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
         TransportCompany transportCompany2 = new TransportCompany("Stark Industries", BigDecimal.valueOf(10000));
-        //TransportCompanyDAO.saveOrUpdateCompany(transportCompany2);
+        TransportCompanyDAO.saveOrUpdateCompany(transportCompany2);
         TransportCompanyDAO.deleteCompanyById(4);
 
         ////////////////////////////////// CREATE OBLIGATIONS ////////////////////////////////////////////
 
-        Obligations obligations = new Obligations(BigDecimal.valueOf(2800));
+        Salary obligations = new Salary(BigDecimal.valueOf(2800));
         //TODO: add obligations to the obligation table throught the ObligationDAO
 
         ////////////////////////////////// MAKING THE QUALIFICATION TYPE SET ////////////////////////////////
@@ -39,10 +39,12 @@ public class Main {
 
         /////////////////////////////////// MAKING EMPLOYEE /////////////////////////////////////////
         // Create the Employee instance
-        Employee employee = new Employee("John Doe");
+
+        Employee employee = new Employee("Martin Trenkov", BigDecimal.valueOf(3000), transportCompany);
         EmployeeDAO.createEmployee(employee);
 
-
+        //TODO: transportCompany_id column in Emloyee doesnt allow records to be
+        // save. Think how objects will be saved. Bassically data incompatability doesnt allow records to be recorded
 
     }
 }

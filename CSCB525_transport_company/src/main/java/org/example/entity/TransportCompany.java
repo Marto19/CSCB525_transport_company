@@ -31,7 +31,7 @@ public class TransportCompany {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //1:n - transportCompany:Vehicles
     private List<Vehicle> vehicleListToVehicle = new ArrayList<>();
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Obligations
-    private Set<Obligations> obligationsSet = new HashSet<>();
+    private Set<Salary> obligationsSet = new HashSet<>();
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<TripDetails> tripDetailsList = new ArrayList<>();
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
@@ -94,11 +94,11 @@ public class TransportCompany {
         this.vehicleListToVehicle = vehicleListToVehicle;
     }
 
-    public Set<Obligations> getObligationsSet() {
+    public Set<Salary> getObligationsSet() {
         return obligationsSet;
     }
 
-    public void setObligationsSet(Set<Obligations> obligationsSet) {
+    public void setObligationsSet(Set<Salary> obligationsSet) {
         this.obligationsSet = obligationsSet;
     }
 

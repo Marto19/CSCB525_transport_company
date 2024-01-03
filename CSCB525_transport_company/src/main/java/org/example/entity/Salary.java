@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.math.BigDecimal;
 @Entity
-@Table(name = "obligations")
-public class Obligations {
+@Table(name = "salary")
+public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,10 +20,10 @@ public class Obligations {
     @OneToOne
     private Employee employee;
 
-    public Obligations(BigDecimal amount) {
+    public Salary(BigDecimal amount) {
         this.amount = amount;
     }
-    public Obligations(){}
+    public Salary(){}
 
     public long getId() {
         return id;
