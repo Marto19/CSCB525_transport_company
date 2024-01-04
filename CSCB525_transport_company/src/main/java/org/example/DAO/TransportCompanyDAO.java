@@ -31,6 +31,15 @@ public class TransportCompanyDAO {
         }
     }
 
+    public static TransportCompany getTransportCompanyById(long id) {
+        TransportCompany company;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            company = session.get(TransportCompany.class, id);
+            transaction.commit();
+        }
+        return company;
+    }
     /**
      * function that lists every company -READ
      * @param - null

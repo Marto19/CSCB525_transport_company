@@ -14,7 +14,7 @@ import java.util.Set;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private long id;
     @Column(name = "name")
     private String name;
@@ -40,6 +40,13 @@ public class Employee {
         this.transportCompany = transportCompany;
 //        this.transportCompanyId = transportCompany.getIdTransportCompany();
     }
+    public Employee(@NotNull String name, BigDecimal salary) {
+        this.name = name;
+//        this.qualificationTypeSet = qualificationTypeSet;
+        this.salary = salary;
+//        this.transportCompanyId = transportCompany.getIdTransportCompany();
+    }
+
 
     public Employee(@NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee
         this.name = name;
