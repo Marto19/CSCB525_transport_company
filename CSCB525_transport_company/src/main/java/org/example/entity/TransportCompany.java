@@ -42,6 +42,10 @@ public class TransportCompany {
         this.name = name;
         this.income = income;
     }
+    public TransportCompany(String name, BigDecimal income) {
+        this.name = name;
+        this.income = income;
+    }
 
     public TransportCompany() {
 

@@ -53,6 +53,16 @@ public class Main {
         wonkaCompany.setIncome(BigDecimal.valueOf(30000));
         TransportCompanyDAO.updateCompany(wonkaCompany);
 
+        //1.- DELETE company
+        //lets create another one in order to be deleted and not leave an empty table
+        TransportCompany starkIndustries = new TransportCompany(6,"Stark Industries.", BigDecimal.valueOf(25000));
+//        TransportCompanyDAO.createCompany(starkIndustries);
+
+        starkIndustries.setIncome(BigDecimal.valueOf(15000));       //still adds a new record when not using the id in the constructor
+        TransportCompanyDAO.updateCompany(starkIndustries);
+
+//        TransportCompanyDAO.deleteCompany(starkIndustries);
+
     }
 }
 // Simona's code
