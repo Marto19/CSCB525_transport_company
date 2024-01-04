@@ -28,6 +28,7 @@ public class VehicleType {
         this.vehicle = vehicle;
     }
 
+
     public VehicleType(){}
 
     public long getIdOfVehicleType() {

@@ -20,7 +20,7 @@ public class CustomerDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(customer);
+            session.persist(customer);
             transaction.commit();
         }
     }
@@ -51,7 +51,7 @@ public class CustomerDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(customer);
+            session.merge(customer);
             transaction.commit();
         }
     }

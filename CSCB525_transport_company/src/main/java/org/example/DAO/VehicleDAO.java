@@ -20,7 +20,7 @@ public class VehicleDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(vehicle);
+            session.persist(vehicle);
             transaction.commit();
         }
     }

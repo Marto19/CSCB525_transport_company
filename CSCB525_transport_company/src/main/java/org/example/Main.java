@@ -1,10 +1,13 @@
 package org.example;
 
-import org.example.DAO.CustomerDAO;
 import org.example.DAO.TransportCompanyDAO;
+import org.example.DAO.VehicleDAO;
+import org.example.DAO.VehicleTypeDAO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Customer;
 import org.example.entity.TransportCompany;
+import org.example.entity.Vehicle;
+import org.example.entity.VehicleType;
 
 import java.math.BigDecimal;
 
@@ -37,7 +40,7 @@ public class Main {
 //        // Create the Employee instance
 //
 ////        Employee employee = new Employee("Martin Trenkov", BigDecimal.valueOf(3000));
-////        employee.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));
+//        employee.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));
 //        Employee employee = new Employee("Simona Velichkova", BigDecimal.valueOf(3000), TransportCompanyDAO.getTransportCompanyById(1));
 //        employee.setId(7);
 //        EmployeeDAO.createEmployee(employee);
@@ -74,11 +77,57 @@ public class Main {
         ////////////////CREATING CLIENTS//////////////////////////////////////////////////
         //2-CREATE customer
         Customer customer1 = new Customer("Gosho", "Smeshkov");
-        CustomerDAO.createCustomer(customer1);
+//        CustomerDAO.createCustomer(customer1);
 
         //2-UPDATE customer
         customer1.setId(1);
+        customer1.setFirstName("Petko");
+//        CustomerDAO.updateCustomer(customer1);
 
+        //2-DELETE customer
+//        CustomerDAO.deleteCustomer(customer1);
+
+
+        ////////////3
+        //create vehicle type before creating a vehicle
+        VehicleType vehicleType = new VehicleType("Hooonda");
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType);    //DONT FORGET TO REMOVE IT
+        vehicleType.setIdOfVehicleType(1);
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType);
+
+        VehicleType vehicleType2 = new VehicleType("SUUUZUUUKIIII");
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType2);
+        vehicleType2.setIdOfVehicleType(3);
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType2);
+
+        VehicleType vehicleType3 = new VehicleType("CHEVIII");
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType3);
+        vehicleType2.setIdOfVehicleType(4);
+//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType3);
+
+//        VehicleTypeDAO.deleteVehicleType(vehicleType);
+
+        ////////////3
+        Vehicle vehicle = new Vehicle(); //remember, the foreign keys are passed as objects, created in the main class
+        //set the foreign key through the setter of the entity
+        vehicle.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));//maybe you can with company.getId too
+        vehicle.setVehicleType1(VehicleTypeDAO.getVehicleTypeById(2));//maybe you can with company.getId too
+
+        //Vehicle CREATED TODO: UPDATE & DELETE 3. ot zadanieto
+        VehicleDAO.createVehicle(vehicle);
+
+
+
+
+
+
+
+
+
+
+        //update vehicle type table
+
+        //Vehicle vehicle1 = new Vehicle(wonkaCompany, ve)
 
 
 

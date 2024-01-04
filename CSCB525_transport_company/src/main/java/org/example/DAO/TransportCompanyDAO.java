@@ -30,7 +30,12 @@ public class TransportCompanyDAO {
             transaction.commit();
         }
     }
-
+    /**
+     * Retrieves a TransportCompany from the database by its id.
+     *
+     * @param id The id of the TransportCompany to be retrieved.
+     * @return The TransportCompany object with the given id.
+     */
     public static TransportCompany getTransportCompanyById(long id) {
         TransportCompany company;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -56,7 +61,11 @@ public class TransportCompanyDAO {
         }
         return transportCompanyList;
     }
-
+    /**
+     * Retrieves a list of TransportCompanyDTO objects from the database.
+     *
+     * @return A list of TransportCompanyDTO objects.
+     */
     public static List<TransportCompanyDTO> getCompaniesDTO() {
         List<TransportCompanyDTO> companies;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -129,7 +138,11 @@ public class TransportCompanyDAO {
     }
 
 
-
+    /**
+     * Saves or updates a TransportCompany in the database.
+     *
+     * @param transportCompany The TransportCompany object to be saved or updated.
+     */
     public static void saveOrUpdateCompany(TransportCompany transportCompany){
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -160,6 +173,12 @@ public class TransportCompanyDAO {
         }
         return company.getEmployeeSet();
     }
+    /**
+     * Retrieves a list of EmployeeDTO objects for a specific company from the database.
+     *
+     * @param id The id of the company.
+     * @return A list of EmployeeDTO objects.
+     */
 
     public static List<EmployeeDTO> getCompanyEmployeesDTO(long id) {
         List<EmployeeDTO> employees;

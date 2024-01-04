@@ -24,6 +24,9 @@ public class Vehicle {
         this.transportCompany = transportCompany;
         this.vehicleType1 = vehicleType1;
     }
+    public Vehicle(VehicleType vehicleType1) {
+        this.vehicleType1 = vehicleType1;
+    }
 
 
     public Vehicle(){}
