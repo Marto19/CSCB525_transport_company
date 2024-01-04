@@ -19,13 +19,11 @@ public class VehicleType {
     private List<Vehicle> vehicle = new ArrayList<>();
 //TODO: make the connection one to many - done
 
-    public VehicleType(long idOfVehicleType, String vehicleType) {
-        this.idOfVehicleType = idOfVehicleType;
+    public VehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
 
-    public VehicleType(long idOfVehicleType, String vehicleType, List<Vehicle> vehicle) {
-        this.idOfVehicleType = idOfVehicleType;
+    public VehicleType(String vehicleType, List<Vehicle> vehicle) {
         this.vehicleType = vehicleType;
         this.vehicle = vehicle;
     }

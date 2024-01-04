@@ -40,8 +40,7 @@ public class Employee {
         this.transportCompany = transportCompany;
 //        this.transportCompanyId = transportCompany.getIdTransportCompany();
     }
-    public Employee(long id, @NotNull String name, BigDecimal salary) {
-        this.id = id;
+    public Employee(@NotNull String name, BigDecimal salary) {
         this.name = name;
 //        this.qualificationTypeSet = qualificationTypeSet;
         this.salary = salary;
@@ -49,8 +48,7 @@ public class Employee {
     }
 
 
-    public Employee(long id, @NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee
-        this.id = id;
+    public Employee(@NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee
         this.name = name;
         this.qualificationTypeSet = qualificationTypeSet;
         this.salary = salary;

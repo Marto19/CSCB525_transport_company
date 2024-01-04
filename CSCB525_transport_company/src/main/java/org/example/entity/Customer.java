@@ -17,10 +17,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, List<OrderDetails> orderDetailsList) {
+    public Customer( String firstName, String lastName, List<OrderDetails> orderDetailsList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.orderDetailsList = orderDetailsList;
+    }
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
     public Customer(){}
 

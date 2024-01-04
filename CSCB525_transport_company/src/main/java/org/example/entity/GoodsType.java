@@ -19,8 +19,7 @@ public class GoodsType {
     private Goods goods;        //bidirectional connection goodsType-Goods
 
 
-    public GoodsType(long idOfGoodsType, String goodsType) {
-        this.idOfGoodsType = idOfGoodsType;
+    public GoodsType(String goodsType) {
         this.goodsType = goodsType;
     }
     public GoodsType(){}

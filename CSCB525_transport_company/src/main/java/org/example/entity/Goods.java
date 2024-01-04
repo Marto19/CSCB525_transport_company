@@ -25,8 +25,7 @@ public class Goods {
     @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
 
-    public Goods(long id, @NotNull double weight, @NotNull GoodsType goodsType) {
-        this.id = id;
+    public Goods(@NotNull double weight, @NotNull GoodsType goodsType) {
         this.weight = weight;
         this.goodsType = goodsType;
     }

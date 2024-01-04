@@ -26,7 +26,7 @@ public class TransportCompanyDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(transportCompany);
+            session.persist(transportCompany);
             transaction.commit();
         }
     }

@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.DAO.TransportCompanyDAO;
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Customer;
 import org.example.entity.TransportCompany;
 
 import java.math.BigDecimal;
@@ -46,22 +47,28 @@ public class Main {
         // save. Think how objects will be saved. Bassically data incompatability doesnt allow records to be recorded
 
         //1.- CREATE company
-        TransportCompany wonkaCompany = new TransportCompany(1, "Wonka ltd.", BigDecimal.valueOf(10000));
-//        TransportCompanyDAO.createCompany(wonkaCompany);
+        TransportCompany wonkaCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
+        wonkaCompany.setIdTransportCompany(1);
+        TransportCompanyDAO.createCompany(wonkaCompany);
 
         //1.- UPDATE company - change the value of income from 10000 to 20000
-        wonkaCompany.setIncome(BigDecimal.valueOf(30000));
-        TransportCompanyDAO.updateCompany(wonkaCompany);
+//        wonkaCompany.setIncome(BigDecimal.valueOf(30000));
+//        TransportCompanyDAO.updateCompany(wonkaCompany);
 
         //1.- DELETE company
         //lets create another one in order to be deleted and not leave an empty table
-        TransportCompany starkIndustries = new TransportCompany(6,"Stark Industries.", BigDecimal.valueOf(25000));
+        TransportCompany starkIndustries = new TransportCompany("Stark Industries.", BigDecimal.valueOf(25000));
+        starkIndustries.setIdTransportCompany(2);
 //        TransportCompanyDAO.createCompany(starkIndustries);
 
-        starkIndustries.setIncome(BigDecimal.valueOf(15000));       //still adds a new record when not using the id in the constructor
-        TransportCompanyDAO.updateCompany(starkIndustries);
+//        starkIndustries.setIncome(BigDecimal.valueOf(223000));       //still adds a new record when not using the id in the constructor
+//        TransportCompanyDAO.saveOrUpdateCompany(starkIndustries);
 
 //        TransportCompanyDAO.deleteCompany(starkIndustries);
+        //conclusion - in order to delete/update an entity, you have to have the same id in the constructor
+
+        ////////////////CREATING CLIENTS//////////////////////////////////////////////////
+        Customer customer1 = new Customer("Gosho", "Smeshkov");
 
     }
 }

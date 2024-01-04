@@ -26,8 +26,7 @@ public class OrderDetails {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public OrderDetails(long id, String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
-        this.id = id;
+    public OrderDetails(String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.priceToPay = priceToPay;

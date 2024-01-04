@@ -18,8 +18,7 @@ public class QualificationType {
     @ManyToMany(mappedBy = "qualificationTypeSet")
     private Set<Employee> employeeSet = new HashSet<>();
 
-    public QualificationType(long id, String name) {
-        this.id = id;
+    public QualificationType(String name) {
         this.name = name;
     }
 
