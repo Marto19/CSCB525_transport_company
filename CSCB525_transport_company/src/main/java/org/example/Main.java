@@ -48,24 +48,27 @@ public class Main {
 
         //1.- CREATE company
         TransportCompany wonkaCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
-        wonkaCompany.setIdTransportCompany(1);
-        TransportCompanyDAO.createCompany(wonkaCompany);
+//        TransportCompanyDAO.createCompany(wonkaCompany);
+
 
         //1.- UPDATE company - change the value of income from 10000 to 20000
-//        wonkaCompany.setIncome(BigDecimal.valueOf(30000));
-//        TransportCompanyDAO.updateCompany(wonkaCompany);
+        wonkaCompany.setIdTransportCompany(1);        //setId must be after createCompany
+        wonkaCompany.setIncome(BigDecimal.valueOf(30000));
+        TransportCompanyDAO.updateCompany(wonkaCompany);
 
         //1.- DELETE company
         //lets create another one in order to be deleted and not leave an empty table
         TransportCompany starkIndustries = new TransportCompany("Stark Industries.", BigDecimal.valueOf(25000));
-        starkIndustries.setIdTransportCompany(2);
 //        TransportCompanyDAO.createCompany(starkIndustries);
+        starkIndustries.setIdTransportCompany(2);
 
-//        starkIndustries.setIncome(BigDecimal.valueOf(223000));       //still adds a new record when not using the id in the constructor
-//        TransportCompanyDAO.saveOrUpdateCompany(starkIndustries);
+
+        starkIndustries.setIncome(BigDecimal.valueOf(223000));
+        TransportCompanyDAO.saveOrUpdateCompany(starkIndustries);
 
 //        TransportCompanyDAO.deleteCompany(starkIndustries);
         //conclusion - in order to delete/update an entity, you have to have the same id in the constructor
+        //still, we need to keep track of the id, because after deleting company we cannot set from the next available in the table, because it will create other two
 
         ////////////////CREATING CLIENTS//////////////////////////////////////////////////
         Customer customer1 = new Customer("Gosho", "Smeshkov");
