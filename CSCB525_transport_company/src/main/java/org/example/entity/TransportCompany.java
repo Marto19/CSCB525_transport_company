@@ -16,7 +16,7 @@ import java.util.*;
 public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private long idTransportCompany;
     @NotBlank(message = "Company name cannot be blank!")
     @Size(max = 20, message = "Company name has to be with up to 20 characters!")
@@ -37,7 +37,8 @@ public class TransportCompany {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
-    public TransportCompany(String name, BigDecimal income) {
+    public TransportCompany(long id, String name, BigDecimal income) {
+        this.idTransportCompany = id;
         this.name = name;
         this.income = income;
     }

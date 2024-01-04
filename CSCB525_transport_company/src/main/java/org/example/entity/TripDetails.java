@@ -43,7 +43,26 @@ public class TripDetails {
 
     public TripDetails(){}
 
-    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
+    public TripDetails(@NotNull long id, @NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate) {
+        this.id = id;
+        this.startingPoint = startingPoint;
+        this.endPoint = endPoint;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+    }
+
+    public TripDetails(@NotNull long id, @NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, Vehicle vehicle, List<Goods> goodsList) {
+        this.id = id;
+        this.startingPoint = startingPoint;
+        this.endPoint = endPoint;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.vehicle = vehicle;
+        this.goodsList = goodsList;
+    }
+
+    public TripDetails(@NotNull long id, @NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
+        this.id = id;
         this.startingPoint = startingPoint;
         this.endPoint = endPoint;
         this.departureDate = departureDate;

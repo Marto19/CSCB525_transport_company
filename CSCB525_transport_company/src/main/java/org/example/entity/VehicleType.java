@@ -24,6 +24,12 @@ public class VehicleType {
         this.vehicleType = vehicleType;
     }
 
+    public VehicleType(long idOfVehicleType, String vehicleType, List<Vehicle> vehicle) {
+        this.idOfVehicleType = idOfVehicleType;
+        this.vehicleType = vehicleType;
+        this.vehicle = vehicle;
+    }
+
     public VehicleType(){}
 
     public long getIdOfVehicleType() {

@@ -20,7 +20,8 @@ public class Salary {
     @OneToOne
     private Employee employee;
 
-    public Salary(BigDecimal amount) {
+    public Salary(long id, BigDecimal amount) {
+        this.id = id;
         this.amount = amount;
     }
     public Salary(){}
