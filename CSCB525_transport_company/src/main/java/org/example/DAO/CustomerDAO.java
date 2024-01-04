@@ -1,6 +1,5 @@
 package org.example.DAO;
 
-import com.mysql.cj.xdevapi.Client;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Customer;
 import org.hibernate.Session;
@@ -12,16 +11,16 @@ public class CustomerDAO {
     /**
      * Creates a new client record in the database.
      *
-     * @param client The client object to be created.
+     * @param customer The client object to be created.
      * @throws IllegalArgumentException If the provided client object is null.
      */
-    public static void createClient(Client client){
-        if(client == null){
+    public static void createCustomer(Customer customer){
+        if(customer == null){
             throw new IllegalArgumentException("The employee cannot be null");
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(client);
+            session.save(customer);
             transaction.commit();
         }
     }
@@ -74,4 +73,12 @@ public class CustomerDAO {
     }
 
 
+    public static void saveOrUpdateCustomer(Customer customer){
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            // it used to be saveOrUpdate(), but it's deprecated
+            session.merge(customer);
+            transaction.commit();
+        }
+    }
 }

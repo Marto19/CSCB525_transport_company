@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.DAO.CustomerDAO;
 import org.example.DAO.TransportCompanyDAO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Customer;
@@ -71,7 +72,15 @@ public class Main {
         //still, we need to keep track of the id, because after deleting company we cannot set from the next available in the table, because it will create other two
 
         ////////////////CREATING CLIENTS//////////////////////////////////////////////////
+        //2-CREATE customer
         Customer customer1 = new Customer("Gosho", "Smeshkov");
+        CustomerDAO.createCustomer(customer1);
+
+        //2-UPDATE customer
+        customer1.setId(1);
+
+
+
 
     }
 }
