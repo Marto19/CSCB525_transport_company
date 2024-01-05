@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.DAO.TransportCompanyDAO;
-import org.example.DAO.TripDAO;
 import org.example.DAO.VehicleDAO;
 import org.example.DAO.VehicleTypeDAO;
 import org.example.configuration.SessionFactoryUtil;
@@ -208,7 +207,7 @@ public class Main {
 //        tripDetails2.setEndPoint("Abbey Road");
 //        TripDAO.updateVehicle(tripDetails2);
         //DELETE
-        TripDAO.deleteTripDetailById(4);
+//        TripDAO.deleteTripDetailById(4);
 
 
     }

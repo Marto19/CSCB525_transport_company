@@ -1,5 +1,8 @@
 package org.example.entity;
 
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -11,12 +14,15 @@ import java.util.Set;
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "products_name")
+    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
+    @Pattern(regexp = "^([A-Z].*)", message = "Product's name should start with a capital letter!")
     private String name;
 
+    @Positive
     @Column(name = "weight")
     @NotNull
     private double weight;

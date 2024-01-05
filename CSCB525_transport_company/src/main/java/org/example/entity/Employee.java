@@ -1,8 +1,6 @@
 package org.example.entity;
 
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -17,18 +15,22 @@ public class Employee {
     @Column(name = "id", unique = true)
     private long id;
     @Column(name = "name")
+    @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters long!")
+    @Pattern(regexp = "^([A-Z].*)\s([a-zA-Z].*)", message = "First name should start with a capital letter and there should be at least a first and last name!")
     private String name;
 
-    @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
-    @JoinColumn(name = "transport_company_id") // Define the name of the foreign key column
-    private TransportCompany transportCompany;
 //    @Column(name = "id_transport_company")
 //    private long transportCompanyId;
 //    @OneToOne(fetch =  FetchType.LAZY)                           //connection between obligations and employee - 1:1
     @Positive
+    @Column(name="salary")
     @Digits(integer = 4, fraction = 2, message = "Salaries should start from 1000.00 and have 2 digits after the decimal point!")
     private BigDecimal salary;
 //    private Obligations obligations;    //this is their salary
+
+    @ManyToOne(fetch =  FetchType.LAZY)                                  //n:1 - Employee:TransportCompany
+    @JoinColumn(name = "transport_company_id") // Define the name of the foreign key column
+    private TransportCompany transportCompany;
 
     @ManyToMany
     private Set<org.example.entity.QualificationType> qualificationTypeSet = new HashSet<>(); //employee will create employee_qualification_type table
