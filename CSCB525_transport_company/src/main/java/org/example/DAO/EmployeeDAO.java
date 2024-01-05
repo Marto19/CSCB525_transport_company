@@ -71,7 +71,7 @@
             }
             try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
                 Transaction transaction = session.beginTransaction();
-                session.saveOrUpdate(employee);
+                session.merge(employee);
                 transaction.commit();
             }
         }
@@ -92,6 +92,33 @@
                 transaction.commit();
             }
         }
+
+        /**
+         * Deletes an Employee by their ID.
+         *
+         * @param id The ID of the Employee to delete.
+         */
+        public static void deleteEmployeeById(long id) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+
+                // Retrieve the Employee by ID
+                Employee employeeToDelete = session.get(Employee.class, id);
+
+                if (employeeToDelete != null) {
+                    // Delete the employee if found
+                    session.delete(employeeToDelete);
+                    transaction.commit();
+                } else {
+                    // Print a message if the employee with the given ID is not found
+                    System.out.println("Employee with ID " + id + " not found.");
+                }
+            } catch (Exception e) {
+                // Handle any exceptions occurred during deletion
+                System.err.println("Error deleting employee: " + e.getMessage());
+            }
+        }
+
 
         /**
          * Adds an employee to a specific company based on their IDs.

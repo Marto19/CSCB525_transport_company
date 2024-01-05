@@ -3,6 +3,8 @@ package org.example.entity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "goods")
@@ -11,6 +13,10 @@ public class Goods {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "weight")
     @NotNull
     private double weight;
@@ -21,13 +27,20 @@ public class Goods {
     private GoodsType goodsType;
 
 
-    @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "trip_id")
-    private TripDetails tripDetails;
+    @ManyToMany(fetch =  FetchType.LAZY)
+    private Set<TripDetails> tripDetails = new HashSet<>();
 
-    public Goods(@NotNull double weight, @NotNull GoodsType goodsType) {
+    public Goods(String name,@NotNull double weight, @NotNull GoodsType goodsType) {
+        this.name = name;
         this.weight = weight;
         this.goodsType = goodsType;
+    }
+
+    public Goods(String name, @NotNull double weight, GoodsType goodsType, Set<TripDetails> tripDetails) {
+        this.name = name;
+        this.weight = weight;
+        this.goodsType = goodsType;
+        this.tripDetails = tripDetails;
     }
 
     public Goods(){}

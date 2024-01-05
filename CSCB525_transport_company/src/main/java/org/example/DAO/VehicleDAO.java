@@ -9,6 +9,23 @@ import java.util.List;
 
 public class VehicleDAO {
     /**
+     * Retrieves a Vehicle entity by its ID.
+     *
+     * @param id The ID of the Vehicle entity to retrieve.
+     * @return The Vehicle entity with the specified ID, or null if not found.
+     */
+    public static Vehicle getVehicleById(long id) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Vehicle vehicle = session.get(Vehicle.class, id);
+            transaction.commit();
+            return vehicle;
+        } catch (Exception e) {
+            System.err.println("Error retrieving vehicle by ID: " + e.getMessage());
+            return null;
+        }
+    }
+    /**
      * Creates a new vehicle record in the database.
      *
      * @param vehicle The vehicle object to be created.
@@ -55,7 +72,7 @@ public class VehicleDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(vehicle);
+            session.merge(vehicle);
             transaction.commit();
         }
     }
@@ -76,4 +93,31 @@ public class VehicleDAO {
             transaction.commit();
         }
     }
+
+    /**
+     * Deletes a Vehicle by its ID.
+     *
+     * @param id The ID of the Vehicle to delete.
+     */
+    public static void deleteVehicleById(long id) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            // Retrieve the Vehicle by ID
+            Vehicle vehicleToDelete = session.get(Vehicle.class, id);
+
+            if (vehicleToDelete != null) {
+                // Delete the vehicle if found
+                session.delete(vehicleToDelete);
+                transaction.commit();
+            } else {
+                // Print a message if the vehicle with the given ID is not found
+                System.out.println("Vehicle with ID " + id + " not found.");
+            }
+        } catch (Exception e) {
+            // Handle any exceptions occurred during deletion
+            System.err.println("Error deleting vehicle: " + e.getMessage());
+        }
+    }
+
 }

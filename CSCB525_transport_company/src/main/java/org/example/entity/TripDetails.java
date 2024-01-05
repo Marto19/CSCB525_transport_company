@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "trip_details")
@@ -35,40 +35,52 @@ public class TripDetails {
 
     //TODO: create goods table, because you'll need its foreign key here
     //creating the table
-    @OneToMany(mappedBy = "tripDetails")
-    private List<Goods> goodsList = new ArrayList<>();
+    @ManyToMany(mappedBy = "tripDetails", fetch = FetchType.LAZY)    //TODO: MAKE IT MANY TO MANY
+    private Set<Goods> goodsList = new HashSet<>();
 
     @OneToOne
     private OrderDetails orderDetails;
 
-    public TripDetails(){}
-
-    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate) {
-        this.startingPoint = startingPoint;
-        this.endPoint = endPoint;
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
-    }
-
-    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, Vehicle vehicle, List<Goods> goodsList) {
-        this.startingPoint = startingPoint;
-        this.endPoint = endPoint;
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
-        this.vehicle = vehicle;
-        this.goodsList = goodsList;
-    }
-
-    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
+    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint,
+                       LocalDate departureDate, LocalDate arrivalDate,
+                       TransportCompany transportCompany, Vehicle vehicle){
         this.startingPoint = startingPoint;
         this.endPoint = endPoint;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.transportCompany = transportCompany;
         this.vehicle = vehicle;
-        this.goodsList = goodsList;
-        this.orderDetails = orderDetails;
+//        this.goodsList = goodsList;
+//        this.orderDetails = orderDetails;
     }
+
+    public TripDetails(){}
+
+//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate) {
+//        this.startingPoint = startingPoint;
+//        this.endPoint = endPoint;
+//        this.departureDate = departureDate;
+//        this.arrivalDate = arrivalDate;
+//    }
+//
+//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, Vehicle vehicle, List<Goods> goodsList) {
+//        this.startingPoint = startingPoint;
+//        this.endPoint = endPoint;
+//        this.departureDate = departureDate;
+//        this.arrivalDate = arrivalDate;
+//        this.goodsList = goodsList;
+//    }
+
+//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
+//        this.startingPoint = startingPoint;
+//        this.endPoint = endPoint;
+//        this.departureDate = departureDate;
+//        this.arrivalDate = arrivalDate;
+//        this.transportCompany = transportCompany;
+//        this.vehicle = vehicle;
+//        this.goodsList = goodsList;
+//        this.orderDetails = orderDetails;
+//    }
 
     public long getId() {
         return id;
@@ -126,11 +138,11 @@ public class TripDetails {
         this.vehicle = vehicle;
     }
 
-    public List<Goods> getGoodsList() {
+    public Set<Goods> getGoodsList() {
         return goodsList;
     }
 
-    public void setGoodsList(List<Goods> goodsList) {
+    public void setGoodsList(Set<Goods> goodsList) {
         this.goodsList = goodsList;
     }
 

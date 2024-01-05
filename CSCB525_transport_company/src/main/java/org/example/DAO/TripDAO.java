@@ -55,8 +55,29 @@ public class TripDAO {
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(trip);
+            session.merge(trip);
             transaction.commit();
+        }
+    }
+
+    /**
+     * Deletes a TripDetails entity by its ID.
+     *
+     * @param id The ID of the TripDetails entity to delete.
+     */
+    public static void deleteTripDetailById(long id) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            TripDetails tripDetailToDelete = session.get(TripDetails.class, id);
+            if (tripDetailToDelete != null) {
+                session.delete(tripDetailToDelete);
+                transaction.commit();
+            } else {
+                System.out.println("Trip details with ID " + id + " not found.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting trip details by ID: " + e.getMessage());
         }
     }
 

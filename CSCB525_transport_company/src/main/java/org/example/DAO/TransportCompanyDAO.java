@@ -45,6 +45,34 @@ public class TransportCompanyDAO {
         }
         return company;
     }
+
+    /**
+     * Deletes a TransportCompany by its ID.
+     *
+     * @param id The ID of the TransportCompany to delete.
+     */
+    public static void deleteTransportCompanyById(long id) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            // Retrieve the TransportCompany by ID
+            TransportCompany companyToDelete = session.get(TransportCompany.class, id);
+
+            if (companyToDelete != null) {
+                // Delete the company if found
+                session.delete(companyToDelete);
+                transaction.commit();
+            } else {
+                // Print a message if the company with the given ID is not found
+                System.out.println("Company with ID " + id + " not found.");
+            }
+        } catch (Exception e) {
+            // Handle any exceptions occurred during deletion
+            System.err.println("Error deleting company: " + e.getMessage());
+        }
+    }
+
+
     /**
      * function that lists every company -READ
      * @param - null
