@@ -28,6 +28,7 @@ public class SessionFactoryUtil {
             configuration.addAnnotatedClass(GoodsType.class);
             configuration.addAnnotatedClass(VehicleType.class);
             configuration.addAnnotatedClass(QualificationType.class);
+            configuration.addAnnotatedClass(CustomerObligation.class);
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

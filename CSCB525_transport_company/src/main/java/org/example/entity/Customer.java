@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -24,6 +25,9 @@ public class Customer {
     private String lastName;
     @OneToMany(mappedBy = "customer")
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY) //relationship 1:n - Customer:CustomerObligations
+    private Set<CustomerObligation> customerObligation;
 
     public Customer( String firstName, String lastName, List<OrderDetails> orderDetailsList) {
         this.firstName = firstName;

@@ -40,6 +40,11 @@ public class TripDetails {
 
     @OneToOne
     private OrderDetails orderDetails;
+    @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
+    private CustomerObligation customerObligation;
+
+
+
 
     public TripDetails(@NotNull String startingPoint, @NotNull String endPoint,
                        LocalDate departureDate, LocalDate arrivalDate,
