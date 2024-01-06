@@ -1,8 +1,6 @@
 package org.example;
 
-import org.example.DAO.TransportCompanyDAO;
-import org.example.DAO.VehicleDAO;
-import org.example.DAO.VehicleTypeDAO;
+import org.example.DAO.*;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.*;
 
@@ -85,7 +83,7 @@ public class Main {
 //
 //        ////////////////////////////////////// CUSTOMERS  2.//////////////////////////////////////////////////
 //        //2-CREATE customer
-//        Customer customer1 = new Customer("Gosho", "Smeshkov");
+        Customer customer1 = new Customer("Gosho", "Smeshkov");
 //        CustomerDAO.createCustomer(customer1);
 //
 //        //2-UPDATE customer
@@ -209,6 +207,12 @@ public class Main {
         //DELETE
 //        TripDAO.deleteTripDetailById(4);
 
+        CustomerObligation customerObligation = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
+//        CustomerObligationDAO.createCustomerObligation(customerObligation); //TODO: FIX THE TransientObjectException
+        //UPDATE
+//        customerObligation.setId(4);
+//        customerObligation.setTripDetails(TripDetailsDAO.getTripDetailsById(1));
+        //TODO: ADD UPDATE METHOD IN THE DAO
 
     }
 }

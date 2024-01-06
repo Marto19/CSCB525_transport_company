@@ -72,6 +72,22 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Retrieves a Customer from the database by its ID.
+     *
+     * @param id The ID of the Customer to be retrieved.
+     * @return The Customer object with the given ID, or null if not found.
+     */
+    public static Customer getCustomerById(long id) {
+        Customer customer;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            customer = session.get(Customer.class, id);
+            transaction.commit();
+        }
+        return customer;
+    }
+
 
     public static void saveOrUpdateCustomer(Customer customer){
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {

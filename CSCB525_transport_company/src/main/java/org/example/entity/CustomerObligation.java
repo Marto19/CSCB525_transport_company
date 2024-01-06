@@ -21,8 +21,7 @@ public class CustomerObligation {
 
     //TODO: test the above two connections in Main, by making records
 
-    public CustomerObligation(long id, boolean paid, Customer customer) {
-        this.id = id;
+    public CustomerObligation(boolean paid, Customer customer) {
         this.paid = paid;
         this.customer = customer;
     }
