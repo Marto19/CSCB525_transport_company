@@ -19,6 +19,8 @@ public class CustomerObligation {
     @OneToOne(fetch = FetchType.LAZY) //relationship 1:1 - customerObligations:trip
     private TripDetails tripDetails;
 
+    //TODO: test the above two connections in Main, by making records
+
     public CustomerObligation(long id, boolean paid, Customer customer) {
         this.id = id;
         this.paid = paid;
