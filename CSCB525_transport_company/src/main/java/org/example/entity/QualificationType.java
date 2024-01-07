@@ -46,5 +46,4 @@ public class QualificationType {
                 ", name='" + name + '\'' +
                 '}';
     }
-    //TODO: make the connections
 }

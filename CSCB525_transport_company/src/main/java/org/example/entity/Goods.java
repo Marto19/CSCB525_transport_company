@@ -29,6 +29,7 @@ public class Goods {
 
     @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "goods_type_id") // Column referencing GoodsType
+    @NotNull
     private GoodsType goodsType;
 
 

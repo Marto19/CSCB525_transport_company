@@ -13,7 +13,7 @@ public class VehicleType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_of_vehicle_type", nullable = false, unique = true)
-    private long idOfVehicleType;
+    private long id;
 
     @Column(name = "vehicle_type")
     @Size(min = 2, max = 30, message = "Type must be between 2 and 30 characters long!")
@@ -36,12 +36,12 @@ public class VehicleType {
 
     public VehicleType(){}
 
-    public long getIdOfVehicleType() {
-        return idOfVehicleType;
+    public long getId() {
+        return id;
     }
 
-    public void setIdOfVehicleType(long idOfVehicleType) {
-        this.idOfVehicleType = idOfVehicleType;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getVehicleType() {
@@ -55,7 +55,7 @@ public class VehicleType {
     @Override
     public String toString() {
         return "VehicleType{" +
-                "idOfVehicleType=" + idOfVehicleType +
+                "idOfVehicleType=" + id +
                 ", vehicleType='" + vehicleType + '\'' +
                 '}';
     }

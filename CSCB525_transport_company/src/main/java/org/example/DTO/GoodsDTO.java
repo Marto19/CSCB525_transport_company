@@ -1,5 +1,4 @@
 package org.example.DTO;
-
 import org.example.entity.GoodsType;
 
 public class GoodsDTO {

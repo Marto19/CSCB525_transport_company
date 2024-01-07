@@ -94,6 +94,17 @@ public class TransportCompanyDAO {
         }
         return transportCompanyList;
     }
+
+    /**
+     * function that counts the companies in the table
+     *
+     * no parameters
+     * @return companies count
+     */
+    public static int countCompanies(){
+        return getCompanies().size();
+    }
+
     /**
      * Retrieves a list of TransportCompanyDTO objects from the database.
      *

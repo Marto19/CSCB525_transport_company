@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DTO.CustomerDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Customer;
 import org.hibernate.Session;
@@ -102,4 +103,23 @@ public class CustomerDAO {
             transaction.commit();
         }
     }
+
+    /**
+     * Retrieves a list of CustomerDTO objects from the database.
+     *
+     * @return A list of CustomerDTO objects.
+     */
+    public static List<CustomerDTO> getClientsDTO() {
+        List<CustomerDTO> clients;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            clients = session
+                    .createQuery("select new org.example.DTO.CustomerDTO(c.firstName, c.lastName) " +
+                            "from Customer c", CustomerDTO.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return clients;
+    }
+
 }

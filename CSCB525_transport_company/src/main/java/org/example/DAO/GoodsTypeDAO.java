@@ -1,9 +1,10 @@
 package org.example.DAO;
 
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.GoodsType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.example.entity.GoodsType;
+
 
 import java.util.List;
 

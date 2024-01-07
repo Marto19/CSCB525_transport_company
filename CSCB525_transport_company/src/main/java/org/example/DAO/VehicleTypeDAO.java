@@ -55,6 +55,9 @@ public class VehicleTypeDAO {
      * @param vehicleType The VehicleType object to be saved or updated.
      */
     public static void saveOrUpdateVehicleType(VehicleType vehicleType) {
+        if(vehicleType == null){
+            throw new IllegalArgumentException("The employee cannot be null");
+        }
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             // it used to be saveOrUpdate(), but it's deprecated

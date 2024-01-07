@@ -35,6 +35,10 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
+    @OneToOne
+    @JoinColumn(name = "order_details_id")
+    private OrderDetails orderDetails;
+
     //TODO: add cost column?
 
     //TODO: create goods table, because you'll need its foreign key here
@@ -42,9 +46,7 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
 //    @ManyToMany(mappedBy = "tripDetails", fetch = FetchType.LAZY)
 //    private Set<Goods> goodsList = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(name = "order_details_id")
-    private OrderDetails orderDetails;
+
     @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
     private CustomerObligation customerObligation;
 
@@ -67,6 +69,17 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
         this.arrivalDate = arrivalDate;
         this.transportCompany = transportCompany;
         this.vehicle = vehicle;
+
+    }
+
+    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint,
+                       LocalDate departureDate, LocalDate arrivalDate,
+                       TransportCompany transportCompany){
+        this.startingPoint = startingPoint;
+        this.endPoint = endPoint;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.transportCompany = transportCompany;
 
     }
 
@@ -129,6 +142,14 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
         this.vehicle = vehicle;
     }
 
+    public OrderDetails getPayments() {
+        return orderDetails;
+    }
+
+    public void setPayments(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
 //    public Set<Goods> getGoodsList() {
 //        return goodsList;
 //    }
@@ -137,13 +158,6 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
 //        this.goodsList = goodsList;
 //    }
 
-    public OrderDetails getPayments() {
-        return orderDetails;
-    }
-
-    public void setPayments(OrderDetails orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 
     @Override
     public String toString() {

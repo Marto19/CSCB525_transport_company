@@ -15,7 +15,9 @@
     import javax.persistence.criteria.Join;
     import javax.persistence.criteria.Root;
     import java.math.BigDecimal;
+    import java.util.HashSet;
     import java.util.List;
+    import java.util.Set;
     import java.util.stream.Collectors;
 
     public class EmployeeDAO {
@@ -73,7 +75,7 @@
          * @param employee The updated employee object.
          * @throws IllegalArgumentException If the provided employee object is null.
          */
-        public static void updateEmployee(Employee employee){
+        public static void saveOrUpdateEmployee(Employee employee){
             if(employee == null){
                 throw new IllegalArgumentException("The employee cannot be null");
             }
@@ -83,6 +85,51 @@
                 transaction.commit();
             }
         }
+
+//        /**
+//         * Retrieves a list of EmployeeDTO objects from the database.
+//         *
+//         * @return A list of EmployeeDTO objects.
+//         */
+//        public static List<EmployeeDTO> getEmployeesDTO() {
+//            List<EmployeeDTO> employees;
+//            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+//                Transaction transaction = session.beginTransaction();
+//                employees = session
+//                        .createQuery("select new org.example.DTO.EmployeeDTO(e.id, e.qualificationTypeSet, e.name, e.transportCompany) " +
+//                                "from Employee e", EmployeeDTO.class)
+//                        .getResultList();
+//                transaction.commit();
+//            }
+//            return employees;
+//        }         //todo: fix it
+
+
+        /**
+         * todo
+         * @param drivingQualification
+         * @param employee
+         */
+        public static void addDrivingQualificationToDriver(QualificationType drivingQualification, Employee employee) {
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                if(employee == null) {
+                    employee = new Employee();
+                }
+                if(employee.getQualificationTypeSet() == null){
+                    Set<QualificationType> qualificationTypes = new HashSet<>();
+                    employee.setQualificationTypeSet(qualificationTypes);
+                }
+                employee.getQualificationTypeSet().add(drivingQualification);
+                // if the qualification is not in the database => add it; same for the driver
+                QualificationTypeDAO.saveOrUpdateQualificationType(drivingQualification);
+                EmployeeDAO.saveOrUpdateEmployee(employee);
+
+                transaction.commit();
+            }
+        }
+
+
 
         /**
          * Deletes an employee record from the database.
@@ -334,7 +381,7 @@
          * @return A List of EmployeeDTO objects ordered by salary from lowest to highest.
          * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
          */
-        public static List<EmployeeDTO> getOrderedEmployeesBySalaryASC() {
+        public static List<EmployeeDTO> getOrderedEmployeesBySalaryAscending() {
             List<Employee> employees;
             try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 Transaction transaction = session.beginTransaction();
@@ -354,7 +401,7 @@
          * @return A List of EmployeeDTO objects ordered by salary from highest to lowest.
          * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
          */
-        public static List<EmployeeDTO> getOrderedEmployeesBySalaryDESC() {
+        public static List<EmployeeDTO> getOrderedEmployeesBySalaryDescending() {
             List<Employee> employees;
             try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 Transaction transaction = session.beginTransaction();
@@ -368,25 +415,25 @@
                     .collect(Collectors.toList());
         }
 
-        /**
-         * Retrieves all Employee entities from the database, ordered by position in ascending order, and transforms them into EmployeeDTOs.
-         *
-         * @return A List of EmployeeDTO objects ordered by position.
-         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
-         */
-        public static List<EmployeeDTO> getOrderedEmployeesByPositionASC() {
-            List<Employee> employees;
-            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-                Transaction transaction = session.beginTransaction();
-                employees = session.createQuery("Select c From Employee c" +
-                                " ORDER BY CONCAT(c.positionType)", Employee.class)
-                        .getResultList();
-                transaction.commit();
-            }
-            return employees.stream()
-                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
-                    .collect(Collectors.toList());
-        }
+//        /**
+//         * Retrieves all Employee entities from the database, ordered by position in ascending order, and transforms them into EmployeeDTOs.
+//         *
+//         * @return A List of EmployeeDTO objects ordered by position.
+//         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+//         */
+//        public static List<EmployeeDTO> getOrderedEmployeesByPositionAscending() {
+//            List<Employee> employees;
+//            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+//                Transaction transaction = session.beginTransaction();
+//                employees = session.createQuery("Select c From Employee c" +
+//                                " ORDER BY CONCAT(c.positionType)", Employee.class)
+//                        .getResultList();
+//                transaction.commit();
+//            }
+//            return employees.stream()
+//                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+//                    .collect(Collectors.toList());
+//        }
 
 
 

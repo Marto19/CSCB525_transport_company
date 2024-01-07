@@ -62,6 +62,9 @@ public class TransportCompany implements Serializable {
         this.name = name;
         this.income = income;
     }
+    public TransportCompany(String name) {
+        this.name = name;
+    }
 
     public TransportCompany() {
 

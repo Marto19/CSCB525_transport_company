@@ -25,6 +25,22 @@ public class VehicleDAO {
             return null;
         }
     }
+
+    /**
+     * Retrieves a list of all Vehicles from the database.
+     *
+     * @return List of all Vehicles in the database.
+     */
+    public static List<Vehicle> getVehicles() {
+        List<Vehicle> vehicles;
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            vehicles = session.createQuery("Select v From Vehicle v", Vehicle.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return vehicles;
+    }
     /**
      * Creates a new vehicle record in the database.
      *
@@ -66,7 +82,7 @@ public class VehicleDAO {
      * @param vehicle The updated vehicle object.
      * @throws IllegalArgumentException If the provided vehicle object is null.
      */
-    public static void updateVehicle(Vehicle vehicle){
+    public static void saveOrUpdateVehicle(Vehicle vehicle){
         if(vehicle == null){
             throw new IllegalArgumentException("The employee cannot be null");
         }

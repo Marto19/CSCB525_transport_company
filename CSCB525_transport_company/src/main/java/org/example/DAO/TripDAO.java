@@ -18,13 +18,13 @@ public class TripDAO {
      * @param trip The TripDetails object to be created.
      * @throws IllegalArgumentException If the provided trip object is null.
      */
-    public static void createTrip(TripDetails trip){
+    public static void saveOrUpdateTripDetails(TripDetails trip){
         if(trip == null){
             throw new IllegalArgumentException("The employee cannot be null");
         }
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(trip);
+            session.merge(trip);
             transaction.commit();
         }
     }

@@ -7,218 +7,190 @@ import org.example.entity.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+
+//TODO: connect qualification table with vehicletype table
+//my idea is that when we connect them with many to many relation ship a new table will be created
+// a new table will be created, and if somehow we take an id of one table it will correspond to a
+//record from other table, therefor not letting the employee drive something that he doesnt have a -
+//qualification for
+
+//todo: do the math
+//todo: make it so that when a an order is placed
+
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         SessionFactoryUtil.getSessionFactory().openSession();
 
           ////////////////////////////////////////////   COMPANY  1.  //////////////////////////////
-//        //1.- CREATE company
-        TransportCompany wonkaCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
-//        TransportCompanyDAO.createCompany(wonkaCompany);
-//
-//
-//        //1.- UPDATE company - change the value of income from 10000 to 20000
-//        wonkaCompany.setIdTransportCompany(1);        //setId must be after createCompany
-//        wonkaCompany.setIncome(BigDecimal.valueOf(30000));
-//        TransportCompanyDAO.updateCompany(wonkaCompany);
-//
-//        //1.- DELETE company
-//        //lets create another one in order to be deleted and not leave an empty table
-//        TransportCompany starkIndustries = new TransportCompany("Stark Industries.", BigDecimal.valueOf(25000));
-//        TransportCompanyDAO.createCompany(starkIndustries);
-//        starkIndustries.setIdTransportCompany(2);
-//
-//        starkIndustries.setIncome(BigDecimal.valueOf(223000));
-//        TransportCompanyDAO.saveOrUpdateCompany(starkIndustries);
-//
-////        TransportCompanyDAO.deleteCompany(starkIndustries);
-//        //conclusion - in order to delete/update an entity, you have to have the same id in the constructor
-//        //still, we need to keep track of the id, because after deleting company we cannot set from the next available in the table, because it will create other two
-//
-//        ////////////////////////////////////// CUSTOMERS  2.//////////////////////////////////////////////////
-//        //2-CREATE customer
-        Customer customer1 = new Customer("Gosho", "Smeshkov");
-//        CustomerDAO.createCustomer(customer1);
-//
-//        //2-UPDATE customer
-//        customer1.setId(1);
-//        customer1.setFirstName("Petko");
-//        CustomerDAO.updateCustomer(customer1);
-//
-//        //2-DELETE customer
-////        CustomerDAO.deleteCustomer(customer1);
-//
-//
-//        ///////////////////////////////// VehicleType  ///////////////////////////////////
-//        //create vehicle type before creating a vehicle
-//        VehicleType vehicleType = new VehicleType("Hooonda");
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType);    //DONT FORGET TO REMOVE IT
-//        vehicleType.setIdOfVehicleType(1);
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType);
-//
-//        VehicleType vehicleType2 = new VehicleType("SUUUZUUUKIIII");
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType2);
-//        vehicleType2.setIdOfVehicleType(2);
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType2);
-//
-//        VehicleType vehicleType3 = new VehicleType("CHEVIII");
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType3);
-//        vehicleType2.setIdOfVehicleType(3);
-//        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType3);
+        TransportCompany dhl = new TransportCompany("DHL");
+        dhl.setIdTransportCompany(1);
+        TransportCompany speedy = new TransportCompany("Speedy");
+        speedy.setIdTransportCompany(2);
+        TransportCompany fedEX = new TransportCompany("FedEX");
+        fedEX.setIdTransportCompany(3);
+        TransportCompany ups = new TransportCompany("UPS");
+        ups.setIdTransportCompany(4);
 
-//        VehicleTypeDAO.deleteVehicleType(vehicleType);
+        //1.- CREATE company
+        TransportCompanyDAO.saveOrUpdateCompany(dhl);
+        TransportCompanyDAO.saveOrUpdateCompany(speedy);
+        TransportCompanyDAO.saveOrUpdateCompany(fedEX);
+        TransportCompanyDAO.saveOrUpdateCompany(ups);
 
-//        //////////////////////////////////////////////Vehicles 3 /////////////////////////////////////////
-//        Vehicle vehicle = new Vehicle(); //remember, the foreign keys are passed as objects, created in the main class
-//        //set the foreign key through the setter of the entity
-//        vehicle.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));//maybe you can with company.getId too
-//        vehicle.setVehicleType1(VehicleTypeDAO.getVehicleTypeById(2));//maybe you can with company.getId too
-//        //Vehicle CREATED TODO: UPDATE & DELETE 3. ot zadanieto
-//        VehicleDAO.createVehicle(vehicle);
-//        vehicle.setId(1);
-//        VehicleDAO.updateVehicle(vehicle);
+        //1. - UPDATE companies by setting
+        dhl.setGoodsTripPrice(BigDecimal.valueOf(5));
+        dhl.setPassengerTripPrice(BigDecimal.valueOf(10));
+
+        speedy.setGoodsTripPrice(BigDecimal.valueOf(2.5));
+        speedy.setPassengerTripPrice(BigDecimal.valueOf(10));
+
+        fedEX.setGoodsTripPrice(BigDecimal.valueOf(3));
+        fedEX.setPassengerTripPrice(BigDecimal.valueOf(10));
+
+        ups.setGoodsTripPrice(BigDecimal.valueOf(2));
+        ups.setPassengerTripPrice(BigDecimal.valueOf(10));
+
+        TransportCompanyDAO.saveOrUpdateCompany(dhl);
+        TransportCompanyDAO.saveOrUpdateCompany(speedy);
+        TransportCompanyDAO.saveOrUpdateCompany(fedEX);
+        TransportCompanyDAO.saveOrUpdateCompany(ups);
 
 
-//        Vehicle vehicle2 = new Vehicle();
-//        vehicle2.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(2));//maybe you can with company.getId too
-//        vehicle2.setVehicleType1(VehicleTypeDAO.getVehicleTypeById(2));
-//        VehicleDAO.createVehicle(vehicle2);
-//        vehicle2.setId(2);
-//        VehicleDAO.updateVehicle(vehicle2);
+        //display them all
+//        TransportCompanyDAO.getCompanies().stream().forEach(System.out::println);
+
+        //by using DTO
+//        TransportCompanyDAO.getCompaniesDTO().stream().forEach(System.out::println);
+
+        //1. - DELETING
+//        TransportCompanyDAO.deleteCompany(ups);
+//        TransportCompanyDAO.deleteTransportCompanyById(4);
+
+        //count companies
+        System.out.println("Total number of companies: " + TransportCompanyDAO.countCompanies());
+
+        // 8. trying to add an invalid company - everything works fine here
+//        TransportCompany invCompany = new TransportCompany("toomuchcharactersinthiscompanynameidkwheretostartidkwheretostartmustchangeitlatersperhapsorperhapsnot");
+//        TransportCompany invCompany2 = new TransportCompany("econt");
+//        TransportCompanyDAO.createCompany(invCompany);
+//        TransportCompanyDAO.createCompany(invCompany2);
 
 
-        Vehicle vehicle3 = new Vehicle();
-//        vehicle3.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(2));//maybe you can with company.getId too
-//        vehicle3.setVehicleType1(VehicleTypeDAO.getVehicleTypeById(1));
-//        VehicleDAO.createVehicle(vehicle3);
-//        vehicle3.setId(3);
-//        VehicleDAO.updateVehicle(vehicle3);
-//
+        /////////////////////////////////////////   2. EMPLOYEE     ///////////////////////////////////
+        Employee employee1 = new Employee("Petar Petrov");
+        employee1.setId(1);
+        employee1.setTransportCompany(dhl);
+        employee1.setSalary(BigDecimal.valueOf(2200));
+
+        Employee employee2 = new Employee("Ivan Ivanov");
+        employee2.setId(2);
+        employee2.setTransportCompany(fedEX);
+        employee2.setSalary(BigDecimal.valueOf(6500));
+
+
+        Employee employee3 = new Employee("Gosheto Qkiq");
+        employee3.setId(3);
+        employee3.setTransportCompany(speedy);
+        employee3.setSalary(BigDecimal.valueOf(3200));
+
+
+        Employee employee4 = new Employee("Smotlio Smotlev");
+        employee4.setId(4);
+        employee4.setTransportCompany(ups);
+        employee4.setSalary(BigDecimal.valueOf(2300));
+
+
+        EmployeeDAO.saveOrUpdateEmployee(employee1);
+        EmployeeDAO.saveOrUpdateEmployee(employee2);
+        EmployeeDAO.saveOrUpdateEmployee(employee3);
+        EmployeeDAO.saveOrUpdateEmployee(employee4);
+
+        //list all employees
+//        EmployeeDAO.getEmployeesDTO().stream().forEach(System.out::println);//todo:fix it;
+
+        /////////////////////////////////////// 3.CUSTOMER  //////////////////////////////////////////
+
+        Customer customer1 = new Customer("Tosho", "Gosho");
+        customer1.setId(1);
+        Customer customer2 = new Customer("Petar", "Stoqnov");
+        customer2.setId(2);
+
+        CustomerDAO.saveOrUpdateCustomer(customer1);
+        CustomerDAO.saveOrUpdateCustomer(customer2);
+
+        // 2. display clients
+        CustomerDAO.getClientsDTO().stream().forEach(System.out::println);
+
+        /////////////////////////////////////// 4. TripDetails  //////////////////////////////////////
+        LocalDate currentDate = LocalDate.now();
+
+        TripDetails tripDetails1 = new TripDetails("Main Str.", "Park Ave.",
+                currentDate, LocalDate.of(2024, 4, 15),
+                TransportCompanyDAO.getTransportCompanyById(1));
+        tripDetails1.setId(1);
+
+        TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
+                currentDate, LocalDate.of(2024, 5, 20),
+                TransportCompanyDAO.getTransportCompanyById(2));
+        tripDetails2.setId(2);
+
+        TripDetails tripDetails3 = new TripDetails("Pine Str.", "Maple Str.",
+                currentDate, LocalDate.of(2024, 6, 25),
+                TransportCompanyDAO.getTransportCompanyById(3));
+        tripDetails3.setId(3);
+
+        TripDetails tripDetails4 = new TripDetails("Cherry Str.", "Walnut Str.",
+                currentDate, LocalDate.of(2024, 7, 30),
+                TransportCompanyDAO.getTransportCompanyById(4));
+        tripDetails4.setId(4);
+
+        TripDAO.saveOrUpdateTripDetails(tripDetails1);
+        TripDAO.saveOrUpdateTripDetails(tripDetails2);
+        TripDAO.saveOrUpdateTripDetails(tripDetails3);
+        TripDAO.saveOrUpdateTripDetails(tripDetails4);
+
+        //deletion
+//        TripDAO.deleteTrip(TripDAO.getTripDetailsById(3));
+
+        ////////////////////////////  5.  VEHICLE TYPES AND VEHICLES ///////////////////////////////////////
+        //CREATING THE TYPES
+        VehicleType vehicleType1 = new VehicleType("Bus");
+        vehicleType1.setId(1);
+        VehicleType vehicleType2 = new VehicleType("Truck");
+        vehicleType2.setId(2);
+        VehicleType vehicleType3 = new VehicleType("Boat");
+        vehicleType3.setId(3);
+        VehicleType vehicleType4 = new VehicleType("Plane");
+        vehicleType4.setId(4);
+
+        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType1);
+        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType2);
+        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType3);
+        VehicleTypeDAO.saveOrUpdateVehicleType(vehicleType4);
+
+        //list them all
+        VehicleTypeDAO.getVehicleTypes().stream().forEach(System.out::println);
+
+        //NOW VEHICLES
+        Vehicle vehicle1 = new Vehicle(TransportCompanyDAO.getTransportCompanyById(1), VehicleTypeDAO.getVehicleTypeById(1));
+        vehicle1.setId(1);
+        Vehicle vehicle2 = new Vehicle(TransportCompanyDAO.getTransportCompanyById(2), VehicleTypeDAO.getVehicleTypeById(2));
+        vehicle2.setId(2);
+        Vehicle vehicle3 = new Vehicle(fedEX, vehicleType3);
+        vehicle3.setId(3);
+
+        VehicleDAO.saveOrUpdateVehicle(vehicle1);
+        VehicleDAO.saveOrUpdateVehicle(vehicle2);
+        VehicleDAO.saveOrUpdateVehicle(vehicle3);
+
+        //deletion
 //        VehicleDAO.deleteVehicleById(3);
-//
-//    //////////////////////////////////////EMPLOYEES 4.    ////////////////////////////////////////////
-////        CREATE
-//        Employee employee1 = new Employee("Smeshniqt Pesho");
-//        EmployeeDAO.createEmployee(employee1);
-//        employee1.setId(1); //remember to increment id when creating a new one
-//        EmployeeDAO.updateEmployee(employee1);
-//        //update
-//        employee1.setSalary(BigDecimal.valueOf(3000));
-//        employee1.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));
-//        EmployeeDAO.updateEmployee(employee1);
-//        //DELETE
-//        EmployeeDAO.deleteEmployeeById(2);
-        //UPDATE - WORKS
-//        Employee employee2 = new Employee("Gosho Peshov");
-//        EmployeeDAO.createEmployee(employee2);
-//        employee2.setId(3); //remember to increment id when creating a new one
-//          employee2.setSalary(BigDecimal.valueOf(2000));
-//          employee2.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));
-//        EmployeeDAO.updateEmployee(employee2);
-
-
-        Vehicle vehicle1 = new Vehicle(wonkaCompany, VehicleTypeDAO.getVehicleTypeById(1));
-
-
-
-
-        ///////////////////////////// TRIP 5. /////////////////////////////////////////////////
-//        Before creating a trip with 3.trip detail, we need goods, and to have 2.goods, we need things in
-//        1.goodsType
-        //CREATE
-        GoodsType goodsType1 = new GoodsType("STOKA");
-//        GoodsTypeDAO.createGoodsType(goodsType1);
-//        goodsType1.setIdOfPositionType(1);
-//        GoodsTypeDAO.updateGoodsType(goodsType1);
-
-        //create another one
-        GoodsType goodsType2 = new GoodsType("PASSENGERS");
-//        GoodsTypeDAO.createGoodsType(goodsType2);
-//        goodsType2.setPositionType("PASSENGERS");
-//        goodsType2.setIdOfPositionType(2);
-//        GoodsTypeDAO.updateGoodsType(goodsType2);
-//        //TODO:CREATE goods objects
-        Goods goods1 = new Goods("Gotini Stoki",2.2, goodsType1); //TODO: Maybe make another constructor, with
-//        GoodsDAO.createGoods(goods1);
-
-        TripDetails tripDetails = new TripDetails("Santa Str.", "Baker Str.",
-                LocalDate.now(), LocalDate.of(2024, 3, 12),
-                TransportCompanyDAO.getTransportCompanyById(1), VehicleDAO.getVehicleById(1));
-//        //TODO: validate so that the departure date is now and cannot be beyond arrival and the other way around. mby use validation annotaion
-//        TripDAO.createTrip(tripDetails);
-//        tripDetails.setId(1);
-//        TripDAO.updateVehicle(tripDetails);
-
-        TripDetails tripDetails2 = new TripDetails("Yantra Str.", "Shoko Str.",
-                LocalDate.now(), LocalDate.of(2024, 6, 20),
-                TransportCompanyDAO.getTransportCompanyById(1), VehicleDAO.getVehicleById(1));
-////        //TODO: validate so that the departure date is now and cannot be beyond arrival and the other way around. mby use validation annotaion
-//        TripDAO.createTrip(tripDetails2);
-//        tripDetails2.setId(3);
-//        //UPDATE
-//        tripDetails2.setEndPoint("Abbey Road");
-//        TripDAO.updateVehicle(tripDetails2);
-        //DELETE
-//        TripDAO.deleteTripDetailById(4);
-
-        ////////////////////////////////TESTING CRUD IN CUSTOMER_OBLIGATIONS
-        CustomerObligation customerObligation = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
-//        CustomerObligationDAO.createCustomerObligation(customerObligation); //TODO: FIX THE TransientObjectException
-        //UPDATE
-//        customerObligation.setId(4);
-//        customerObligation.setTripDetails(TripDAO.getTripDetailsById(1));
-        //TODO: ADD UPDATE METHOD IN THE DAO
-//        CustomerObligationDAO.saveOrUpdateCustomerObligation(customerObligation);
-
-        CustomerObligation customerObligation2 = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
-//        CustomerObligationDAO.createCustomerObligation(customerObligation2); //TODO: FIX THE TransientObjectException
-        //UPDATE
-//        customerObligation2.setId(5);
-//        customerObligation2.setTripDetails(TripDAO.getTripDetailsById(1));
-        //DELETE
-//        CustomerObligationDAO.deleteCustomerObligationById(7);
-        //GET ALL
-//        CustomerObligationDAO.getAllCustomerObligations();
-
-//        ////////////////////////////        7.          //////////////////////////////////////////
-//
-//        //A.
-//        System.out.println("7. A ot zadanieto");
-//        TransportCompanyDAO.getOrderedCompaniesByName();    // ordered by name in ascending order.
-//
-//        //TODO: B
-//
-//        //C.
-//        //GET 1 ByDestination
-//        TripDAO.getOrderedTripDetailsByDestination();
-//        //GET 2
-////        System.out.println("NOW WERE GOING TO TRY TO FIND ABBEY ROAD");
-//        TripDAO.tripDetailsFindByDestination("Abbey Road");
-//
-
-
-
-        ////////////////////////////////////ADDING QUALIFICATION TYPES/////////////////////////////////
-
-//        QualificationType qualificationType = new QualificationType("Car");
-////        QualificationTypeDAO.addQualificationType(qualificationType);
-//
-//        System.out.println("EMPLOYEEEEEEEEEEEEEEES");
-//        EmployeeDAO.getEmployeeDTO();
-//        System.out.println("EMPLOYEEEEE QUALIFICATION");
-//        //EmployeeDAO.employeesFindByQualificationById(1);
-//
-//        /////////////////////////////////////////   8. de/Serialization ///////////////////////////////
-//        String filepath = "/home/xor7/Documents/GitHub/CSCB525_transport_company/CSCB525_transport_company/src/main/java/org/example/serializedFiles/tripDetails.ser";
-//        TripDetailsSerializer serializer = new TripDetailsSerializer();
-//        serializer.serialize(tripDetails, filepath);
-//
-//        TripDetailsDeserializer deserializer = new TripDetailsDeserializer();
-//        TripDetails deserializedTripDetails = deserializer.deserialize(filepath);
-//        System.out.println("deserialized trip details:");
-//        System.out.println(deserializedTripDetails);
-
-
+        //LIST THEM ALL
+//        VehicleDAO.getVehicles().forEach(System.out::println);    //todo: fix: .LazyInitializationException
+        //TODO: START FROM 106 LINE
+        //TODO: REMOVE CUSTOMER OBLIGATIONS TABLE
+``
     }
 }
