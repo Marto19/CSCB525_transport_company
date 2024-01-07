@@ -187,7 +187,15 @@ public class Main {
         //GET ALL
 //        CustomerObligationDAO.getAllCustomerObligations();
 
+        ////////////////////////////////////ADDING QUALIFICATION TYPES/////////////////////////////////
 
+        QualificationType qualificationType = new QualificationType("Car");
+        QualificationTypeDAO.addQualificationType(qualificationType);
+
+        System.out.println("EMPLOYEEEEEEEEEEEEEEES");
+        EmployeeDAO.getEmployeeDTO();
+        System.out.println("EMPLOYEEEEE QUALIFICATION");
+        //EmployeeDAO.employeesFindByQualificationById(1);
 
     }
 }

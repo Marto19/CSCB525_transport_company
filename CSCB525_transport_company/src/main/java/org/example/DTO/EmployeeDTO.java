@@ -3,15 +3,17 @@ package org.example.DTO;
 import org.example.entity.QualificationType;
 import org.example.entity.TransportCompany;
 
+import java.util.Set;
+
 public class EmployeeDTO {
     private long id;
-    private QualificationType qualificationType;
+    private Set<QualificationType> qualificationTypeSet;
     private String name;
     private TransportCompany transportCompany;
 
-    public EmployeeDTO(long id, QualificationType qualificationType, String name, TransportCompany transportCompany) {
+    public EmployeeDTO(long id, Set<QualificationType> qualificationTypeSet, String name, TransportCompany transportCompany) {
         this.id = id;
-        this.qualificationType = qualificationType;
+        this.qualificationTypeSet = qualificationTypeSet;
         this.name = name;
         this.transportCompany = transportCompany;
     }
@@ -20,8 +22,8 @@ public class EmployeeDTO {
         return id;
     }
 
-    public QualificationType getQualificationType() {
-        return qualificationType;
+    public Set<QualificationType> getQualificationTypeSet() {
+        return qualificationTypeSet;
     }
 
     public String getName() {
@@ -36,7 +38,7 @@ public class EmployeeDTO {
     public String toString() {
         return "EmployeeDto{" +
                 "id=" + id +
-                ", qualificationType=" + qualificationType +
+                ", qualificationTypeSet=" + qualificationTypeSet +
                 ", name='" + name + '\'' +
                 ", transportCompany=" + transportCompany +
                 '}';

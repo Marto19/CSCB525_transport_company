@@ -1,14 +1,22 @@
     package org.example.DAO;
 
+    import org.example.DTO.EmployeeDTO;
     import org.example.configuration.SessionFactoryUtil;
     import org.example.entity.Employee;
+    import org.example.entity.QualificationType;
     import org.example.entity.TransportCompany;
     import org.hibernate.HibernateException;
     import org.hibernate.Session;
     import org.hibernate.Transaction;
     import org.hibernate.query.Query;
 
+    import javax.persistence.criteria.CriteriaBuilder;
+    import javax.persistence.criteria.CriteriaQuery;
+    import javax.persistence.criteria.Join;
+    import javax.persistence.criteria.Root;
+    import java.math.BigDecimal;
     import java.util.List;
+    import java.util.stream.Collectors;
 
     public class EmployeeDAO {
 
@@ -200,10 +208,6 @@
         }
         //TODO: redo the method above
 
-//        public static void addObligations(BigDecimal salary){
-//
-//        }
-
         /**
          * Retrieves a driver employee from the system by its ID.
          *
@@ -226,5 +230,164 @@
             }
             return driverEmployee;
         }
+
+        /**
+         * This method retrieves all Employee entities from the database, transforms each Employee entity into an EmployeeDTO,
+         * and returns a list of these EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects. Each EmployeeDTO contains the id, qualificationTypeSet, name, and transportCompany
+         *         of an Employee entity.
+         *
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> getEmployeeDTO(){
+            List<Employee> employees;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
+                Transaction transaction = session.beginTransaction();
+                employees = session.createQuery("from Employee e", Employee.class).getResultList();
+                transaction.commit();
+            }
+            return employees.stream()
+                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                    .collect(Collectors.toList());
+        }
+        /**
+         * This method retrieves all Employee entities from the database with salaries between two specified values,
+         * and returns a list of these Employees.
+         *
+         * @param bottom The lower bound of the salary range.
+         * @param top The upper bound of the salary range.
+         * @return A List of Employee objects with salaries between the bottom and top values.
+         *
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<Employee> findEmployeesBetweenSalary(BigDecimal bottom, BigDecimal top){
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+                Root<Employee> root = criteriaQuery.from(Employee.class);
+
+                criteriaQuery.select(root).where((criteriaBuilder.between(root.get("salary"),bottom, top)));
+
+                Query<Employee> query = session.createQuery(criteriaQuery);
+                return query.getResultList();
+            }
+        }
+
+
+
+
+        /**
+         * Retrieves all Employee entities from the database with a specific qualification type and transforms them into EmployeeDTOs.
+         *
+         * @param qualificationType The qualification type to filter employees by.
+         * @return A List of EmployeeDTO objects with the specified qualification type.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> employeesFindByQualification(QualificationType qualificationType) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                CriteriaBuilder cb = session.getCriteriaBuilder();
+                CriteriaQuery<Employee> cr = cb.createQuery(Employee.class);
+                Root<Employee> root = cr.from(Employee.class);
+                Join<Employee, QualificationType> join = root.join("qualificationTypeSet");
+
+                cr.select(root).where(cb.equal(join.get("name"), qualificationType.getName()));
+
+                Query<Employee> query = session.createQuery(cr);
+                List<Employee> employees = query.getResultList();
+
+                return employees.stream()
+                        .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                        .collect(Collectors.toList());
+            }
+        }
+
+        /**
+         * Retrieves all Employee entities from the database with a specific qualification type ID and transforms them into EmployeeDTOs.
+         *
+         * @param id The ID of the qualification type to filter employees by.
+         * @return A List of EmployeeDTO objects with the specified qualification type.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> employeesFindByQualificationById(long id) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                CriteriaBuilder cb = session.getCriteriaBuilder();
+                CriteriaQuery<Employee> cr = cb.createQuery(Employee.class);
+                Root<Employee> root = cr.from(Employee.class);
+                Join<Employee, QualificationType> join = root.join("qualificationTypeSet");
+
+                cr.select(root).where(cb.equal(join.get("id"), id));
+
+                Query<Employee> query = session.createQuery(cr);
+                List<Employee> employees = query.getResultList();
+
+                return employees.stream()
+                        .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                        .collect(Collectors.toList());
+            }
+        }
+
+
+        /**
+         * Retrieves all Employee entities from the database, ordered by salary in ascending order, and transforms them into EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects ordered by salary from lowest to highest.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> getOrderedEmployeesBySalaryASC() {
+            List<Employee> employees;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                employees = session.createQuery("Select c From Employee c" +
+                                " ORDER BY c.salary", Employee.class)
+                        .getResultList();
+                transaction.commit();
+            }
+            return employees.stream()
+                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                    .collect(Collectors.toList());
+        }
+
+        /**
+         * Retrieves all Employee entities from the database, ordered by salary in descending order, and transforms them into EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects ordered by salary from highest to lowest.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> getOrderedEmployeesBySalaryDESC() {
+            List<Employee> employees;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                employees = session.createQuery("Select c From Employee c" +
+                                " ORDER BY c.salary DESC", Employee.class)
+                        .getResultList();
+                transaction.commit();
+            }
+            return employees.stream()
+                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                    .collect(Collectors.toList());
+        }
+
+        /**
+         * Retrieves all Employee entities from the database, ordered by position in ascending order, and transforms them into EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects ordered by position.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> getOrderedEmployeesByPositionASC() {
+            List<Employee> employees;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                employees = session.createQuery("Select c From Employee c" +
+                                " ORDER BY CONCAT(c.positionType)", Employee.class)
+                        .getResultList();
+                transaction.commit();
+            }
+            return employees.stream()
+                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                    .collect(Collectors.toList());
+        }
+
+
 
     }
