@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.DAO.*;
+import org.example.SerializationDesrialization.TripDetailsDeserializer;
+import org.example.SerializationDesrialization.TripDetailsSerializer;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.*;
 
@@ -202,14 +204,23 @@ public class Main {
         ////////////////////////////////////ADDING QUALIFICATION TYPES/////////////////////////////////
 
         QualificationType qualificationType = new QualificationType("Car");
-        QualificationTypeDAO.addQualificationType(qualificationType);
+//        QualificationTypeDAO.addQualificationType(qualificationType);
 
         System.out.println("EMPLOYEEEEEEEEEEEEEEES");
         EmployeeDAO.getEmployeeDTO();
         System.out.println("EMPLOYEEEEE QUALIFICATION");
         //EmployeeDAO.employeesFindByQualificationById(1);
 
-        //
+        /////////////////////////////////////////   8. de/Serialization ///////////////////////////////
+        String filepath = "/home/xor7/Documents/GitHub/CSCB525_transport_company/CSCB525_transport_company/src/main/java/org/example/serializedFiles/tripDetails.ser";
+        TripDetailsSerializer serializer = new TripDetailsSerializer();
+        serializer.serialize(tripDetails, filepath);
+
+        TripDetailsDeserializer deserializer = new TripDetailsDeserializer();
+        TripDetails deserializedTripDetails = deserializer.deserialize(filepath);
+        System.out.println("deserialized trip details:");
+        System.out.println(deserializedTripDetails);
+
 
     }
 }
