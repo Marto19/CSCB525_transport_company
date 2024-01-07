@@ -38,7 +38,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY) //relationship 1:n - Customer:CustomerObligations
     private Set<CustomerObligation> customerObligation;
 
-    public Customer( String firstName, String lastName, List<OrderDetails> orderDetailsList) {
+    public Customer(String firstName, String lastName, BigDecimal balance, List<OrderDetails> orderDetailsList) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.balance = balance;
+        this.orderDetailsList = orderDetailsList;
+    }
+
+    public Customer(String firstName, String lastName, List<OrderDetails> orderDetailsList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.orderDetailsList = orderDetailsList;

@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,21 +32,22 @@ public class Goods {
     private GoodsType goodsType;
 
 
+//    @ManyToMany(fetch =  FetchType.LAZY)
+//    private Set<TripDetails> tripDetails = new HashSet<>();
     @ManyToMany(fetch =  FetchType.LAZY)
-    private Set<TripDetails> tripDetails = new HashSet<>();
-
+    private Set<OrderDetails> orderDetailsSet;
     public Goods(String name,@NotNull double weight, @NotNull GoodsType goodsType) {
         this.name = name;
         this.weight = weight;
         this.goodsType = goodsType;
     }
 
-    public Goods(String name, @NotNull double weight, GoodsType goodsType, Set<TripDetails> tripDetails) {
-        this.name = name;
-        this.weight = weight;
-        this.goodsType = goodsType;
-        this.tripDetails = tripDetails;
-    }
+//    public Goods(String name, @NotNull double weight, GoodsType goodsType) {
+//        this.name = name;
+//        this.weight = weight;
+//        this.goodsType = goodsType;
+////        this.tripDetails = tripDetails;
+//    }
 
     public Goods(){}
 

@@ -1,9 +1,6 @@
 package org.example.entity;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,6 +26,15 @@ public class TransportCompany implements Serializable {
     @PositiveOrZero
     private BigDecimal income;
 
+    @Column(name = "goods_trip_price_per_kg")
+    @Positive
+    private BigDecimal goodsTripPrice;
+
+    @Column(name = "passenger_trip_price")
+    @Positive
+    private BigDecimal passengerTripPrice;
+
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
 
@@ -44,6 +50,13 @@ public class TransportCompany implements Serializable {
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
 
+
+    public TransportCompany(String name, BigDecimal income, BigDecimal goodsTripPrice, BigDecimal passengerTripPrice) {
+        this.name = name;
+        this.income = income;
+        this.goodsTripPrice = goodsTripPrice;
+        this.passengerTripPrice = passengerTripPrice;
+    }
 
     public TransportCompany(String name, BigDecimal income) {
         this.name = name;
@@ -126,17 +139,39 @@ public class TransportCompany implements Serializable {
         this.vehicleListToTrip = vehicleListToTrip;
     }
 
+    public BigDecimal getGoodsTripPrice() {
+        return goodsTripPrice;
+    }
+
+    public void setGoodsTripPrice(BigDecimal goodsTripPrice) {
+        this.goodsTripPrice = goodsTripPrice;
+    }
+
+    public BigDecimal getPassengerTripPrice() {
+        return passengerTripPrice;
+    }
+
+    public void setPassengerTripPrice(BigDecimal passengerTripPrice) {
+        this.passengerTripPrice = passengerTripPrice;
+    }
+
+    public List<TripDetails> getTripDetailsList() {
+        return tripDetailsList;
+    }
+
+    public void setTripDetailsList(List<TripDetails> tripDetailsList) {
+        this.tripDetailsList = tripDetailsList;
+    }
+
+
     @Override
     public String toString() {
         return "TransportCompany{" +
                 "idTransportCompany=" + idTransportCompany +
                 ", name='" + name + '\'' +
                 ", income=" + income +
-//                ", employeeSet=" + employeeSet +
-//                ", vehicleListToVehicle=" + vehicleListToVehicle +
-//                ", obligationsSet=" + obligationsSet +
-//                ", tripList=" + tripDetailsList +
-//                ", vehicleListToTrip=" + vehicleListToTrip +
+                ", goodsTripPrice=" + goodsTripPrice +
+                ", passengerTripPrice=" + passengerTripPrice +
                 '}';
     }
 
@@ -145,11 +180,11 @@ public class TransportCompany implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransportCompany that = (TransportCompany) o;
-        return idTransportCompany == that.idTransportCompany && Objects.equals(name, that.name) && Objects.equals(income, that.income) && Objects.equals(employeeSet, that.employeeSet) && Objects.equals(vehicleListToVehicle, that.vehicleListToVehicle) && Objects.equals(obligationsSet, that.obligationsSet) && Objects.equals(tripDetailsList, that.tripDetailsList) && Objects.equals(vehicleListToTrip, that.vehicleListToTrip);
+        return idTransportCompany == that.idTransportCompany && Objects.equals(name, that.name) && Objects.equals(income, that.income) && Objects.equals(goodsTripPrice, that.goodsTripPrice) && Objects.equals(passengerTripPrice, that.passengerTripPrice) && Objects.equals(employeeSet, that.employeeSet) && Objects.equals(vehicleListToVehicle, that.vehicleListToVehicle) && Objects.equals(obligationsSet, that.obligationsSet) && Objects.equals(tripDetailsList, that.tripDetailsList) && Objects.equals(vehicleListToTrip, that.vehicleListToTrip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTransportCompany, name, income, employeeSet, vehicleListToVehicle, obligationsSet, tripDetailsList, vehicleListToTrip);
+        return Objects.hash(idTransportCompany, name, income, goodsTripPrice, passengerTripPrice, employeeSet, vehicleListToVehicle, obligationsSet, tripDetailsList, vehicleListToTrip);
     }
 }

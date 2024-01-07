@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "order_details")
@@ -28,11 +29,13 @@ public class OrderDetails {
     @Positive
     private BigDecimal priceToPay;
     @OneToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "trip_id")
     private TripDetails tripDetails;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @ManyToMany(mappedBy = "orderDetailsSet", fetch = FetchType.LAZY)
+    private Set<Goods> goodsSet;
 
     public OrderDetails(String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
         this.firstName = firstName;

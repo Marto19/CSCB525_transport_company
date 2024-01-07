@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "trip_details")
@@ -41,10 +39,11 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
 
     //TODO: create goods table, because you'll need its foreign key here
     //creating the table
-    @ManyToMany(mappedBy = "tripDetails", fetch = FetchType.LAZY)    //TODO: MAKE IT MANY TO MANY
-    private Set<Goods> goodsList = new HashSet<>();
+//    @ManyToMany(mappedBy = "tripDetails", fetch = FetchType.LAZY)
+//    private Set<Goods> goodsList = new HashSet<>();
 
     @OneToOne
+    @JoinColumn(name = "order_details_id")
     private OrderDetails orderDetails;
     @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
     private CustomerObligation customerObligation;
@@ -58,8 +57,6 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
     private boolean isDestinationDifferentFromStartingPoint() {
         return startingPoint == null || endPoint == null || !startingPoint.equals(endPoint);
     }
-
-
 
     public TripDetails(@NotNull String startingPoint, @NotNull String endPoint,
                        LocalDate departureDate, LocalDate arrivalDate,
@@ -132,13 +129,13 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
         this.vehicle = vehicle;
     }
 
-    public Set<Goods> getGoodsList() {
-        return goodsList;
-    }
-
-    public void setGoodsList(Set<Goods> goodsList) {
-        this.goodsList = goodsList;
-    }
+//    public Set<Goods> getGoodsList() {
+//        return goodsList;
+//    }
+//
+//    public void setGoodsList(Set<Goods> goodsList) {
+//        this.goodsList = goodsList;
+//    }
 
     public OrderDetails getPayments() {
         return orderDetails;
