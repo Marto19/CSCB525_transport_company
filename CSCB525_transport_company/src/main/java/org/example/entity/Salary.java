@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import jakarta.validation.constraints.Positive;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -9,15 +10,16 @@ import java.math.BigDecimal;
 public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     @NotNull
     private long id;
     @Column(name = "amount")
+    @Positive
     private BigDecimal amount;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "transport_company_id")
     private TransportCompany transportCompany;
-    @OneToOne
+    @OneToOne//TODO: decide are we going to use this class
     private Employee employee;
 
     public Salary(BigDecimal amount) {

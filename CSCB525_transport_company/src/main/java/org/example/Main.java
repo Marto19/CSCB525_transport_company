@@ -211,7 +211,7 @@ public class Main {
 //        CustomerObligationDAO.createCustomerObligation(customerObligation); //TODO: FIX THE TransientObjectException
         //UPDATE
 //        customerObligation.setId(4);
-//        customerObligation.setTripDetails(TripDetailsDAO.getTripDetailsById(1));
+//        customerObligation.setTripDetails(TripDAO.getTripDetailsById(1));
         //TODO: ADD UPDATE METHOD IN THE DAO
 
     }

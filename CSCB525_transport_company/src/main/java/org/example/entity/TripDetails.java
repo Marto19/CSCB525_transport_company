@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -12,14 +14,15 @@ import java.util.Set;
 public class TripDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @NotNull
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
     @Column(name = "starting_point")
     @NotNull
+    @Size(min = 4, max = 100, message = "Starting point must be between 4 and 100 characters")
     private String startingPoint;
     @Column(name = "end_point")
     @NotNull
+    @Size(min = 7, max = 100, message = "End point must be between 4 and 100 characters long!")
     private String endPoint;
     @Column(name = "departure_date")
     private LocalDate departureDate;
@@ -33,6 +36,8 @@ public class TripDetails {
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
+    //TODO: add cost column?
+
     //TODO: create goods table, because you'll need its foreign key here
     //creating the table
     @ManyToMany(mappedBy = "tripDetails", fetch = FetchType.LAZY)    //TODO: MAKE IT MANY TO MANY
@@ -43,6 +48,15 @@ public class TripDetails {
     @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
     private CustomerObligation customerObligation;
 
+    @AssertTrue(message = "Departure date should be before the arrival date!")
+    private boolean isDepartureBeforeArrival() {
+        return departureDate == null || arrivalDate == null || !departureDate.isAfter(arrivalDate);
+    }
+
+    @AssertTrue(message = "Destination must be different from the starting point!")
+    private boolean isDestinationDifferentFromStartingPoint() {
+        return startingPoint == null || endPoint == null || !startingPoint.equals(endPoint);
+    }
 
 
 
@@ -55,37 +69,11 @@ public class TripDetails {
         this.arrivalDate = arrivalDate;
         this.transportCompany = transportCompany;
         this.vehicle = vehicle;
-//        this.goodsList = goodsList;
-//        this.orderDetails = orderDetails;
+
     }
 
     public TripDetails(){}
 
-//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate) {
-//        this.startingPoint = startingPoint;
-//        this.endPoint = endPoint;
-//        this.departureDate = departureDate;
-//        this.arrivalDate = arrivalDate;
-//    }
-//
-//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, Vehicle vehicle, List<Goods> goodsList) {
-//        this.startingPoint = startingPoint;
-//        this.endPoint = endPoint;
-//        this.departureDate = departureDate;
-//        this.arrivalDate = arrivalDate;
-//        this.goodsList = goodsList;
-//    }
-
-//    public TripDetails(@NotNull String startingPoint, @NotNull String endPoint, LocalDate departureDate, LocalDate arrivalDate, TransportCompany transportCompany, Vehicle vehicle, List<Goods> goodsList, OrderDetails orderDetails) {
-//        this.startingPoint = startingPoint;
-//        this.endPoint = endPoint;
-//        this.departureDate = departureDate;
-//        this.arrivalDate = arrivalDate;
-//        this.transportCompany = transportCompany;
-//        this.vehicle = vehicle;
-//        this.goodsList = goodsList;
-//        this.orderDetails = orderDetails;
-//    }
 
     public long getId() {
         return id;

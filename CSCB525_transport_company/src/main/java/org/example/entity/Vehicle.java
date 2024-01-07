@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne(fetch =  FetchType.LAZY)

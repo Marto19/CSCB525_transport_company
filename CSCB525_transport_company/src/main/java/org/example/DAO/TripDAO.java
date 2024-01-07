@@ -4,7 +4,11 @@ import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.TripDetails;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class TripDAO {
@@ -41,6 +45,23 @@ public class TripDAO {
         }
         return customerList;
     }
+
+    /**
+     * Retrieves a TripDetails from the database by its ID.
+     *
+     * @param id The ID of the TripDetails to be retrieved.
+     * @return The TripDetails object with the given ID, or null if not found.
+     */
+    public static TripDetails getTripDetailsById(long id) {
+        TripDetails tripDetails;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            tripDetails = session.get(TripDetails.class, id);
+            transaction.commit();
+        }
+        return tripDetails;
+    }
+
 
 
     /**
@@ -81,6 +102,9 @@ public class TripDAO {
         }
     }
 
+
+
+
     /**
      * Deletes a trip record from the database.
      *
@@ -95,6 +119,41 @@ public class TripDAO {
             Transaction transaction = session.beginTransaction();
             session.delete(trip);
             transaction.commit();
+        }
+    }
+
+    /**
+     * Retrieves a list of TripDetails based on a destination substring using criteria query.
+     *
+     * @param destinationSubstring The substring to search for in the destination field.
+     * @return List of TripDetails objects matching the destination substring.
+     */
+    public static List<TripDetails> tripDetailsFindByDestination(String destinationSubstring) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<TripDetails> cr = cb.createQuery(TripDetails.class);
+            Root<TripDetails> root = cr.from(TripDetails.class);
+            cr.select(root).where(cb.like(root.get("destination"), "%" + destinationSubstring + "%"));
+
+            Query<TripDetails> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+
+    /**
+     * Retrieves a list of TripDetails sorted lexicographically by destination.
+     *
+     * @return List of TripDetails objects ordered by destination.
+     */
+    public static List<TripDetails> getOrderedTripDetailsByDestination() {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<TripDetails> cr = cb.createQuery(TripDetails.class);
+            Root<TripDetails> root = cr.from(TripDetails.class);
+            cr.select(root).orderBy(cb.asc(root.get("destination")));
+
+            Query<TripDetails> query = session.createQuery(cr);
+            return query.getResultList();
         }
     }
 

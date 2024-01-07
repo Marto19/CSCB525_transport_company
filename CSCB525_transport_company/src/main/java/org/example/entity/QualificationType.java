@@ -9,10 +9,9 @@ import java.util.Set;
 public class QualificationType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name="id", nullable = false, unique = true)    private long id;
 
-    @Column(name = "qualification_type_name")
+    @Column(name = "qualification_type_name",  nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "qualificationTypeSet")

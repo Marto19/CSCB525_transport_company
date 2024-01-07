@@ -16,7 +16,7 @@ import java.util.*;
 public class TransportCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     private long idTransportCompany;
     @NotBlank(message = "Company name cannot be blank!")
     @Size(max = 20, message = "Company name has to be with up to 20 characters!")
