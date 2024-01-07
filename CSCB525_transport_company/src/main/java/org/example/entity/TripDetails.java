@@ -5,13 +5,14 @@ import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "trip_details")
-public class TripDetails {
+public class TripDetails implements Serializable {          ////8. ot zadanieto
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)

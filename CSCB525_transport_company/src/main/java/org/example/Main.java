@@ -161,12 +161,6 @@ public class Main {
 //        TripDAO.updateVehicle(tripDetails2);
         //DELETE
 //        TripDAO.deleteTripDetailById(4);
-        //GET 1 ByDestination
-        TripDAO.getOrderedTripDetailsByDestination();
-        //GET 2
-//        System.out.println("NOW WERE GOING TO TRY TO FIND ABBEY ROAD");
-//        TripDAO.tripDetailsFindByDestination("Abbey Road");
-
 
         ////////////////////////////////TESTING CRUD IN CUSTOMER_OBLIGATIONS
         CustomerObligation customerObligation = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
@@ -187,6 +181,24 @@ public class Main {
         //GET ALL
 //        CustomerObligationDAO.getAllCustomerObligations();
 
+        ////////////////////////////        7.          //////////////////////////////////////////
+
+        //A.
+        System.out.println("7. A ot zadanieto");
+        TransportCompanyDAO.getOrderedCompaniesByName();    // ordered by name in ascending order.
+
+        //TODO: B
+
+        //C.
+        //GET 1 ByDestination
+        TripDAO.getOrderedTripDetailsByDestination();
+        //GET 2
+//        System.out.println("NOW WERE GOING TO TRY TO FIND ABBEY ROAD");
+        TripDAO.tripDetailsFindByDestination("Abbey Road");
+
+
+
+
         ////////////////////////////////////ADDING QUALIFICATION TYPES/////////////////////////////////
 
         QualificationType qualificationType = new QualificationType("Car");
@@ -196,6 +208,8 @@ public class Main {
         EmployeeDAO.getEmployeeDTO();
         System.out.println("EMPLOYEEEEE QUALIFICATION");
         //EmployeeDAO.employeesFindByQualificationById(1);
+
+        //
 
     }
 }

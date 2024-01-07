@@ -1,6 +1,5 @@
 package org.example.DAO;
 
-import org.example.DTO.EmployeeDTO;
 import org.example.DTO.TransportCompanyDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.Employee;
@@ -8,7 +7,13 @@ import org.example.entity.TransportCompany;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -201,27 +206,103 @@ public class TransportCompanyDAO {
         }
         return company.getEmployeeSet();
     }
-    /**
-     * Retrieves a list of EmployeeDTO objects for a specific company from the database.
-     *
-     * @param id The id of the company.
-     * @return A list of EmployeeDTO objects.
-     */
+//    /**
+//     * Retrieves a list of EmployeeDTO objects for a specific company from the database.
+//     *
+//     * @param id The id of the company.
+//     * @return A list of EmployeeDTO objects.
+//     */
 
-    public static List<EmployeeDTO> getCompanyEmployeesDTO(long id) {
-        List<EmployeeDTO> employees;
+//    public static List<EmployeeDTO> getCompanyEmployeesDTO(long id) {
+//        List<EmployeeDTO> employees;
+//        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+//            Transaction transaction = session.beginTransaction();
+//            employees = session.createQuery(
+//                            "select new org.example.DTO.EmployeeDTO(e.id, e.qualificationType, e.name, e.transportCompany) from Employee e" +
+//                                    " join e.transportCompany c " +
+//                                    "where c.id = :id",
+//                            EmployeeDTO.class)
+//                    .setParameter("id", id)
+//                    .getResultList();
+//            transaction.commit();
+//        }
+//        return employees;
+//    }
+
+    /**
+     * Retrieves all TransportCompany entities from the database with a balance between two specified values.
+     *
+     * @param bottom The lower bound of the balance range.
+     * @param top The upper bound of the balance range.
+     * @return A List of TransportCompany objects with balances between the bottom and top values.
+     * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+     */
+    public static List<TransportCompany> companiesFindByBalanceBetween(BigDecimal bottom, BigDecimal top) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<TransportCompany> cr = cb.createQuery(TransportCompany.class);
+            Root<TransportCompany> root = cr.from(TransportCompany.class);
+
+            cr.select(root).where(cb.between(root.get("balance"), bottom, top));
+
+            Query<TransportCompany> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+    /**
+     * Retrieves all TransportCompany entities from the database with names starting with a specified string.
+     *
+     * @param name The string that the names of the TransportCompany entities should start with.
+     * @return A List of TransportCompany objects with names starting with the specified string.
+     * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+     */
+    public static List<TransportCompany> companiesFindByNameStartingWith(String name) {
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<TransportCompany> cr = cb.createQuery(TransportCompany.class);
+            Root<TransportCompany> root = cr.from(TransportCompany.class);
+
+            Predicate nameStartingWith = cb.like(root.get("name"), name + "%");
+
+            cr.select(root).where(nameStartingWith);
+
+            Query<TransportCompany> query = session.createQuery(cr);
+            List<TransportCompany> companies = query.getResultList();
+            return companies;
+        }
+    }
+    /**
+     * Retrieves all TransportCompany entities from the database, ordered by name in ascending order.
+     *
+     * @return A List of TransportCompany objects ordered by name.
+     * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+     */
+    public static List<TransportCompany> getOrderedCompaniesByName() {
+        List<TransportCompany> companies;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            employees = session.createQuery(
-                            "select new org.example.DTO.EmployeeDTO(e.id, e.qualificationType, e.name, e.transportCompany) from Employee e" +
-                                    " join e.transportCompany c " +
-                                    "where c.id = :id",
-                            EmployeeDTO.class)
-                    .setParameter("id", id)
+            companies = session.createQuery("Select c From TransportCompany c" +
+                            " ORDER BY c.name", TransportCompany.class)
                     .getResultList();
             transaction.commit();
         }
-        return employees;
+        return companies;
     }
-
+    /**
+     * Retrieves all TransportCompany entities from the database, ordered by income in ascending order.
+     *
+     * @return A List of TransportCompany objects ordered by income.
+     * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+     */
+    public static List<TransportCompany> getOrderedCompaniesByIncome() {
+        List<TransportCompany> companies;
+        try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            companies = session.createQuery("Select c From TransportCompany c" +
+                            " ORDER BY c.income", TransportCompany.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return companies;
+    }
 }
