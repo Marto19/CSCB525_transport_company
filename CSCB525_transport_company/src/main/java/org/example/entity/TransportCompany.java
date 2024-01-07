@@ -18,24 +18,32 @@ public class TransportCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private long idTransportCompany;
+
     @NotBlank(message = "Company name cannot be blank!")
     @Size(max = 20, message = "Company name has to be with up to 20 characters!")
     @Pattern(regexp = "^([A-Z]).*", message = "Company name has to start with capital letter!")
     @Column(name = "name")
     private String name;
+
     @Column(name = "income")
     @PositiveOrZero
     private BigDecimal income;
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //stranata, kqoto uprawlqwa wryzkata e w drugiq klas
     private Set<Employee> employeeSet = new HashSet<>();                //1:n - transportCompany:Employees
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY) //1:n - transportCompany:Vehicles
     private List<Vehicle> vehicleListToVehicle = new ArrayList<>();
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Obligations
     private Set<Salary> obligationsSet = new HashSet<>();
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)  //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<TripDetails> tripDetailsList = new ArrayList<>();
+
     @OneToMany(mappedBy = "transportCompany", fetch = FetchType.LAZY)   //1:n - transportCompany:Trip - attribute - vehicle to trip
     private List<Vehicle> vehicleListToTrip = new ArrayList<>();
+
 
     public TransportCompany(String name, BigDecimal income) {
         this.name = name;

@@ -1,9 +1,11 @@
 package org.example.entity;
 
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,14 +17,21 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false, unique = true)
     private long id;
+
     @Column(name = "first_name", nullable = false)
     @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
     @Pattern(regexp = "^([A-Z].*)", message = "First name should start with a capital letter!")
     private String firstName;
+
     @Column(name = "last_name", nullable = false)
     @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
     @Pattern(regexp = "^([A-Z].*)", message = "Last name should start with a capital letter!")
     private String lastName;
+
+    @PositiveOrZero
+    @Column(name="balance")
+    private BigDecimal balance = BigDecimal.ZERO;
+
     @OneToMany(mappedBy = "customer")
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
 

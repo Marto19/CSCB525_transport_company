@@ -133,7 +133,7 @@ public class TripDAO {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<TripDetails> cr = cb.createQuery(TripDetails.class);
             Root<TripDetails> root = cr.from(TripDetails.class);
-            cr.select(root).where(cb.like(root.get("destination"), "%" + destinationSubstring + "%"));
+            cr.select(root).where(cb.like(root.get("endPoint"), "%" + destinationSubstring + "%"));
 
             Query<TripDetails> query = session.createQuery(cr);
             return query.getResultList();
@@ -150,7 +150,7 @@ public class TripDAO {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<TripDetails> cr = cb.createQuery(TripDetails.class);
             Root<TripDetails> root = cr.from(TripDetails.class);
-            cr.select(root).orderBy(cb.asc(root.get("destination")));
+            cr.select(root).orderBy(cb.asc(root.get("endPoint")));
 
             Query<TripDetails> query = session.createQuery(cr);
             return query.getResultList();

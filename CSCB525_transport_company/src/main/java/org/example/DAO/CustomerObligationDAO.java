@@ -26,6 +26,21 @@ public class CustomerObligationDAO {
     }
 
     /**
+     * Updates an existing trip record in the database.
+     *
+     * @param customerObligation The updated TripDetails object.
+     * @throws IllegalArgumentException If the provided trip object is null.
+     */
+    public static void saveOrUpdateCustomerObligation(CustomerObligation customerObligation){
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            // it used to be saveOrUpdate(), but it's deprecated
+            session.merge(customerObligation);
+            transaction.commit();
+        }
+    }
+
+    /**
      * Retrieves a CustomerObligation from the database by its ID.
      *
      * @param id The ID of the CustomerObligation to be retrieved.

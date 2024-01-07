@@ -11,51 +11,6 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         SessionFactoryUtil.getSessionFactory().openSession();
-//    ////////////////////////////////////// COMPANY MAKING ////////////////////////////////////////////////
-//
-////        TransportCompany transportCompany = new TransportCompany("Wonka ltd.", BigDecimal.valueOf(10000));
-////        TransportCompany transportCompany2 = new TransportCompany("Stark Industries", BigDecimal.valueOf(10000));
-////        TransportCompanyDAO.saveOrUpdateCompany(transportCompany2);
-////        TransportCompanyDAO.deleteCompanyById(4);
-//
-//        ////////////////////////////////// CREATE OBLIGATIONS ////////////////////////////////////////////
-//
-//        Salary obligations = new Salary(BigDecimal.valueOf(2800));
-//        //TODO: add obligations to the obligation table throught the ObligationDAO
-//
-//        ////////////////////////////////// MAKING THE QUALIFICATION TYPE SET ////////////////////////////////
-//
-//        // Create a set of qualification types for the employee
-//        Set<QualificationType> qualificationTypeSet = new HashSet<>();
-//
-//        // Add qualification types to the set (example)
-//        QualificationType qualificationType1 = new QualificationType("Type 1");
-//        qualificationTypeSet.add(qualificationType1);
-//
-//        /////////////////////////////////// MAKING EMPLOYEE /////////////////////////////////////////
-//        // Create the Employee instance
-//
-////        Employee employee = new Employee("Martin Trenkov", BigDecimal.valueOf(3000));
-//        employee.setTransportCompany(TransportCompanyDAO.getTransportCompanyById(1));
-//        Employee employee = new Employee("Simona Velichkova", BigDecimal.valueOf(3000), TransportCompanyDAO.getTransportCompanyById(1));
-//        employee.setId(7);
-//        EmployeeDAO.createEmployee(employee);
-
-        //TODO: transportCompany_id column in Emloyee doesnt allow records to be
-        // save. Think how objects will be saved. Bassically data incompatability doesnt allow records to be recorded
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           ////////////////////////////////////////////   COMPANY  1.  //////////////////////////////
 //        //1.- CREATE company
@@ -206,20 +161,33 @@ public class Main {
 //        TripDAO.updateVehicle(tripDetails2);
         //DELETE
 //        TripDAO.deleteTripDetailById(4);
+        //GET 1 ByDestination
+        TripDAO.getOrderedTripDetailsByDestination();
+        //GET 2
+//        System.out.println("NOW WERE GOING TO TRY TO FIND ABBEY ROAD");
+//        TripDAO.tripDetailsFindByDestination("Abbey Road");
 
+
+        ////////////////////////////////TESTING CRUD IN CUSTOMER_OBLIGATIONS
         CustomerObligation customerObligation = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
 //        CustomerObligationDAO.createCustomerObligation(customerObligation); //TODO: FIX THE TransientObjectException
         //UPDATE
 //        customerObligation.setId(4);
 //        customerObligation.setTripDetails(TripDAO.getTripDetailsById(1));
         //TODO: ADD UPDATE METHOD IN THE DAO
+//        CustomerObligationDAO.saveOrUpdateCustomerObligation(customerObligation);
+
+        CustomerObligation customerObligation2 = new CustomerObligation(true, CustomerDAO.getCustomerById(1));
+//        CustomerObligationDAO.createCustomerObligation(customerObligation2); //TODO: FIX THE TransientObjectException
+        //UPDATE
+//        customerObligation2.setId(5);
+//        customerObligation2.setTripDetails(TripDAO.getTripDetailsById(1));
+        //DELETE
+//        CustomerObligationDAO.deleteCustomerObligationById(7);
+        //GET ALL
+//        CustomerObligationDAO.getAllCustomerObligations();
+
+
 
     }
 }
-// Simona's code
-
-//TODO: add client table, think about it, connect it with the payments - done
-//TODO: watch out for those DTO's properties. You will have to redo them with the properties you need
-//TODO: change the enums by making them entities and connect them - done for GoodsType - done
-
-//HAPPY NEW YEARS UPDATE

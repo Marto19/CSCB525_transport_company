@@ -88,7 +88,12 @@ public class CustomerDAO {
         return customer;
     }
 
-
+    /**
+     * Updates an existing trip record in the database.
+     *
+     * @param customer The updated TripDetails object.
+     * @throws IllegalArgumentException If the provided trip object is null.
+     */
     public static void saveOrUpdateCustomer(Customer customer){
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
