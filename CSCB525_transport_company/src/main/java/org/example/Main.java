@@ -191,6 +191,5 @@ public class Main {
 //        VehicleDAO.getVehicles().forEach(System.out::println);    //todo: fix: .LazyInitializationException
         //TODO: START FROM 106 LINE
         //TODO: REMOVE CUSTOMER OBLIGATIONS TABLE
-``
     }
 }
