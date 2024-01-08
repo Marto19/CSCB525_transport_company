@@ -47,8 +47,12 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
 //    private Set<Goods> goodsList = new HashSet<>();
 
 
-    @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
-    private CustomerObligation customerObligation;
+//    @OneToOne(mappedBy = "tripDetails", fetch = FetchType.LAZY) //relationship trip:customerObligations - 1:1
+//    private CustomerObligation customerObligation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee employee;
+
 
     @AssertTrue(message = "Departure date should be before the arrival date!")
     private boolean isDepartureBeforeArrival() {

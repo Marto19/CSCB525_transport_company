@@ -35,6 +35,9 @@ public class Employee {
     @ManyToMany
     private Set<org.example.entity.QualificationType> qualificationTypeSet = new HashSet<>(); //employee will create employee_qualification_type table
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private Set<TripDetails> tripDetailsSet;
+
     public Employee(@NotNull String name, BigDecimal salary, TransportCompany transportCompany) {
         this.name = name;
 //        this.qualificationTypeSet = qualificationTypeSet;

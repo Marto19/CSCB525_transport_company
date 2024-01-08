@@ -123,37 +123,6 @@ public class Main {
         // 2. display clients
         CustomerDAO.getClientsDTO().stream().forEach(System.out::println);
 
-        /////////////////////////////////////// 4. TripDetails  //////////////////////////////////////
-        LocalDate currentDate = LocalDate.now();
-
-        TripDetails tripDetails1 = new TripDetails("Main Str.", "Park Ave.",
-                currentDate, LocalDate.of(2024, 4, 15),
-                TransportCompanyDAO.getTransportCompanyById(1));
-        tripDetails1.setId(1);
-
-        TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
-                currentDate, LocalDate.of(2024, 5, 20),
-                TransportCompanyDAO.getTransportCompanyById(2));
-        tripDetails2.setId(2);
-
-        TripDetails tripDetails3 = new TripDetails("Pine Str.", "Maple Str.",
-                currentDate, LocalDate.of(2024, 6, 25),
-                TransportCompanyDAO.getTransportCompanyById(3));
-        tripDetails3.setId(3);
-
-        TripDetails tripDetails4 = new TripDetails("Cherry Str.", "Walnut Str.",
-                currentDate, LocalDate.of(2024, 7, 30),
-                TransportCompanyDAO.getTransportCompanyById(4));
-        tripDetails4.setId(4);
-
-        TripDAO.saveOrUpdateTripDetails(tripDetails1);
-        TripDAO.saveOrUpdateTripDetails(tripDetails2);
-        TripDAO.saveOrUpdateTripDetails(tripDetails3);
-        TripDAO.saveOrUpdateTripDetails(tripDetails4);
-
-        //deletion
-//        TripDAO.deleteTrip(TripDAO.getTripDetailsById(3));
-
         ////////////////////////////  5.  VEHICLE TYPES AND VEHICLES ///////////////////////////////////////
         //CREATING THE TYPES
         VehicleType vehicleType1 = new VehicleType("Bus");
@@ -189,6 +158,49 @@ public class Main {
 //        VehicleDAO.deleteVehicleById(3);
         //LIST THEM ALL
 //        VehicleDAO.getVehicles().forEach(System.out::println);    //todo: fix: .LazyInitializationException
+
+        /////////////////////////////////////// 4. TripDetails  //////////////////////////////////////
+        LocalDate currentDate = LocalDate.now();
+
+        TripDetails tripDetails1 = new TripDetails("Main Str.", "Park Ave.",
+                currentDate, LocalDate.of(2024, 4, 15),
+                TransportCompanyDAO.getTransportCompanyById(1));
+        tripDetails1.setId(1);
+
+        TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
+                currentDate, LocalDate.of(2024, 5, 20),
+                TransportCompanyDAO.getTransportCompanyById(2));
+        tripDetails2.setId(2);
+
+        TripDetails tripDetails3 = new TripDetails("Pine Str.", "Maple Str.",
+                currentDate, LocalDate.of(2024, 6, 25),
+                TransportCompanyDAO.getTransportCompanyById(3));
+        tripDetails3.setId(3);
+
+        TripDetails tripDetails4 = new TripDetails("Cherry Str.", "Walnut Str.",
+                currentDate, LocalDate.of(2024, 7, 30),
+                TransportCompanyDAO.getTransportCompanyById(4));
+        tripDetails4.setId(4);
+
+        TripDAO.saveOrUpdateTripDetails(tripDetails1);
+        TripDAO.saveOrUpdateTripDetails(tripDetails2);
+        TripDAO.saveOrUpdateTripDetails(tripDetails3);
+        TripDAO.saveOrUpdateTripDetails(tripDetails4);
+
+        System.out.println("ARRIVED TRIPS:" +   TripDAO.getCompletedTripsDTO());
+
+        System.out.println("NUMBER OF ARRIVED TRIPS: " + TripDAO.getCompletedTripsCountDTO());
+
+
+        //deletion
+//        TripDAO.deleteTrip(TripDAO.getTripDetailsById(3));
+
+        //////////////////////////////////////  ORDER DETAILS   //////////////////////////////////////
+        OrderDetails orderDetails1 = new OrderDetails(BigDecimal.valueOf(20), true, tripDetails1);
+        orderDetails1.setId(1);
+        OrderDetailsDAO.createOrder(orderDetails1, customer1.getId());
+
+
         //TODO: START FROM 106 LINE
         //TODO: REMOVE CUSTOMER OBLIGATIONS TABLE
     }

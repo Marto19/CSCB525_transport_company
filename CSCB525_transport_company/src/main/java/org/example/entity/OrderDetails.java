@@ -1,8 +1,6 @@
 package org.example.entity;
 
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -17,17 +15,22 @@ public class OrderDetails {
     @NotNull
     @Column(name = "id", nullable = false, unique = true)
     private long id;
-    @Column(name = "first_name")
-    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
-    @Pattern(regexp = "^([A-Z].*)", message = "First name should start with a capital letter!")
-    private String firstName;
-    @Column(name = "last_name")
-    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
-    @Pattern(regexp = "^([A-Z].*)", message = "Last name should start with a capital letter!")
-    private String lastName;
+//    @Column(name = "first_name")
+//    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
+//    @Pattern(regexp = "^([A-Z].*)", message = "First name should start with a capital letter!")
+//    private String firstName;
+//    @Column(name = "last_name")
+//    @Size(min = 1, max = 30, message = "Name must be between 1 and 30 characters long!")
+//    @Pattern(regexp = "^([A-Z].*)", message = "Last name should start with a capital letter!")
+//    private String lastName;
+
     @Column(name = "price_to_pay")
     @Positive
     private BigDecimal priceToPay;
+
+    @Column(name = "paying_status")
+    private boolean payingStatus;
+
     @OneToOne(fetch =  FetchType.LAZY)
     private TripDetails tripDetails;
     @ManyToOne(fetch =  FetchType.LAZY)
@@ -37,11 +40,24 @@ public class OrderDetails {
     @ManyToMany(mappedBy = "orderDetailsSet", fetch = FetchType.LAZY)
     private Set<Goods> goodsSet;
 
-    public OrderDetails(String firstName, String lastName, BigDecimal priceToPay, TripDetails tripDetails) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public OrderDetails( BigDecimal priceToPay, TripDetails tripDetails) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
         this.priceToPay = priceToPay;
         this.tripDetails = tripDetails;
+    }
+
+    public OrderDetails(BigDecimal priceToPay, boolean payingStatus, TripDetails tripDetails) {
+        this.priceToPay = priceToPay;
+        this.payingStatus = payingStatus;
+        this.tripDetails = tripDetails;
+    }
+
+    public OrderDetails(BigDecimal priceToPay, boolean payingStatus, TripDetails tripDetails, Customer customer) {
+        this.priceToPay = priceToPay;
+        this.payingStatus = payingStatus;
+        this.tripDetails = tripDetails;
+        this.customer = customer;
     }
 
     public OrderDetails(){}
@@ -54,21 +70,37 @@ public class OrderDetails {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public boolean getPayingStatus() {
+        return payingStatus;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPayingStatus(boolean payingStatus) {
+        this.payingStatus = payingStatus;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Set<Goods> getGoodsSet() {
+        return goodsSet;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setGoodsSet(Set<Goods> goodsSet) {
+        this.goodsSet = goodsSet;
     }
+
+    //    public String getFirstName() {
+//        return firstName;
+//    }
+//
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
+//
+//    public String getLastName() {
+//        return lastName;
+//    }
+//
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
 
     public BigDecimal getPriceToPay() {
         return priceToPay;
@@ -106,8 +138,8 @@ public class OrderDetails {
     public String toString() {
         return "OrderDetails{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
                 ", priceToPay=" + priceToPay +
 //                ", tripDetails=" + tripDetails +
 //                ", customer=" + customer +

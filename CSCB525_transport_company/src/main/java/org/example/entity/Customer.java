@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -35,8 +34,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY) //relationship 1:n - Customer:CustomerObligations
-    private Set<CustomerObligation> customerObligation;
+//    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY) //relationship 1:n - Customer:CustomerObligations
+//    private Set<CustomerObligation> customerObligation;
 
     public Customer(String firstName, String lastName, BigDecimal balance, List<OrderDetails> orderDetailsList) {
         this.firstName = firstName;
@@ -86,6 +85,14 @@ public class Customer {
 
     public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
         this.orderDetailsList = orderDetailsList;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DTO.CarriedOutTripsReferenceDTO;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.TripDetails;
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TripDAO {
@@ -39,11 +41,59 @@ public class TripDAO {
         List<TripDetails> customerList;
         try(Session session = SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
-            customerList = session.createQuery("select c from TripDetails ", TripDetails.class)
+            customerList = session.createQuery("select c from TripDetails c", TripDetails.class)
                     .getResultList();
             transaction.commit();
         }
         return customerList;
+    }
+    /**
+     * Retrieves the count of completed trips.
+     *
+     * @return The count of completed trips.
+     */
+    public static int getCompletedTripsCountDTO() {
+        int count;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<CarriedOutTripsReferenceDTO> cq = cb.createQuery(CarriedOutTripsReferenceDTO.class);
+
+            Root<TripDetails> root = cq.from(TripDetails.class);
+            cq.select(cb.construct(CarriedOutTripsReferenceDTO.class, root.get("arrivalDate"))).where(cb.lessThan(root.get("arrivalDate"), LocalDate.now()));
+
+            Query<CarriedOutTripsReferenceDTO> query = session.createQuery(cq);
+            count = query.getResultList().size();
+
+            transaction.commit();
+        }
+        return count;
+    }
+
+
+    /**
+     * Retrieves a list of completed trips.
+     *
+     * @return The list of completed trips as CarriedOutTripsReferenceDTO objects.
+     */
+    public static List<CarriedOutTripsReferenceDTO> getCompletedTripsDTO() {
+        List<CarriedOutTripsReferenceDTO> completedTrips;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<CarriedOutTripsReferenceDTO> cq = cb.createQuery(CarriedOutTripsReferenceDTO.class);
+
+            Root<TripDetails> root = cq.from(TripDetails.class);
+            cq.select(cb.construct(CarriedOutTripsReferenceDTO.class, root.get("arrivalDate"))).where(cb.lessThan(root.get("arrivalDate"), LocalDate.now()));
+
+            Query<CarriedOutTripsReferenceDTO> query = session.createQuery(cq);
+            completedTrips = query.getResultList();
+
+            transaction.commit();
+        }
+        return completedTrips;
     }
 
     /**
