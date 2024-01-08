@@ -182,10 +182,24 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(4));
         tripDetails4.setId(4);
 
+        //adding trips that have arrived
+
+        TripDetails tripDetails5 = new TripDetails("Cherry Str.", "Walnut Str.",
+                LocalDate.of(2023, 7, 30), LocalDate.of(2024, 1, 1),
+                TransportCompanyDAO.getTransportCompanyById(3));
+        tripDetails5.setId(5);
+
+        TripDetails tripDetails6 = new TripDetails("Cherry Str.", "Walnut Str.",
+                LocalDate.of(2023, 7, 30), LocalDate.of(2024, 1, 1),
+                TransportCompanyDAO.getTransportCompanyById(3));
+        tripDetails6.setId(6);
+
         TripDAO.saveOrUpdateTripDetails(tripDetails1);
         TripDAO.saveOrUpdateTripDetails(tripDetails2);
         TripDAO.saveOrUpdateTripDetails(tripDetails3);
         TripDAO.saveOrUpdateTripDetails(tripDetails4);
+        TripDAO.saveOrUpdateTripDetails(tripDetails5);
+        TripDAO.saveOrUpdateTripDetails(tripDetails6);
 
         System.out.println("ARRIVED TRIPS:" +   TripDAO.getCompletedTripsDTO());
 
@@ -196,9 +210,16 @@ public class Main {
 //        TripDAO.deleteTrip(TripDAO.getTripDetailsById(3));
 
         //////////////////////////////////////  ORDER DETAILS   //////////////////////////////////////
+        customer1.setBalance(BigDecimal.valueOf(2000));
+        CustomerDAO.saveOrUpdateCustomer(customer1);
+
         OrderDetails orderDetails1 = new OrderDetails(BigDecimal.valueOf(20), true, tripDetails1);
         orderDetails1.setId(1);
-        OrderDetailsDAO.createOrder(orderDetails1, customer1.getId());
+
+        OrderDetailsDAO.updateOrderDetails(orderDetails1);
+
+//        OrderDetailsDAO.saveOrUpdateCreateOrder(orderDetails1, customer1);  //TODO: makes new record, therefore its not setting  the id's properly
+
 
 
         //TODO: START FROM 106 LINE
