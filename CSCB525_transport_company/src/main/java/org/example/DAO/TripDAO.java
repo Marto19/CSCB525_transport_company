@@ -2,6 +2,7 @@ package org.example.DAO;
 
 import org.example.DTO.CarriedOutTripsReferenceDTO;
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.OrderDetails;
 import org.example.entity.TripDetails;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,6 +11,7 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -69,6 +71,30 @@ public class TripDAO {
             transaction.commit();
         }
         return count;
+    }
+
+    /**
+     * Retrieves the total price of completed trips.
+     *
+     * @return The total price of completed trips.
+     */
+    public static BigDecimal getTotalPriceOfCompletedTrips() {
+        BigDecimal totalPrice;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
+
+            Root<OrderDetails> root = cq.from(OrderDetails.class);
+            cq.select(cb.sum(root.get("priceToPay"))).where(cb.isTrue(root.get("payingStatus")));
+
+            Query<BigDecimal> query = session.createQuery(cq);
+            totalPrice = query.getSingleResult();
+
+            transaction.commit();
+        }
+        return totalPrice;
     }
 
 

@@ -6,6 +6,12 @@ import org.example.entity.OrderDetails;
 import org.example.exceptions.InsufficientBalanceException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 
 public class OrderDetailsDAO {
 
@@ -35,6 +41,9 @@ public class OrderDetailsDAO {
         }
         return order;
     }
+
+
+
 
     public static OrderDetails saveOrUpdateCreateOrder(OrderDetails orderDetails, Customer customer1) {
         OrderDetails order = null;

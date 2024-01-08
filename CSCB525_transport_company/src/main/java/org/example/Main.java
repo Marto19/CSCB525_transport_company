@@ -201,9 +201,11 @@ public class Main {
         TripDAO.saveOrUpdateTripDetails(tripDetails5);
         TripDAO.saveOrUpdateTripDetails(tripDetails6);
 
-        System.out.println("ARRIVED TRIPS:" +   TripDAO.getCompletedTripsDTO());
+        System.out.println("ARRIVED TRIPS: " +   TripDAO.getCompletedTripsDTO());        //9.
 
-        System.out.println("NUMBER OF ARRIVED TRIPS: " + TripDAO.getCompletedTripsCountDTO());
+        System.out.println("NUMBER OF ARRIVED TRIPS: " + TripDAO.getCompletedTripsCountDTO()); //9. a ot zadanieto
+
+        System.out.println("Total Price of Completed Trips: " + TripDAO.getTotalPriceOfCompletedTrips());   //TODO:check if it works okay
 
 
         //deletion
