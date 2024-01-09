@@ -273,6 +273,55 @@ public class Main {
 
         OrderDetailsDAO.saveOrUpdateCreateOrder(orderDetails1, customer1);  //TODO: makes new record, therefore its not setting  the id's properly
 
+
+        //////////////////////////////////////7.  CRITERIA AND SORTING   ///////////////////////////////////////////
+        System.out.println("createCompany:");
+        TransportCompanyDAO.createCompany(new TransportCompany(/* Provide transport company details */));
+
+        System.out.println("getTransportCompanyById:");
+        System.out.println(TransportCompanyDAO.getTransportCompanyById(1));
+
+        System.out.println("getCompanies:");
+        System.out.println(TransportCompanyDAO.getCompanies());
+
+        System.out.println("countCompanies:");
+        System.out.println(TransportCompanyDAO.countCompanies());
+
+        System.out.println("getCompaniesDTO:");
+        System.out.println(TransportCompanyDAO.getCompaniesDTO());
+
+        System.out.println("getCompanyEmployees:");
+        System.out.println(TransportCompanyDAO.getCompanyEmployees(1));
+
+//        System.out.println("companiesFindByBalanceBetween:");
+//        System.out.println(TransportCompanyDAO.companiesFindByBalanceBetween(BigDecimal.ZERO, BigDecimal.TEN));
+
+        System.out.println("companiesFindByNameStartingWith:");
+        System.out.println(TransportCompanyDAO.companiesFindByNameStartingWith("F"));
+
+        System.out.println("getOrderedCompaniesByName:");
+        System.out.println(TransportCompanyDAO.getOrderedCompaniesByName());
+
+        System.out.println("getOrderedCompaniesByIncome:");
+        System.out.println(TransportCompanyDAO.getOrderedCompaniesByIncome());
+
+
+
+        //B.
+        System.out.println();
+        System.out.println("getEmployeesByQualificationAndSalary:");
+        System.out.println(EmployeeDAO.getEmployeesByQualificationAndSalary(qualificationType4.getName(), BigDecimal.valueOf(2000), BigDecimal.valueOf(7000)));
+        System.out.println("getEmployeesWithSalaryAbove:");
+        System.out.println(EmployeeDAO.getEmployeesWithSalaryAbove(BigDecimal.valueOf(2000)));
+        System.out.println("getEmployeesWithSalaryBelow:");
+        System.out.println(EmployeeDAO.getEmployeesWithSalaryBelow(BigDecimal.valueOf(2000)));
+
+        System.out.println("getEmployeesWithSalaryBelowDTO:");
+        System.out.println(EmployeeDAO.getEmployeesWithSalaryBelowDTO(BigDecimal.valueOf(3400)));
+        System.out.println("getEmployeesWithSalaryAboveDTO:");
+        System.out.println(EmployeeDAO.getEmployeesWithSalaryAboveDTO(BigDecimal.valueOf(3400)));
+
+        //TODO: B.C
         ////////////////////////////////////////////////    9. REFERENCES   ///////////////////////////
 
         System.out.println("ARRIVED TRIPS: " +   TripDAO.getCompletedTripsDTO());        //9.
@@ -286,6 +335,8 @@ public class Main {
         System.out.println();
         EmployeeDAO.printDriversAndCompletedTripsCount();       //9.
         System.out.println();
+
+        System.out.println("Employee incomes: " + EmployeeDAO.getEmployeeIncomesDTO());
 
         //TODO: START FROM 106 LINE
         //TODO: REMOVE CUSTOMER OBLIGATIONS TABLE

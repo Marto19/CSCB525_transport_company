@@ -1,6 +1,7 @@
     package org.example.DAO;
 
     import org.example.DTO.EmployeeDTO;
+    import org.example.DTO.EmployeeIncomeDTO;
     import org.example.configuration.SessionFactoryUtil;
     import org.example.entity.Employee;
     import org.example.entity.QualificationType;
@@ -15,6 +16,7 @@
     import javax.persistence.criteria.Join;
     import javax.persistence.criteria.Root;
     import java.math.BigDecimal;
+    import java.util.ArrayList;
     import java.util.HashSet;
     import java.util.List;
     import java.util.Set;
@@ -173,7 +175,132 @@
             }
         }
 
+        public static List<EmployeeIncomeDTO> getEmployeeIncomesDTO() {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "SELECT e.id, e.name, e.salary " +
+                        "FROM Employee e";
 
+                Query<Object[]> query = session.createQuery(hql, Object[].class);
+                List<Object[]> results = query.getResultList();
+
+                List<EmployeeIncomeDTO> employeeIncomes = new ArrayList<>();
+                for (Object[] result : results) {
+                    long id = (long) result[0];
+                    String name = (String) result[1];
+                    BigDecimal salary = (BigDecimal) result[2];
+                    employeeIncomes.add(new EmployeeIncomeDTO(id, name, salary));
+                }
+
+                return employeeIncomes;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public static List<Employee> getEmployeesByQualificationAndSalary(String qualification,     //TODO
+                                                                          BigDecimal minSalary,
+                                                                          BigDecimal maxSalary) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "SELECT e " +
+                        "FROM Employee e " +
+                        "JOIN e.qualificationTypeSet qt " +
+                        "WHERE qt.name = :qualification " +
+                        "AND e.salary BETWEEN :minSalary AND :maxSalary " +
+                        "ORDER BY e.salary";
+
+                Query<Employee> query = session.createQuery(hql, Employee.class);
+                query.setParameter("qualification", qualification);
+                query.setParameter("minSalary", minSalary);
+                query.setParameter("maxSalary", maxSalary);
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public static List<Employee> getEmployeesWithSalaryBelow(BigDecimal salaryCap) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "FROM Employee e " +
+                        "WHERE e.salary < :salaryCap " +
+                        "ORDER BY e.salary";
+
+                Query<Employee> query = session.createQuery(hql, Employee.class);
+                query.setParameter("salaryCap", salaryCap);
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public static List<Employee> getEmployeesWithSalaryAbove(BigDecimal salaryFloor) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "FROM Employee e " +
+                        "WHERE e.salary > :salaryFloor " +
+                        "ORDER BY e.salary";
+
+                Query<Employee> query = session.createQuery(hql, Employee.class);
+                query.setParameter("salaryFloor", salaryFloor);
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public static List<EmployeeIncomeDTO> getEmployeesWithSalaryBelowDTO(BigDecimal salaryCap) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "SELECT e.id, e.name, e.salary " +
+                        "FROM Employee e " +
+                        "WHERE e.salary < :salaryCap " +
+                        "ORDER BY e.salary";
+
+                Query<Object[]> query = session.createQuery(hql, Object[].class);
+                query.setParameter("salaryCap", salaryCap);
+                List<Object[]> results = query.getResultList();
+
+                List<EmployeeIncomeDTO> employeeIncomes = new ArrayList<>();
+                for (Object[] result : results) {
+                    long id = (long) result[0];
+                    String name = (String) result[1];
+                    BigDecimal salary = (BigDecimal) result[2];
+                    employeeIncomes.add(new EmployeeIncomeDTO(id, name, salary));
+                }
+
+                return employeeIncomes;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        public static List<EmployeeIncomeDTO> getEmployeesWithSalaryAboveDTO(BigDecimal salaryFloor) {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "SELECT e.id, e.name, e.salary " +
+                        "FROM Employee e " +
+                        "WHERE e.salary > :salaryFloor " +
+                        "ORDER BY e.salary";
+
+                Query<Object[]> query = session.createQuery(hql, Object[].class);
+                query.setParameter("salaryFloor", salaryFloor);
+                List<Object[]> results = query.getResultList();
+
+                List<EmployeeIncomeDTO> employeeIncomes = new ArrayList<>();
+                for (Object[] result : results) {
+                    long id = (long) result[0];
+                    String name = (String) result[1];
+                    BigDecimal salary = (BigDecimal) result[2];
+                    employeeIncomes.add(new EmployeeIncomeDTO(id, name, salary));
+                }
+
+                return employeeIncomes;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         /**
          * Deletes an employee record from the database.
          *
@@ -363,8 +490,6 @@
                 return query.getResultList();
             }
         }
-
-
 
 
         /**
