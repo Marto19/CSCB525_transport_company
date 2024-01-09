@@ -9,14 +9,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 
-//TODO: connect qualification table with vehicletype table
-//my idea is that when we connect them with many to many relation ship a new table will be created
-// a new table will be created, and if somehow we take an id of one table it will correspond to a
-//record from other table, therefor not letting the employee drive something that he doesnt have a -
-//qualification for
 
-//todo: do the math
-//todo: make it so that when a an order is placed
 
 
 public class Main {
@@ -271,12 +264,12 @@ public class Main {
 
         OrderDetailsDAO.updateOrderDetails(orderDetails1);
 
-        OrderDetailsDAO.saveOrUpdateCreateOrder(orderDetails1, customer1);  //TODO: makes new record, therefore its not setting  the id's properly
+        OrderDetailsDAO.saveOrUpdateCreateOrder(orderDetails1, customer1);
 
 
         //////////////////////////////////////7.  CRITERIA AND SORTING   ///////////////////////////////////////////
         System.out.println("createCompany:");
-        TransportCompanyDAO.createCompany(new TransportCompany(/* Provide transport company details */));
+//        TransportCompanyDAO.createCompany(new TransportCompany(/* Provide transport company details */));
 
         System.out.println("getTransportCompanyById:");
         System.out.println(TransportCompanyDAO.getTransportCompanyById(1));
@@ -321,6 +314,10 @@ public class Main {
         System.out.println("getEmployeesWithSalaryAboveDTO:");
         System.out.println(EmployeeDAO.getEmployeesWithSalaryAboveDTO(BigDecimal.valueOf(3400)));
 
+        //C.
+        System.out.println("tripDetailsFindByDestination:");
+        System.out.println(TripDAO.tripDetailsFindByDestination("Walnut Str."));
+
         //TODO: B.C
         ////////////////////////////////////////////////    9. REFERENCES   ///////////////////////////
 
@@ -338,7 +335,27 @@ public class Main {
 
         System.out.println("Employee incomes: " + EmployeeDAO.getEmployeeIncomesDTO());
 
-        //TODO: START FROM 106 LINE
-        //TODO: REMOVE CUSTOMER OBLIGATIONS TABLE
+
+        ////////////////////////////////////TRYING DAOS //////////////////////////////////
+        System.out.println();
+        System.out.println("GET EMPLOYEES DTO:");
+        System.out.println(EmployeeDAO.getEmployees());
+        System.out.println(" ordered by position in ascending order:");
+//        System.out.println(EmployeeDAO.sortEmployeesByQualificationType(EmployeeDAO.getEmployees())); //todo: fix the method
+
     }
 }
+
+//TODO: make many to many qualification type and vehicle type and make check in the dao when creating a trip or smh
+//TODO: START FROM 106 LINE
+//TODO: REMOVE CUSTOMER OBLIGATIONS TABLE - done
+//TODO: makes new record, therefore its not setting  the id's properly - fixed
+
+//TODO: connect qualification table with vehicletype table
+//my idea is that when we connect them with many to many relation ship a new table will be created
+// a new table will be created, and if somehow we take an id of one table it will correspond to a
+//record from other table, therefor not letting the employee drive something that he doesnt have a -
+//qualification for
+
+//todo: do the math
+//todo: make it so that when a an order is placed

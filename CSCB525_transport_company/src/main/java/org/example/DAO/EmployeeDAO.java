@@ -17,7 +17,7 @@
     import javax.persistence.criteria.Root;
     import java.math.BigDecimal;
     import java.util.ArrayList;
-    import java.util.HashSet;
+    import java.util.Comparator;
     import java.util.List;
     import java.util.Set;
     import java.util.stream.Collectors;
@@ -44,15 +44,6 @@
             }
         }
 
-//        public static void createEmployee(Employee employee) {
-//            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-//                Transaction transaction = session.beginTransaction();
-//                // save() it's deprecated
-//                session.persist(employee);
-//                transaction.commit();
-//            }
-//        }
-
         /**
          * Retrieves a list of all employees from the database.
          *
@@ -68,8 +59,6 @@
             }
             return employeeList;
         }
-
-
 
         /**
          * Updates an existing employee record in the database.
@@ -88,48 +77,37 @@
             }
         }
 
-//        /**
-//         * Retrieves a list of EmployeeDTO objects from the database.
-//         *
-//         * @return A list of EmployeeDTO objects.
-//         */
-//        public static List<EmployeeDTO> getEmployeesDTO() {
-//            List<EmployeeDTO> employees;
-//            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-//                Transaction transaction = session.beginTransaction();
-//                employees = session
-//                        .createQuery("select new org.example.DTO.EmployeeDTO(e.id, e.qualificationTypeSet, e.name, e.transportCompany) " +
-//                                "from Employee e", EmployeeDTO.class)
-//                        .getResultList();
-//                transaction.commit();
-//            }
-//            return employees;
-//        }         //todo: fix it
-
-
         /**
-         * todo
-         * @param drivingQualification
-         * @param employee
+         * Retrieves a list of all employees.
+         * Each employee is represented as an EmployeeDTO object, which includes the employee's ID, qualification types, name, and transport company.
+         *
+         * @return List of EmployeeDTO objects representing all employees.
+         * @throws RuntimeException If an exception occurs during the database operation.
          */
-        public static void addDrivingQualificationToDriver(QualificationType drivingQualification, Employee employee) {
-            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-                Transaction transaction = session.beginTransaction();
-                if(employee == null) {
-                    employee = new Employee();
-                }
-                if(employee.getQualificationTypeSet() == null){
-                    Set<QualificationType> qualificationTypes = new HashSet<>();
-                    employee.setQualificationTypeSet(qualificationTypes);
-                }
-                employee.getQualificationTypeSet().add(drivingQualification);
-                // if the qualification is not in the database => add it; same for the driver
-                QualificationTypeDAO.saveOrUpdateQualificationType(drivingQualification);
-                EmployeeDAO.saveOrUpdateEmployee(employee);
+        public static List<EmployeeDTO> getEmployeesDTO() {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "SELECT e.id, e.qualificationTypeSet, e.name, e.transportCompany " +
+                        "FROM Employee e";
 
-                transaction.commit();
+                Query<Object[]> query = session.createQuery(hql, Object[].class);
+                List<Object[]> results = query.getResultList();
+
+                List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+                for (Object[] result : results) {
+                    long id = (long) result[0];
+                    Set<QualificationType> qualificationTypeSet = (Set<QualificationType>) result[1];
+                    String name = (String) result[2];
+                    TransportCompany transportCompany = (TransportCompany) result[3];
+                    employeeDTOs.add(new EmployeeDTO(id, qualificationTypeSet, name, transportCompany));
+                }
+
+                return employeeDTOs;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
         }
+
 
         /**
          * Retrieves a list of drivers along with the count of completed trips for each driver.
@@ -175,6 +153,13 @@
             }
         }
 
+        /**
+         * Retrieves a list of all employees' incomes.
+         * Each income is represented as an EmployeeIncomeDTO object, which includes the employee's ID, name, and salary.
+         *
+         * @return List of EmployeeIncomeDTO objects representing all employees' incomes.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<EmployeeIncomeDTO> getEmployeeIncomesDTO() {
             try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 String hql = "SELECT e.id, e.name, e.salary " +
@@ -198,6 +183,15 @@
             }
         }
 
+        /**
+         * Retrieves a list of employees who have a specific qualification and whose salary falls within a specified range.
+         *
+         * @param qualification The qualification to search for.
+         * @param minSalary The minimum salary to search for.
+         * @param maxSalary The maximum salary to search for.
+         * @return List of Employee objects who have the specified qualification and whose salary falls within the specified range.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<Employee> getEmployeesByQualificationAndSalary(String qualification,     //TODO
                                                                           BigDecimal minSalary,
                                                                           BigDecimal maxSalary) {
@@ -220,6 +214,13 @@
             }
         }
 
+        /**
+         * Retrieves a list of employees whose salary is below a specified cap.
+         *
+         * @param salaryCap The salary cap to search for.
+         * @return List of Employee objects whose salary is below the specified cap.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<Employee> getEmployeesWithSalaryBelow(BigDecimal salaryCap) {
             try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 String hql = "FROM Employee e " +
@@ -235,6 +236,13 @@
             }
         }
 
+        /**
+         * Retrieves a list of employees whose salary is above a specified floor.
+         *
+         * @param salaryFloor The salary floor to search for.
+         * @return List of Employee objects whose salary is above the specified floor.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<Employee> getEmployeesWithSalaryAbove(BigDecimal salaryFloor) {
             try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 String hql = "FROM Employee e " +
@@ -250,6 +258,14 @@
             }
         }
 
+        /**
+         * Retrieves a list of all employees' incomes who earn below a specified salary cap.
+         * Each income is represented as an EmployeeIncomeDTO object, which includes the employee's ID, name, and salary.
+         *
+         * @param salaryCap The salary cap to search for.
+         * @return List of EmployeeIncomeDTO objects representing all employees' incomes who earn below the specified salary cap.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<EmployeeIncomeDTO> getEmployeesWithSalaryBelowDTO(BigDecimal salaryCap) {
             try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 String hql = "SELECT e.id, e.name, e.salary " +
@@ -276,6 +292,14 @@
             }
         }
 
+        /**
+         * Retrieves a list of all employees' incomes who earn above a specified salary floor.
+         * Each income is represented as an EmployeeIncomeDTO object, which includes the employee's ID, name, and salary.
+         *
+         * @param salaryFloor The salary floor to search for.
+         * @return List of EmployeeIncomeDTO objects representing all employees' incomes who earn above the specified salary floor.
+         * @throws RuntimeException If an exception occurs during the database operation.
+         */
         public static List<EmployeeIncomeDTO> getEmployeesWithSalaryAboveDTO(BigDecimal salaryFloor) {
             try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
                 String hql = "SELECT e.id, e.name, e.salary " +
@@ -583,25 +607,43 @@
                     .collect(Collectors.toList());
         }
 
-//        /**
-//         * Retrieves all Employee entities from the database, ordered by position in ascending order, and transforms them into EmployeeDTOs.
-//         *
-//         * @return A List of EmployeeDTO objects ordered by position.
-//         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
-//         */
-//        public static List<EmployeeDTO> getOrderedEmployeesByPositionAscending() {
-//            List<Employee> employees;
-//            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-//                Transaction transaction = session.beginTransaction();
-//                employees = session.createQuery("Select c From Employee c" +
-//                                " ORDER BY CONCAT(c.positionType)", Employee.class)
-//                        .getResultList();
-//                transaction.commit();
-//            }
-//            return employees.stream()
-//                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
-//                    .collect(Collectors.toList());
-//        }
+        /**
+         * Retrieves all Employee entities from the database, ordered by name in ascending order, and transforms them into EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects ordered by name.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<EmployeeDTO> getOrderedEmployeesByNameAscending() {
+            List<Employee> employees;
+            try(Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                employees = session.createQuery("SELECT e FROM Employee e ORDER BY e.name", Employee.class)
+                        .getResultList();
+                transaction.commit();
+            }
+            return employees.stream()
+                    .map(e -> new EmployeeDTO(e.getId(), e.getQualificationTypeSet(), e.getName(), e.getTransportCompany()))
+                    .collect(Collectors.toList());
+        }
+
+        /**
+         * Retrieves all Employee entities from the database, ordered by the number of qualifications in ascending order, and transforms them into EmployeeDTOs.
+         *
+         * @return A List of EmployeeDTO objects ordered by the number of qualifications.
+         * @throws javax.persistence.PersistenceException If there is an issue with the transaction or the database connection.
+         */
+        public static List<Employee> sortEmployeesByQualificationType(List<Employee> employees) {
+            return employees.stream()
+                    .sorted(Comparator.comparing(e -> e.getQualificationTypeSet().stream()
+                            .map(QualificationType::getName)
+                            .sorted()
+                            .collect(Collectors.joining())))
+                    .collect(Collectors.toList());
+        }
+
+
+
+
 
 
 

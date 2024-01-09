@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,7 +33,7 @@ public class Employee {
     private TransportCompany transportCompany;
 
     @ManyToMany
-    private Set<org.example.entity.QualificationType> qualificationTypeSet = new HashSet<>(); //employee will create employee_qualification_type table
+    private Set<org.example.entity.QualificationType> qualificationTypeSet; //employee will create employee_qualification_type table
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private Set<TripDetails> tripDetailsSet;

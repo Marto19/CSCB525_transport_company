@@ -11,10 +11,12 @@ public class OrderDetailsDAO {
 
 
     /**
+     * Creates a new order if the customer has sufficient balance.
      *
-     * @param orderDetails
-     * @param customer1
-     * @return
+     * @param orderDetails The details of the order to be created.
+     * @param customer1 The customer who is placing the order.
+     * @return The created OrderDetails object, or null if the order could not be created due to insufficient balance.
+     * @throws RuntimeException If an InsufficientBalanceException is caught.
      */
     public static OrderDetails createOrder(OrderDetails orderDetails, Customer customer1) {
         OrderDetails order = null;
@@ -41,16 +43,18 @@ public class OrderDetailsDAO {
         }
         return order;
     }
-    //TODO: make many to many qualification type and vehicle type and make check in the dao when creating a trip or smh
 
     /**
+     * Saves or updates an order if the customer has sufficient balance.
+     * If the customer exists and has sufficient balance, the order is created or updated.
+     * The customer's balance is updated, and the order details are set to the customer.
      *
-     * @param orderDetails
-     * @param customer1
-     * @return
+     * @param orderDetails The details of the order to be saved or updated.
+     * @param customer1 The customer who is placing the order.
+     * @return The saved or updated OrderDetails object.
+     * @throws RuntimeException If an InsufficientBalanceException is caught.
      */
     public static OrderDetails saveOrUpdateCreateOrder(OrderDetails orderDetails, Customer customer1) {
-        OrderDetails order = null;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
@@ -62,8 +66,7 @@ public class OrderDetailsDAO {
                 CustomerDAO.saveOrUpdateCustomer(customer1);
                 orderDetails.setCustomer(customer1);
                 OrderDetailsDAO.updateOrderDetails(orderDetails);
-                order = new OrderDetails(orderDetails.getPriceToPay(), orderDetails.getPayingStatus(), orderDetails.getTripDetails(), customer);
-                session.merge(order);
+                session.merge(orderDetails);  // Update the existing orderDetails object
             }
             else{
                 throw new InsufficientBalanceException("InsufficientBalanceException: not enough balance");
@@ -73,13 +76,16 @@ public class OrderDetailsDAO {
         } catch (InsufficientBalanceException e) {
             throw new RuntimeException(e);
         }
-        return order;
-        }
+        return orderDetails;
+    }
+
+
     /**
-     * Updates an existing customer record in the database.
+     * Updates an existing order record in the database.
+     * If the provided OrderDetails object is null, an IllegalArgumentException is thrown.
      *
-     * @param orderDetails The updated customer object.
-     * @throws IllegalArgumentException If the provided customer object is null.
+     * @param orderDetails The updated OrderDetails object.
+     * @throws IllegalArgumentException If the provided OrderDetails object is null.
      */
     public static void updateOrderDetails(OrderDetails orderDetails){
         if(orderDetails == null){
