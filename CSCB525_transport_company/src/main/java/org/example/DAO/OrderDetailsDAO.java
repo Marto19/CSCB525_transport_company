@@ -6,16 +6,16 @@ import org.example.entity.OrderDetails;
 import org.example.exceptions.InsufficientBalanceException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.math.BigDecimal;
 
 public class OrderDetailsDAO {
 
 
+    /**
+     *
+     * @param orderDetails
+     * @param customer1
+     * @return
+     */
     public static OrderDetails createOrder(OrderDetails orderDetails, Customer customer1) {
         OrderDetails order = null;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
@@ -41,10 +41,14 @@ public class OrderDetailsDAO {
         }
         return order;
     }
+    //TODO: make many to many qualification type and vehicle type and make check in the dao when creating a trip or smh
 
-
-
-
+    /**
+     *
+     * @param orderDetails
+     * @param customer1
+     * @return
+     */
     public static OrderDetails saveOrUpdateCreateOrder(OrderDetails orderDetails, Customer customer1) {
         OrderDetails order = null;
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {

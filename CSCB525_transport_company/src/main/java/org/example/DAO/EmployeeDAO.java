@@ -129,6 +129,49 @@
             }
         }
 
+        /**
+         * Retrieves a list of drivers along with the count of completed trips for each driver.
+         * A completed trip is defined as a trip where the arrival date is before the current date.
+         *
+         * @return A list of Object arrays containing driver names and their completed trip counts.
+         *         Each Object array contains:
+         *         - Index 0: String - Driver name
+         *         - Index 1: Long - Completed trip count
+         * @throws Exception if an error occurs during the retrieval process
+         */
+        public static List<Object[]> getDriversAndCompletedTripsCount() {
+            try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+                String hql = "select e.name, count(td.id) " +
+                        "from Employee e " +
+                        "left join TripDetails td on td.employee.id = e.id " +
+                        "where td.arrivalDate < current_date() " +
+                        "group by e.id";
+
+                Query<Object[]> query = session.createQuery(hql, Object[].class);
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        /**
+         * Prints the list of drivers and their completed trip counts to the console.
+         * It retrieves the information using 'getDriversAndCompletedTripsCount' method.
+         * If the query returns null or encounters an error, it prints an appropriate message.
+         */
+        public static void printDriversAndCompletedTripsCount() {
+            List<Object[]> result = getDriversAndCompletedTripsCount();
+            if (result != null) {
+                for (Object[] row : result) {
+                    String employeeName = (String) row[0];
+                    Long tripCount = (Long) row[1];
+                    System.out.println("Employee: " + employeeName + ", Completed Trips: " + tripCount);
+                }
+            } else {
+                System.out.println("Query returned null.");
+            }
+        }
 
 
         /**

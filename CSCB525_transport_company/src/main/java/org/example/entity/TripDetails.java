@@ -154,7 +154,23 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
         this.orderDetails = orderDetails;
     }
 
-//    public Set<Goods> getGoodsList() {
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    //    public Set<Goods> getGoodsList() {
 //        return goodsList;
 //    }
 //

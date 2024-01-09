@@ -31,7 +31,7 @@ public class OrderDetails {
     @Column(name = "paying_status")
     private boolean payingStatus;
 
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(fetch =  FetchType.LAZY)//, mappedBy = "orderDetails causing .AssertionFailure:
     private TripDetails tripDetails;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "customer_id")

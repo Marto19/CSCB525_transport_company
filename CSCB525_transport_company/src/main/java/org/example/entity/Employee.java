@@ -14,6 +14,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private long id;
+
     @Column(name = "name")
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters long!")
     @Pattern(regexp = "^([A-Z].*)\s([a-zA-Z].*)", message = "First name should start with a capital letter and there should be at least a first and last name!")
@@ -55,8 +56,7 @@ public class Employee {
 
     public Employee(@NotNull String name) {     //TODO: qualificationTypeSet doesn let Employee record to be recorder into the table of Employee
         this.name = name;
-        this.qualificationTypeSet = qualificationTypeSet;
-        this.salary = salary;
+
     }
 
     public Employee() {
