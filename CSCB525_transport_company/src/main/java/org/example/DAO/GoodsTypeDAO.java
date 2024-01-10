@@ -49,7 +49,7 @@ public class GoodsTypeDAO {
      * @param goodsType The updated GoodsType object.
      * @throws IllegalArgumentException If the provided goodsType object is null.
      */
-    public static void updateGoodsType(GoodsType goodsType) {
+    public static void saveOrUpdateGoodsType(GoodsType goodsType) {
         if (goodsType == null) {
             throw new IllegalArgumentException("The goods type cannot be null");
         }

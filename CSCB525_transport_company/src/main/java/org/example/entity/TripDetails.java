@@ -33,6 +33,7 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
     private TransportCompany transportCompany;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
+    @NotNull
     private Vehicle vehicle;
 
     @OneToOne
@@ -177,6 +178,8 @@ public class TripDetails implements Serializable {          ////8. ot zadanieto
 //    public void setGoodsList(Set<Goods> goodsList) {
 //        this.goodsList = goodsList;
 //    }
+
+
 
 
     @Override

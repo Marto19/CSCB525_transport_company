@@ -2,10 +2,12 @@ package org.example.entity;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -26,6 +28,15 @@ public class Goods {
     @NotNull
     private double weight;
 
+    @Column(name = "goods_quantity")
+    @NotNull
+    @PositiveOrZero
+    private int goodsQuantity;
+
+    @Column(name = "price_per_good_or_kg")
+    @NotNull
+    @Positive
+    private BigDecimal priceForGoods;
 
     @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "goods_type_id") // Column referencing GoodsType
@@ -33,22 +44,29 @@ public class Goods {
     private GoodsType goodsType;
 
 
-//    @ManyToMany(fetch =  FetchType.LAZY)
-//    private Set<TripDetails> tripDetails = new HashSet<>();
-    @ManyToMany(fetch =  FetchType.LAZY)
+    @ManyToMany(fetch =  FetchType.EAGER)
     private Set<OrderDetails> orderDetailsSet;
-    public Goods(String name,@NotNull double weight, @NotNull GoodsType goodsType) {
-        this.name = name;
-        this.weight = weight;
-        this.goodsType = goodsType;
-    }
 
-//    public Goods(String name, @NotNull double weight, GoodsType goodsType) {
+//    public Goods(String name,@NotNull double weight, @NotNull GoodsType goodsType) {
 //        this.name = name;
 //        this.weight = weight;
 //        this.goodsType = goodsType;
-////        this.tripDetails = tripDetails;
 //    }
+//
+//    public Goods(String name, @NotNull double weight, @NotNull int goodsQuantity, @NotNull GoodsType goodsType) {
+//        this.name = name;
+//        this.weight = weight;
+//        this.goodsQuantity = goodsQuantity;
+//        this.goodsType = goodsType;
+//    }
+
+    public Goods(String name, @NotNull double weight, @NotNull int goodsQuantity, @NotNull BigDecimal priceForGoods, @NotNull GoodsType goodsType) {
+        this.name = name;
+        this.weight = weight;
+        this.goodsQuantity = goodsQuantity;
+        this.priceForGoods = priceForGoods;
+        this.goodsType = goodsType;
+    }
 
     public Goods(){}
 

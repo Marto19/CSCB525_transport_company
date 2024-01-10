@@ -32,6 +32,7 @@ public class OrderDetails {
     private boolean payingStatus;
 
     @OneToOne(fetch =  FetchType.LAZY)//, mappedBy = "orderDetails causing .AssertionFailure:
+    @JoinColumn(name = "tripDetails_id")
     private TripDetails tripDetails;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "customer_id")
@@ -47,6 +48,11 @@ public class OrderDetails {
         this.tripDetails = tripDetails;
     }
 
+    public OrderDetails(BigDecimal priceToPay, boolean payingStatus) {
+        this.priceToPay = priceToPay;
+        this.payingStatus = payingStatus;
+        this.tripDetails = tripDetails;
+    }
     public OrderDetails(BigDecimal priceToPay, boolean payingStatus, TripDetails tripDetails) {
         this.priceToPay = priceToPay;
         this.payingStatus = payingStatus;

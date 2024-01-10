@@ -2,7 +2,6 @@ package org.example.DAO;
 
 import org.example.DTO.CarriedOutTripsReferenceDTO;
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.OrderDetails;
 import org.example.entity.TripDetails;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -32,6 +31,26 @@ public class TripDAO {
             transaction.commit();
         }
     }
+
+    public static BigDecimal getTotalPriceOfCompletedTrips() {
+        BigDecimal totalPrice;
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            String jpql = "SELECT SUM(od.priceToPay) FROM OrderDetails od " +
+                    "JOIN od.tripDetails td " +
+                    "WHERE td.arrivalDate < :currentDate";
+            Query<BigDecimal> query = session.createQuery(jpql, BigDecimal.class);
+            query.setParameter("currentDate", LocalDate.now());
+
+            totalPrice = query.getSingleResult();
+
+            transaction.commit();
+        }
+        return totalPrice != null ? totalPrice : BigDecimal.ZERO;
+    }
+
+
 
     /**
      * Retrieves a list of all trip details from the database.
@@ -73,29 +92,7 @@ public class TripDAO {
         return count;
     }
 
-    /**
-     * Retrieves the total price of completed trips.
-     *
-     * @return The total price of completed trips.
-     */
-    public static BigDecimal getTotalPriceOfCompletedTrips() {
-        BigDecimal totalPrice;
-        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
 
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
-
-            Root<OrderDetails> root = cq.from(OrderDetails.class);
-            cq.select(cb.sum(root.get("priceToPay"))).where(cb.isTrue(root.get("payingStatus")));
-
-            Query<BigDecimal> query = session.createQuery(cq);
-            totalPrice = query.getSingleResult();
-
-            transaction.commit();
-        }
-        return totalPrice;
-    }
 
 
     /**

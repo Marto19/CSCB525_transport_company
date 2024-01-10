@@ -17,6 +17,9 @@ public class QualificationType {
     @ManyToMany(mappedBy = "qualificationTypeSet")
     private Set<Employee> employeeSet = new HashSet<>();
 
+    @ManyToMany
+    private Set<VehicleType> vehicleTypeSet;
+
     public QualificationType(String name) {
         this.name = name;
     }
@@ -37,6 +40,22 @@ public class QualificationType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Employee> getEmployeeSet() {
+        return employeeSet;
+    }
+
+    public void setEmployeeSet(Set<Employee> employeeSet) {
+        this.employeeSet = employeeSet;
+    }
+
+    public Set<VehicleType> getVehicleTypeSet() {
+        return vehicleTypeSet;
+    }
+
+    public void setVehicleTypeSet(Set<VehicleType> vehicleTypeSet) {
+        this.vehicleTypeSet = vehicleTypeSet;
     }
 
     @Override

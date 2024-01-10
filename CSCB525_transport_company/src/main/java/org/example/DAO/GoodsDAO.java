@@ -66,13 +66,13 @@ public class GoodsDAO {
      * @param goods The updated Goods object.
      * @throws IllegalArgumentException If the provided goods object is null.
      */
-    public static void updateGoods(Goods goods) {
+    public static void saveOrUpdateGoods(Goods goods) {
         if (goods == null) {
             throw new IllegalArgumentException("The goods object cannot be null");
         }
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(goods);
+            session.merge(goods);
             transaction.commit();
         }
     }
