@@ -3,6 +3,8 @@ package org.example;
 import org.example.DAO.*;
 import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.*;
+import org.example.exceptions.EmployeeNotQualfiedException;
+import org.example.exceptions.NoVehicleSetForThisTrip;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoVehicleSetForThisTrip, EmployeeNotQualfiedException {
         System.out.println("Hello world!");
         SessionFactoryUtil.getSessionFactory().openSession();
 
@@ -322,13 +324,13 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(1));
         tripDetails1.setId(1);
         tripDetails1.setVehicle(vehicle1);
-//        tripDetails1.setEmployee(employee1);
-
+        tripDetails1.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails1.getVehicle().getVehicleType1(), tripDetails1));
+        //TODO: it returns dto object and we need employee
         TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
                 currentDate, LocalDate.of(2024, 5, 20),
                 TransportCompanyDAO.getTransportCompanyById(2));
         tripDetails2.setId(2);
-//        tripDetails2.setVehicle(vehicle1);
+        tripDetails2.setVehicle(vehicle1);
 //        tripDetails2.setEmployee(employee2);
 
 
@@ -336,7 +338,7 @@ public class Main {
                 currentDate, LocalDate.of(2024, 6, 25),
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails3.setId(3);
-//        tripDetails2.setVehicle(vehicle2);
+        tripDetails3.setVehicle(vehicle2);
 //        tripDetails3.setEmployee(employee2);
 
 
@@ -344,7 +346,7 @@ public class Main {
                 currentDate, LocalDate.of(2024, 7, 30),
                 TransportCompanyDAO.getTransportCompanyById(4));
         tripDetails4.setId(4);
-//        tripDetails2.setVehicle(vehicle2);
+        tripDetails4.setVehicle(vehicle2);
 //        tripDetails4.setEmployee(employee3);
 
 
@@ -354,7 +356,7 @@ public class Main {
                 LocalDate.of(2023, 7, 30), LocalDate.of(2024, 1, 1),
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails5.setId(5);
-//        tripDetails3.setVehicle(vehicle3);
+        tripDetails5.setVehicle(vehicle3);
 //        tripDetails5.setEmployee(employee1);
 
 
@@ -362,7 +364,7 @@ public class Main {
                 LocalDate.of(2023, 7, 30), LocalDate.of(2024, 1, 1),
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails6.setId(6);
-//        tripDetails3.setVehicle(vehicle3);
+        tripDetails6.setVehicle(vehicle3);
 //        tripDetails6.setEmployee(employee1);
 
         TripDAO.saveOrUpdateTripDetails(tripDetails1);

@@ -2,7 +2,12 @@ package org.example.DAO;
 
 import org.example.DTO.CarriedOutTripsReferenceDTO;
 import org.example.configuration.SessionFactoryUtil;
+import org.example.entity.Employee;
+import org.example.entity.QualificationType;
 import org.example.entity.TripDetails;
+import org.example.entity.VehicleType;
+import org.example.exceptions.EmployeeNotQualfiedException;
+import org.example.exceptions.NoVehicleSetForThisTrip;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -13,6 +18,7 @@ import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public class TripDAO {
     /**
@@ -229,5 +235,67 @@ public class TripDAO {
             return query.getResultList();
         }
     }
+    /**
+     * This method checks if an employee is qualified to operate a specific vehicle for a trip.
+     *
+     * @param employee The employee whose qualifications are to be checked.
+     * @param vehicleType The type of vehicle that is to be used for the trip.
+     * @param tripDetails The details of the trip for which the employee and vehicle are being considered.
+     * @return The employee if they are qualified for the vehicle.
+     * @throws NoVehicleSetForThisTrip If no vehicle is set for the trip.
+     * @throws EmployeeNotQualfiedException If the employee is not qualified for the vehicle.
+     *
+     * <p>
+     * The method first checks if a vehicle is set for the trip. If no vehicle is set, it throws a
+     * NoVehicleSetForThisTrip exception.
+     * </p>
+     *
+     * <p>
+     * Next, it checks if the employee is qualified for the vehicle. It does this by iterating over the
+     * set of QualificationTypes of the employee. For each QualificationType, it checks if the id of the
+     * QualificationType matches the id of the VehicleType of the Vehicle set for the trip. If it finds a match,
+     * it sets a flag, isQualified, to true and breaks the loop.
+     * </p>
+     *
+     * <p>
+     * If no matching VehicleType is found after checking all QualificationTypes, it throws an
+     * EmployeeNotQualfiedException. If a match is found, it returns the employee.
+     * </p>
+     */
+    public static Employee getQualificatedEmployee(Employee employee, VehicleType vehicleType,
+                                                   TripDetails tripDetails) throws NoVehicleSetForThisTrip, EmployeeNotQualfiedException {
+        // Check if a vehicle is set for the trip
+        if (tripDetails.getVehicle() == null) {
+            throw new NoVehicleSetForThisTrip("No vehicle is set for this trip.");
+        }
+
+        // Check if the employee is qualified for the vehicle
+        Set<QualificationType> qualifications = employee.getQualificationTypeSet();
+        boolean isQualified = false;
+        for(QualificationType qualification : qualifications) {
+            if(qualification.getId() == tripDetails.getVehicle().getVehicleType1().getId()) {
+                isQualified = true;
+                break;
+            }
+        }
+
+        if (!isQualified) {
+            throw new EmployeeNotQualfiedException("The employee is not qualified for this vehicle. Vehicle id: "
+                    + tripDetails.getVehicle().getId() + " Vehicle type id: "
+                    + tripDetails.getVehicle().getVehicleType1().getId() + " Employee qualification id: "
+                    + employee.getQualificationTypeSet());
+        }
+
+        return employee;
+    }
+
+
+
+
+
+
+
+
+
 
 }

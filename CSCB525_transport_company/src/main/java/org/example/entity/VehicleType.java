@@ -28,7 +28,7 @@ public class VehicleType {
     private List<Vehicle> vehicle = new ArrayList<>();
 //TODO: make the connection one to many - done
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<QualificationType> qualificationTypeSet;
 
     public VehicleType(String vehicleType) {

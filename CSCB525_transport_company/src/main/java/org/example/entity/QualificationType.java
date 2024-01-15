@@ -2,6 +2,7 @@ package org.example.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class QualificationType {
     @ManyToMany(mappedBy = "qualificationTypeSet")
     private Set<Employee> employeeSet = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<VehicleType> vehicleTypeSet;
 
     public QualificationType(String name) {
@@ -64,5 +65,18 @@ public class QualificationType {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QualificationType that = (QualificationType) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
