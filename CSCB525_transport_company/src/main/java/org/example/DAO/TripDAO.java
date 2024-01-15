@@ -38,23 +38,39 @@ public class TripDAO {
         }
     }
 
+    /**
+     * This method calculates the total price of all completed trips.
+     *
+     * @return The total price of all completed trips.
+     */
     public static BigDecimal getTotalPriceOfCompletedTrips() {
         BigDecimal totalPrice;
+        // Open a new session
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            // Begin a new transaction
             Transaction transaction = session.beginTransaction();
 
+            // Define the JPQL query
             String jpql = "SELECT SUM(od.priceToPay) FROM OrderDetails od " +
                     "JOIN od.tripDetails td " +
                     "WHERE td.arrivalDate < :currentDate";
+
+            // Create the query
             Query<BigDecimal> query = session.createQuery(jpql, BigDecimal.class);
+            // Set the parameter for the current date
             query.setParameter("currentDate", LocalDate.now());
 
+            // Execute the query and get the single result
             totalPrice = query.getSingleResult();
 
+            // Commit the transaction
             transaction.commit();
         }
+        // If totalPrice is null, return BigDecimal.ZERO, otherwise return totalPrice
         return totalPrice != null ? totalPrice : BigDecimal.ZERO;
     }
+
+
 
 
 

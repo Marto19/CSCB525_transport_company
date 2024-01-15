@@ -93,8 +93,8 @@ public class Main {
         /////////////////////////////////////////   2. EMPLOYEE     ///////////////////////////////////
 
         HashSet<QualificationType> qualificationTypesEmployee1 = new HashSet<>();
-        qualificationTypesEmployee1.add(QualificationTypeDAO.getQualificationTypeById(4));
         qualificationTypesEmployee1.add(QualificationTypeDAO.getQualificationTypeById(1));
+        qualificationTypesEmployee1.add(QualificationTypeDAO.getQualificationTypeById(2));
 
         Employee employee1 = new Employee("Petar Petrov");
         employee1.setId(1);
@@ -103,8 +103,8 @@ public class Main {
         employee1.setQualificationTypeSet(qualificationTypesEmployee1);     //THESE SET THE MANY TO MANY
 
         HashSet<QualificationType> qualificationTypesEmployee2 = new HashSet<>();
+        qualificationTypesEmployee2.add(QualificationTypeDAO.getQualificationTypeById(3));
         qualificationTypesEmployee2.add(QualificationTypeDAO.getQualificationTypeById(4));
-        qualificationTypesEmployee2.add(QualificationTypeDAO.getQualificationTypeById(5));
 
         Employee employee2 = new Employee("Ivan Ivanov");
         employee2.setId(2);
@@ -113,8 +113,9 @@ public class Main {
         employee2.setQualificationTypeSet(qualificationTypesEmployee2);
 
         HashSet<QualificationType> qualificationTypesEmployee3 = new HashSet<>();
-        qualificationTypesEmployee3.add(QualificationTypeDAO.getQualificationTypeById(4));
+        qualificationTypesEmployee3.add(QualificationTypeDAO.getQualificationTypeById(5));
         qualificationTypesEmployee3.add(QualificationTypeDAO.getQualificationTypeById(6));
+
 
         Employee employee3 = new Employee("Gosheto Qkiq");
         employee3.setId(3);
@@ -123,8 +124,8 @@ public class Main {
         employee3.setQualificationTypeSet(qualificationTypesEmployee3);
 
         HashSet<QualificationType> qualificationTypesEmployee4 = new HashSet<>();
-        qualificationTypesEmployee4.add(QualificationTypeDAO.getQualificationTypeById(6));
         qualificationTypesEmployee4.add(QualificationTypeDAO.getQualificationTypeById(7));
+        qualificationTypesEmployee4.add(QualificationTypeDAO.getQualificationTypeById(8));
 
         Employee employee4 = new Employee("Smotlio Smotlev");
         employee4.setId(4);
@@ -132,11 +133,23 @@ public class Main {
         employee4.setSalary(BigDecimal.valueOf(2300));
         employee4.setQualificationTypeSet(qualificationTypesEmployee4);
 
+        HashSet<QualificationType> qualificationTypesEmployee5 = new HashSet<>();
+        qualificationTypesEmployee5.add(QualificationTypeDAO.getQualificationTypeById(9));
+        qualificationTypesEmployee5.add(QualificationTypeDAO.getQualificationTypeById(10));
+
+        Employee employee5 = new Employee("Gosho Goshev");
+        employee5.setId(5);
+        employee5.setTransportCompany(ups);
+        employee5.setSalary(BigDecimal.valueOf(2300));
+        employee5.setQualificationTypeSet(qualificationTypesEmployee5);
+
 
         EmployeeDAO.saveOrUpdateEmployee(employee1);
         EmployeeDAO.saveOrUpdateEmployee(employee2);
         EmployeeDAO.saveOrUpdateEmployee(employee3);
         EmployeeDAO.saveOrUpdateEmployee(employee4);
+        EmployeeDAO.saveOrUpdateEmployee(employee4);
+
 
         //list all employees
 //        EmployeeDAO.getEmployeesDTO().stream().forEach(System.out::println);//todo:fix it;
@@ -326,12 +339,13 @@ public class Main {
         tripDetails1.setVehicle(vehicle1);
         tripDetails1.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails1.getVehicle().getVehicleType1(), tripDetails1));
         //TODO: it returns dto object and we need employee
+
         TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
                 currentDate, LocalDate.of(2024, 5, 20),
                 TransportCompanyDAO.getTransportCompanyById(2));
         tripDetails2.setId(2);
         tripDetails2.setVehicle(vehicle1);
-//        tripDetails2.setEmployee(employee2);
+        tripDetails2.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails2.getVehicle().getVehicleType1(), tripDetails2));
 
 
         TripDetails tripDetails3 = new TripDetails("Pine Str.", "Maple Str.",
@@ -339,7 +353,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails3.setId(3);
         tripDetails3.setVehicle(vehicle2);
-//        tripDetails3.setEmployee(employee2);
+        tripDetails3.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails3.getVehicle().getVehicleType1(), tripDetails3));
 
 
         TripDetails tripDetails4 = new TripDetails("Cherry Str.", "Walnut Str.",
@@ -347,7 +361,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(4));
         tripDetails4.setId(4);
         tripDetails4.setVehicle(vehicle2);
-//        tripDetails4.setEmployee(employee3);
+//        tripDetails4.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails4.getVehicle().getVehicleType1(), tripDetails4));
 
 
         //adding trips that have arrived
@@ -357,7 +371,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails5.setId(5);
         tripDetails5.setVehicle(vehicle3);
-//        tripDetails5.setEmployee(employee1);
+//        tripDetails5.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails5.getVehicle().getVehicleType1(), tripDetails5));
 
 
         TripDetails tripDetails6 = new TripDetails("Cherry Str.", "Walnut Str.",
@@ -365,7 +379,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails6.setId(6);
         tripDetails6.setVehicle(vehicle3);
-//        tripDetails6.setEmployee(employee1);
+//        tripDetails6.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails6.getVehicle().getVehicleType1(), tripDetails6));
 
         TripDAO.saveOrUpdateTripDetails(tripDetails1);
         TripDAO.saveOrUpdateTripDetails(tripDetails2);
@@ -485,7 +499,7 @@ public class Main {
         System.out.println("tripDetailsFindByDestination:");
         System.out.println(TripDAO.tripDetailsFindByDestination("Walnut Str."));
 
-        //TODO: B.C
+        //TODO: B.C - done
         ////////////////////////////////////////////////    9. REFERENCES   ///////////////////////////
 
         System.out.println("ARRIVED TRIPS: " +   TripDAO.getCompletedTripsDTO());        //9.
