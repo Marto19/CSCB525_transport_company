@@ -539,26 +539,7 @@ public class Main {
 //record from other table, therefor not letting the employee drive something that he doesnt have a -
 //qualification for
 
-//todo: do the math
-//todo: make it so that when a an order is placed
+//todo: do the math - done
+//todo: make it so that when a an order is placed - done
 
-//TODO!!!!!: create a new column in vehicle_type - qualification type - created table - many to many
-//extract qualification type from employee_qualification_type
-//update Employee constructor so that it includes qualification type not null
-//update the employees in Main
-//now when creating a trip and assigning an employee - check his qualification
-//if not qualified - throw CUSTOM exception
-//else - creat the trip record in the table
-
-//when creating trip_details record, vehicle id u must set - not nullable
-//then u must set employee, employee qualification(extract from many to many employee_qualification_type)
-//must match vehicle type(extract it from vehicle_type)
-//if not qualified - throw CUSTOM exception
-//else - creat the trip record in the table
-
-
-///in trip_details there is goods_id which we need to search in goods_order_details to see orderedgoods
-//we search which goods with order_id = x, are there
-//then we check their price per good
-//we miltiply (goodsX x goodsXprice)+(goodsXweight x CompanysChargeX) + (goodsY x goodsYprice) + (goodsYweight x CompanysChargeY) .... N
-//we do
+//TODO!!!!!: create a new column in vehicle_type - qualification type - created table - many to many - done
