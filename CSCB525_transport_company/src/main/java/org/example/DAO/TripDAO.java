@@ -5,6 +5,7 @@ import org.example.configuration.SessionFactoryUtil;
 import org.example.entity.*;
 import org.example.exceptions.EmployeeNotQualfiedException;
 import org.example.exceptions.NoVehicleSetForThisTrip;
+import org.example.exceptions.NullCompanyException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -36,10 +37,40 @@ public class TripDAO {
         }
     }
 
+
+    /**
+     * This method calculates the total price of all arrived trips for a specific transport company and sets the
+     * company's income.
+     *
+     * <p>
+     * It uses Hibernate's Session and Criteria API to create a query that:
+     * <ul>
+     * <li>Joins the TripDetails, OrderDetails, and TransportCompany entities.</li>
+     * <li>Selects the sum of the priceToPay attribute from the OrderDetails entity.</li>
+     * <li>Filters the results based on the transport company's ID and whether the trip has already arrived (arrival date is before the current date).</li>
+     * </ul>
+     * </p>
+     *
+     * @param company The transport company is passed, we need only the id, for which the total price of arrived trips is to be calculated.
+     * @return The total price of all arrived trips for the specified transport company. If no arrived trips are found, it returns BigDecimal.ZERO.
+     *
+     * @throws org.hibernate.HibernateException If there is a problem executing the query or performing the transaction.
+     * @throws java.lang.IllegalArgumentException If the companyId is null.
+     */
     public static BigDecimal getTotalArrivedTripsPrice(TransportCompany company) {
+
         BigDecimal total = BigDecimal.ZERO;
 
         long companyId = company.getIdTransportCompany();
+
+        if (companyId <= 0) {
+            try {
+                throw new NullCompanyException("Company ID cannot be null");
+            } catch (NullCompanyException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
@@ -61,7 +92,14 @@ public class TripDAO {
 
             transaction.commit();
         }
-
+        if (!(total.equals(BigDecimal.ZERO))){
+            if (company.getIncome() == null){
+                company.setIncome(total);
+            }else {
+                company.setIncome(company.getIncome().add(total));
+            }
+            TransportCompanyDAO.saveOrUpdateCompany(company);
+        }
         return total;
     }
 
