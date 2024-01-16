@@ -2,10 +2,7 @@ package org.example.DAO;
 
 import org.example.DTO.CarriedOutTripsReferenceDTO;
 import org.example.configuration.SessionFactoryUtil;
-import org.example.entity.Employee;
-import org.example.entity.QualificationType;
-import org.example.entity.TripDetails;
-import org.example.entity.VehicleType;
+import org.example.entity.*;
 import org.example.exceptions.EmployeeNotQualfiedException;
 import org.example.exceptions.NoVehicleSetForThisTrip;
 import org.hibernate.Session;
@@ -14,6 +11,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,39 +36,34 @@ public class TripDAO {
         }
     }
 
-    /**
-     * This method calculates the total price of all completed trips.
-     *
-     * @return The total price of all completed trips.
-     */
-    public static BigDecimal getTotalPriceOfCompletedTrips() {
-        BigDecimal totalPrice;
-        // Open a new session
+    public static BigDecimal getTotalArrivedTripsPrice(TransportCompany company) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        long companyId = company.getIdTransportCompany();
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
-            // Begin a new transaction
             Transaction transaction = session.beginTransaction();
 
-            // Define the JPQL query
-            String jpql = "SELECT SUM(od.priceToPay) FROM OrderDetails od " +
-                    "JOIN od.tripDetails td " +
-                    "WHERE td.arrivalDate < :currentDate";
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
 
-            // Create the query
-            Query<BigDecimal> query = session.createQuery(jpql, BigDecimal.class);
-            // Set the parameter for the current date
-            query.setParameter("currentDate", LocalDate.now());
+            Root<TripDetails> tripRoot = cq.from(TripDetails.class);
+            Join<TripDetails, OrderDetails> orderJoin = tripRoot.join("orderDetails");
+            Join<TripDetails, TransportCompany> companyJoin = tripRoot.join("transportCompany");
 
-            // Execute the query and get the single result
-            totalPrice = query.getSingleResult();
+            cq.select(cb.sum(orderJoin.get("priceToPay"))).where(cb.equal(companyJoin.get("idTransportCompany"), companyId), cb.lessThan(tripRoot.get("arrivalDate"), LocalDate.now()));
 
-            // Commit the transaction
+            Query<BigDecimal> query = session.createQuery(cq);
+            List<BigDecimal> results = query.getResultList();
+
+            if (!results.isEmpty() && results.get(0) != null) {
+                total = results.get(0);
+            }
+
             transaction.commit();
         }
-        // If totalPrice is null, return BigDecimal.ZERO, otherwise return totalPrice
-        return totalPrice != null ? totalPrice : BigDecimal.ZERO;
+
+        return total;
     }
-
-
 
 
 

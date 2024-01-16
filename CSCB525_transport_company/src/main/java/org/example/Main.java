@@ -506,7 +506,7 @@ public class Main {
 
         System.out.println("NUMBER OF ARRIVED TRIPS: " + TripDAO.getCompletedTripsCountDTO()); //9. a ot zadanieto
 
-        System.out.println("Total Price of Completed Trips: " + TripDAO.getTotalPriceOfCompletedTrips());   //TODO:check if it works okay
+        System.out.println("Total Price of Completed Trips: " + TripDAO.getTotalArrivedTripsPrice(TransportCompanyDAO.getTransportCompanyById(3)));   //TODO:check if it works okay
 
 //        System.out.println("list of employees and the count of trips each employee has completed:" + EmployeeDAO.getDriversAndCompletedTripsCount());
 
@@ -516,7 +516,7 @@ public class Main {
 
         System.out.println("Employee incomes: " + EmployeeDAO.getEmployeeIncomesDTO());
 
-        System.out.println("getTotalPriceOfCompletedTrips:" + TripDAO.getTotalPriceOfCompletedTrips());
+//        System.out.println("getTotalPriceOfCompletedTrips:" + TripDAO.getTotalPriceOfCompletedTrips());
 
         ////////////////////////////////////TRYING DAOS //////////////////////////////////
         System.out.println();
