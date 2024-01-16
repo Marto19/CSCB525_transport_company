@@ -337,7 +337,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(1));
         tripDetails1.setId(1);
         tripDetails1.setVehicle(vehicle1);
-        tripDetails1.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails1.getVehicle().getVehicleType1(), tripDetails1));
+//        tripDetails1.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails1.getVehicle().getVehicleType1(), tripDetails1));
         //TODO: it returns dto object and we need employee
 
         TripDetails tripDetails2 = new TripDetails("Elm Str.", "Oak Str.",
@@ -345,7 +345,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(2));
         tripDetails2.setId(2);
         tripDetails2.setVehicle(vehicle1);
-        tripDetails2.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails2.getVehicle().getVehicleType1(), tripDetails2));
+//        tripDetails2.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails2.getVehicle().getVehicleType1(), tripDetails2));
 
 
         TripDetails tripDetails3 = new TripDetails("Pine Str.", "Maple Str.",
@@ -353,7 +353,7 @@ public class Main {
                 TransportCompanyDAO.getTransportCompanyById(3));
         tripDetails3.setId(3);
         tripDetails3.setVehicle(vehicle2);
-        tripDetails3.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails3.getVehicle().getVehicleType1(), tripDetails3));
+//        tripDetails3.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails3.getVehicle().getVehicleType1(), tripDetails3));
 
 
         TripDetails tripDetails4 = new TripDetails("Cherry Str.", "Walnut Str.",
@@ -387,6 +387,13 @@ public class Main {
         TripDAO.saveOrUpdateTripDetails(tripDetails4);
         TripDAO.saveOrUpdateTripDetails(tripDetails5);
         TripDAO.saveOrUpdateTripDetails(tripDetails6);
+
+        tripDetails1.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails1.getVehicle().getVehicleType1(), tripDetails1));
+//        tripDetails2.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails2.getVehicle().getVehicleType1(), tripDetails2));
+//        tripDetails3.setEmployee(TripDAO.getQualificatedEmployee(employee1, tripDetails3.getVehicle().getVehicleType1(), tripDetails3));
+//        tripDetails4.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails4.getVehicle().getVehicleType1(), tripDetails4));
+//        tripDetails5.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails5.getVehicle().getVehicleType1(), tripDetails5));
+//        tripDetails6.setEmployee(TripDAO.getQualificatedEmployee(employee3, tripDetails6.getVehicle().getVehicleType1(), tripDetails6));
 
 
         //deletion
